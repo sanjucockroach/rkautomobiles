@@ -1,20 +1,66 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, Environment, ContactShadows, Sparkles } from "@react-three/drei";
-import { useRef, useMemo, Suspense } from "react";
+import { useRef, useMemo, Suspense, useEffect } from "react";
 import * as THREE from "three";
 
-/* Stylized low-poly sports car built from primitives */
+/* Custom spinning wheel component */
+function Wheel({ position }: { position: [number, number, number] }) {
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const t = state.clock.getElapsedTime();
+    // Spin the wheels forward (X-axis movement corresponds to Z-axis rotation in R3F scene)
+    groupRef.current.rotation.z = -t * 8;
+  });
+
+  const isOutwardPositive = position[2] < 0;
+  const rimY = isOutwardPositive ? 0.15 : -0.15;
+
+  return (
+    <group position={position}>
+      <group ref={groupRef}>
+        {/* Tire */}
+        <mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
+          <cylinderGeometry args={[0.42, 0.42, 0.28, 24]} />
+          <meshStandardMaterial color="#080808" metalness={0.5} roughness={0.7} />
+        </mesh>
+        {/* Rim accent */}
+        <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, rimY, 0]}>
+          <cylinderGeometry args={[0.22, 0.22, 0.02, 16]} />
+          <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={2.0} metalness={0.9} roughness={0.1} toneMapped={false} />
+        </mesh>
+        {/* Visual spokes for spinning effect */}
+        <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, rimY * 1.05, 0]}>
+          <boxGeometry args={[0.38, 0.04, 0.04]} />
+          <meshStandardMaterial color="#14181f" metalness={0.8} roughness={0.3} />
+        </mesh>
+        <mesh rotation={[Math.PI / 2, 0, Math.PI / 2]} position={[0, rimY * 1.05, 0]}>
+          <boxGeometry args={[0.38, 0.04, 0.04]} />
+          <meshStandardMaterial color="#14181f" metalness={0.8} roughness={0.3} />
+        </mesh>
+      </group>
+    </group>
+  );
+}
+
+/* Stylized low-poly sports car built from primitives with high-gloss automotive shaders */
 function SportsCar() {
   const group = useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (!group.current) return;
     const t = state.clock.getElapsedTime();
-    // gentle floating + slow rotation
-    group.current.rotation.y = Math.sin(t * 0.25) * 0.35 + 0.4;
-    group.current.position.y = Math.sin(t * 0.8) * 0.05;
+    // gentle floating + slow rotation, plus reacting to pointer
+    const targetRotationY = Math.sin(t * 0.2) * 0.2 + 0.4 + state.pointer.x * 0.45;
+    const targetRotationX = state.pointer.y * 0.12;
+
+    // smooth lerp
+    group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetRotationY, 0.05);
+    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetRotationX, 0.05);
+    group.current.position.y = Math.sin(t * 0.8) * 0.04;
   });
 
   return (
@@ -22,7 +68,7 @@ function SportsCar() {
       {/* Lower body chassis */}
       <mesh castShadow receiveShadow position={[0, 0.35, 0]}>
         <boxGeometry args={[3.6, 0.5, 1.5]} />
-        <meshStandardMaterial color="#0a0a0a" metalness={0.9} roughness={0.25} />
+        <meshPhysicalMaterial color="#080a0f" metalness={0.9} roughness={0.15} clearcoat={1.0} clearcoatRoughness={0.1} />
       </mesh>
       {/* Beveled side accent (lime neon) */}
       <mesh position={[0, 0.35, 0.76]}>
@@ -36,45 +82,45 @@ function SportsCar() {
       {/* Cabin / roof - tapered */}
       <mesh castShadow position={[-0.15, 0.85, 0]}>
         <boxGeometry args={[1.7, 0.55, 1.35]} />
-        <meshStandardMaterial color="#0d0d0d" metalness={0.85} roughness={0.15} />
+        <meshPhysicalMaterial color="#0c0e14" metalness={0.9} roughness={0.15} clearcoat={1.0} clearcoatRoughness={0.1} />
       </mesh>
-      {/* Windshield glass (cyan tint, emissive) */}
+      {/* Windshield glass */}
       <mesh position={[0.78, 0.86, 0]} rotation={[0, 0, -0.5]}>
         <boxGeometry args={[0.05, 0.6, 1.25]} />
-        <meshStandardMaterial color="#00a8ff" emissive="#00a8ff" emissiveIntensity={1.2} transparent opacity={0.55} metalness={0.4} roughness={0.1} toneMapped={false} />
+        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={1.2} transparent opacity={0.55} metalness={0.4} roughness={0.1} toneMapped={false} />
       </mesh>
       {/* Rear glass */}
       <mesh position={[-1.05, 0.86, 0]} rotation={[0, 0, 0.5]}>
         <boxGeometry args={[0.05, 0.55, 1.25]} />
-        <meshStandardMaterial color="#00a8ff" emissive="#00a8ff" emissiveIntensity={1.0} transparent opacity={0.5} metalness={0.4} roughness={0.1} toneMapped={false} />
+        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={1.0} transparent opacity={0.5} metalness={0.4} roughness={0.1} toneMapped={false} />
       </mesh>
       {/* Hood nose taper */}
       <mesh castShadow position={[1.55, 0.5, 0]} rotation={[0, 0, -0.12]}>
         <boxGeometry args={[0.9, 0.32, 1.45]} />
-        <meshStandardMaterial color="#0a0a0a" metalness={0.9} roughness={0.25} />
+        <meshPhysicalMaterial color="#080a0f" metalness={0.9} roughness={0.15} clearcoat={1.0} clearcoatRoughness={0.1} />
       </mesh>
       {/* Rear taper */}
       <mesh castShadow position={[-1.7, 0.5, 0]} rotation={[0, 0, 0.12]}>
         <boxGeometry args={[0.8, 0.32, 1.45]} />
-        <meshStandardMaterial color="#0a0a0a" metalness={0.9} roughness={0.25} />
+        <meshPhysicalMaterial color="#080a0f" metalness={0.9} roughness={0.15} clearcoat={1.0} clearcoatRoughness={0.1} />
       </mesh>
-      {/* Headlights (cyan) */}
+      {/* Headlights */}
       <mesh position={[2.02, 0.5, 0.5]}>
         <boxGeometry args={[0.06, 0.14, 0.3]} />
-        <meshStandardMaterial color="#ffffff" emissive="#00a8ff" emissiveIntensity={4} toneMapped={false} />
+        <meshStandardMaterial color="#ffffff" emissive="#d4ff00" emissiveIntensity={4} toneMapped={false} />
       </mesh>
       <mesh position={[2.02, 0.5, -0.5]}>
         <boxGeometry args={[0.06, 0.14, 0.3]} />
-        <meshStandardMaterial color="#ffffff" emissive="#00a8ff" emissiveIntensity={4} toneMapped={false} />
+        <meshStandardMaterial color="#ffffff" emissive="#d4ff00" emissiveIntensity={4} toneMapped={false} />
       </mesh>
-      {/* Tail lights (red) */}
+      {/* Tail lights */}
       <mesh position={[-2.12, 0.5, 0.5]}>
         <boxGeometry args={[0.05, 0.12, 0.35]} />
-        <meshStandardMaterial color="#ff3b30" emissive="#ff3b30" emissiveIntensity={3} toneMapped={false} />
+        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={3} toneMapped={false} />
       </mesh>
       <mesh position={[-2.12, 0.5, -0.5]}>
         <boxGeometry args={[0.05, 0.12, 0.35]} />
-        <meshStandardMaterial color="#ff3b30" emissive="#ff3b30" emissiveIntensity={3} toneMapped={false} />
+        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={3} toneMapped={false} />
       </mesh>
 
       {/* Wheels - 4 cylinders */}
@@ -84,17 +130,7 @@ function SportsCar() {
         [-1.2, 0.05, 0.78],
         [-1.2, 0.05, -0.78],
       ].map((p, i) => (
-        <group key={i} position={p as [number, number, number]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
-            <cylinderGeometry args={[0.42, 0.42, 0.28, 24]} />
-            <meshStandardMaterial color="#050505" metalness={0.6} roughness={0.5} />
-          </mesh>
-          {/* rim accent */}
-          <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0.15, 0]}>
-            <cylinderGeometry args={[0.22, 0.22, 0.02, 16]} />
-            <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={1.5} metalness={0.8} roughness={0.2} toneMapped={false} />
-          </mesh>
-        </group>
+        <Wheel key={i} position={p as [number, number, number]} />
       ))}
 
       {/* Underglow plane */}
@@ -149,7 +185,7 @@ function NeonRings() {
       </mesh>
       <mesh ref={ring2} position={[0, 0.5, 0]}>
         <torusGeometry args={[4.2, 0.015, 16, 80]} />
-        <meshStandardMaterial color="#00a8ff" emissive="#00a8ff" emissiveIntensity={2} toneMapped={false} />
+        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={2} toneMapped={false} />
       </mesh>
     </>
   );
@@ -158,7 +194,7 @@ function NeonRings() {
 /* Floating geometric particles */
 function FloatingShapes() {
   const shapes = useMemo(() => {
-    const colors = ["#d4ff00", "#00a8ff", "#ff3b30", "#007aff"];
+    const colors = ["#d4ff00", "#d4ff00", "#d4ff00", "#d4ff00"];
     return Array.from({ length: 14 }).map((_, i) => ({
       position: [
         (Math.random() - 0.5) * 12,
@@ -195,6 +231,32 @@ function FloatingShapes() {
   );
 }
 
+/* Camera Controller for Responsive Viewports (adjusts FOV and position for mobile screens) */
+function CameraController() {
+  const { camera, size } = useThree();
+
+  useEffect(() => {
+    if (!(camera instanceof THREE.PerspectiveCamera)) return;
+
+    if (size.width < 640) {
+      // Mobile devices
+      camera.position.set(6, 3, 7.2);
+      camera.fov = 46;
+    } else if (size.width < 1024) {
+      // Tablets
+      camera.position.set(5.5, 2.8, 6.8);
+      camera.fov = 40;
+    } else {
+      // Desktops
+      camera.position.set(5, 2.5, 6);
+      camera.fov = 38;
+    }
+    camera.updateProjectionMatrix();
+  }, [size.width, camera]);
+
+  return null;
+}
+
 export function ThreeScene() {
   return (
     <Canvas
@@ -205,12 +267,13 @@ export function ThreeScene() {
       style={{ background: "transparent" }}
     >
       <Suspense fallback={null}>
+        <CameraController />
         {/* Lighting */}
         <ambientLight intensity={0.35} />
         <spotLight position={[6, 8, 4]} angle={0.4} penumbra={0.8} intensity={3} color="#d4ff00" castShadow />
-        <spotLight position={[-6, 6, -4]} angle={0.4} penumbra={0.8} intensity={2.5} color="#00a8ff" />
-        <pointLight position={[0, 3, 6]} intensity={2} color="#ff3b30" />
-        <pointLight position={[0, 1, -4]} intensity={1.5} color="#007aff" />
+        <spotLight position={[-6, 6, -4]} angle={0.4} penumbra={0.8} intensity={2.5} color="#d4ff00" />
+        <pointLight position={[0, 3, 6]} intensity={2} color="#d4ff00" />
+        <pointLight position={[0, 1, -4]} intensity={1.5} color="#d4ff00" />
 
         <group position={[0, -0.3, 0]}>
           <SportsCar />
@@ -218,7 +281,7 @@ export function ThreeScene() {
           <NeonGrid />
           <FloatingShapes />
           <Sparkles count={60} scale={10} size={3} speed={0.4} color="#d4ff00" opacity={0.7} />
-          <Sparkles count={40} scale={8} size={2} speed={0.3} color="#00a8ff" opacity={0.6} />
+          <Sparkles count={40} scale={8} size={2} speed={0.3} color="#d4ff00" opacity={0.6} />
           <ContactShadows position={[0, -0.59, 0]} opacity={0.6} scale={12} blur={2.5} far={4} color="#000000" />
         </group>
 

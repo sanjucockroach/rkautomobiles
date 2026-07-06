@@ -1,8 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
-import { Fuel, Gauge, Settings2, Calendar, Users, Star, BadgeCheck, ChevronRight, Phone, MessageCircle } from "lucide-react";
+import { Fuel, Gauge, Settings2, Calendar, Star, ChevronRight, Phone, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cars, brandInfo, type Car } from "@/lib/data";
@@ -45,25 +44,23 @@ export function CarInventory() {
   }, [body, fuel, budget, sort]);
 
   return (
-    <section id="inventory" className="relative py-16 lg:py-24">
-      <div className="absolute inset-0 bg-grid-cyan opacity-20 pointer-events-none" />
+    <section id="inventory" className="content-auto relative py-16 lg:py-24">
+      <div className="absolute inset-0 section-depth opacity-20 pointer-events-none" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#d4ff00]/30 bg-[#d4ff00]/5 text-xs font-medium text-brand-lime mb-3">
-              <BadgeCheck className="h-3.5 w-3.5" /> Certified Inventory
-            </div>
+            <p className="text-sm font-semibold text-brand-lime mb-3">Certified inventory, ready for India-wide delivery</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white">
-              Explore <span className="gradient-text-lime-cyan">Featured Cars</span>
+              Explore <span className="text-brand-lime">Featured Cars</span>
             </h2>
             <p className="text-gray-400 mt-2 max-w-2xl">
               Every car passes a 200+ point inspection. Transparent pricing, genuine deals, and best prices — guaranteed.
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <label className="text-sm text-gray-400">Sort:</label>
+            <label className="text-sm text-gray-400" htmlFor="inventory-sort">Sort:</label>
             <select
+              id="inventory-sort"
               value={sort}
               onChange={(e) => setSort(e.target.value as typeof sortOptions[number])}
               className="bg-[#14181f] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-lime/50"
@@ -77,54 +74,60 @@ export function CarInventory() {
 
         {/* Filter bar */}
         <div className="bg-[#0d0f14]/80 backdrop-blur-md border border-white/10 rounded-2xl p-4 mb-8 space-y-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs uppercase tracking-wider text-gray-500 mr-1">Body:</span>
+          <fieldset className="flex flex-wrap items-center gap-2">
+            <legend className="text-xs font-semibold text-gray-400 mr-1">Body</legend>
             {bodyTypes.map((t) => (
               <button
                 key={t}
+                type="button"
                 onClick={() => setBody(t)}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                aria-pressed={body === t}
+                className={`min-h-10 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                   body === t
-                    ? "bg-brand-lime text-black glow-lime"
+                    ? "bg-brand-lime text-black"
                     : "bg-white/5 text-gray-300 hover:bg-white/10"
                 }`}
               >
                 {t}
               </button>
             ))}
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs uppercase tracking-wider text-gray-500 mr-1">Fuel:</span>
+          </fieldset>
+          <fieldset className="flex flex-wrap items-center gap-2">
+            <legend className="text-xs font-semibold text-gray-400 mr-1">Fuel</legend>
             {fuelTypes.map((t) => (
               <button
                 key={t}
+                type="button"
                 onClick={() => setFuel(t)}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                aria-pressed={fuel === t}
+                className={`min-h-10 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                   fuel === t
-                    ? "bg-brand-cyan text-black"
+                    ? "bg-brand-lime text-black"
                     : "bg-white/5 text-gray-300 hover:bg-white/10"
                 }`}
               >
                 {t}
               </button>
             ))}
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs uppercase tracking-wider text-gray-500 mr-1">Budget:</span>
+          </fieldset>
+          <fieldset className="flex flex-wrap items-center gap-2">
+            <legend className="text-xs font-semibold text-gray-400 mr-1">Budget</legend>
             {budgets.map((b, i) => (
               <button
                 key={b.label}
+                type="button"
                 onClick={() => setBudget(i)}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                aria-pressed={budget === i}
+                className={`min-h-10 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                   budget === i
-                    ? "border border-brand-red text-brand-red bg-brand-red/10"
+                    ? "border border-brand-lime text-brand-lime bg-brand-lime/10"
                     : "bg-white/5 text-gray-300 hover:bg-white/10"
                 }`}
               >
                 {b.label}
               </button>
             ))}
-          </div>
+          </fieldset>
         </div>
 
         {/* Results count */}
@@ -161,7 +164,7 @@ export function CarInventory() {
         {/* CTA */}
         <div className="mt-10 text-center">
           <p className="text-gray-400 mb-3">Can&apos;t find what you&apos;re looking for? We have 200+ cars in stock.</p>
-          <Button asChild size="lg" className="bg-[#25D366] hover:bg-[#1ebe57] text-black font-bold">
+          <Button asChild size="lg" className="bg-[#25d366] hover:bg-[#1ebe57] text-black font-bold">
             <a
               href={`https://wa.me/${brandInfo.whatsapp}?text=${encodeURIComponent("Hi, I'm looking for a specific car. Please help me find it.")}`}
               target="_blank"
@@ -193,6 +196,8 @@ function CarCard({ car, onSelect }: { car: Car; onSelect: () => void }) {
         <img
           src={car.image}
           alt={car.name}
+          loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0d0f14] via-transparent to-transparent" />
@@ -202,7 +207,7 @@ function CarCard({ car, onSelect }: { car: Car; onSelect: () => void }) {
             <Badge className="bg-[#d4ff00] text-black font-bold border-0">{car.badge}</Badge>
           )}
           {discount > 0 && (
-            <Badge className="bg-[#ff3b30] text-white font-bold border-0">-{discount}%</Badge>
+            <Badge className="bg-[#d4ff00] text-black font-bold border-0">-{discount}%</Badge>
           )}
         </div>
         <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
@@ -227,7 +232,7 @@ function CarCard({ car, onSelect }: { car: Car; onSelect: () => void }) {
         {/* Specs */}
         <div className="grid grid-cols-3 gap-1.5 text-[11px]">
           <div className="flex flex-col items-center gap-0.5 p-1.5 rounded-md bg-white/[0.03]">
-            <Gauge className="h-3.5 w-3.5 text-brand-cyan" />
+            <Gauge className="h-3.5 w-3.5 text-brand-lime" />
             <span className="text-gray-300">{(car.kmDriven / 1000).toFixed(1)}k km</span>
           </div>
           <div className="flex flex-col items-center gap-0.5 p-1.5 rounded-md bg-white/[0.03]">
@@ -235,7 +240,7 @@ function CarCard({ car, onSelect }: { car: Car; onSelect: () => void }) {
             <span className="text-gray-300">{car.fuel}</span>
           </div>
           <div className="flex flex-col items-center gap-0.5 p-1.5 rounded-md bg-white/[0.03]">
-            <Settings2 className="h-3.5 w-3.5 text-brand-red" />
+            <Settings2 className="h-3.5 w-3.5 text-brand-lime" />
             <span className="text-gray-300">{car.transmission === "Automatic" ? "Auto" : "Manual"}</span>
           </div>
         </div>
@@ -255,18 +260,19 @@ function CarCard({ car, onSelect }: { car: Car; onSelect: () => void }) {
         <div className="flex gap-2 pt-1">
           <Button
             onClick={onSelect}
+            aria-label={`View details for ${car.name}`}
             className="flex-1 bg-white/10 hover:bg-white/15 text-white border border-white/10"
             size="sm"
           >
             Details <ChevronRight className="h-3.5 w-3.5" />
           </Button>
-          <Button asChild size="sm" className="bg-[#25D366] hover:bg-[#1ebe57] text-black px-2.5">
-            <a href={waLink} target="_blank" rel="noreferrer" aria-label="WhatsApp">
+          <Button asChild size="sm" className="bg-[#25d366] hover:bg-[#1ebe57] text-black px-2.5">
+            <a href={waLink} target="_blank" rel="noreferrer" aria-label={`WhatsApp about ${car.name}`}>
               <MessageCircle className="h-3.5 w-3.5" />
             </a>
           </Button>
           <Button asChild size="sm" variant="outline" className="border-brand-lime/50 text-brand-lime px-2.5">
-            <a href={`tel:${brandInfo.phone1}`} aria-label="Call">
+            <a href={`tel:${brandInfo.phone1}`} aria-label={`Call R.K. Automobile about ${car.name}`}>
               <Phone className="h-3.5 w-3.5" />
             </a>
           </Button>

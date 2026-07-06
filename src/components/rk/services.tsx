@@ -13,26 +13,30 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 const colorMap = {
-  lime: { text: "text-brand-lime", bg: "bg-[#d4ff00]/10", border: "border-[#d4ff00]/30", glow: "group-hover:glow-lime" },
-  cyan: { text: "text-brand-cyan", bg: "bg-[#00a8ff]/10", border: "border-[#00a8ff]/30", glow: "group-hover:glow-cyan" },
-  red: { text: "text-brand-red", bg: "bg-[#ff3b30]/10", border: "border-[#ff3b30]/30", glow: "group-hover:glow-red" },
-  blue: { text: "text-brand-blue", bg: "bg-[#007aff]/10", border: "border-[#007aff]/30", glow: "" },
+  accent: { text: "text-brand-lime", bg: "bg-[#d4ff00]/10", border: "border-[#d4ff00]/30" },
+  quiet: { text: "text-white", bg: "bg-white/[0.04]", border: "border-white/10" },
 };
 
 export function Services() {
   return (
-    <section id="services" className="relative py-16 lg:py-24">
+    <section id="services" className="content-auto relative py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#00a8ff]/30 bg-[#00a8ff]/5 text-xs font-medium text-brand-cyan mb-3">
-            <Sparkles className="h-3.5 w-3.5" /> What We Offer
+        <div className="mb-12 grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
+          <div>
+            <p className="text-sm font-semibold text-brand-lime mb-3">Everything around the car, handled by one desk</p>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white">
+              One Stop <span className="text-brand-lime">Automobile Hub</span>
+            </h2>
+            <p className="text-gray-400 mt-3 max-w-2xl">
+              From buying your dream car to selling, financing, insuring, and servicing it — R.K. Automobile does it all under one roof.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white">
-            One Stop <span className="gradient-text-lime-cyan">Automobile Hub</span>
-          </h2>
-          <p className="text-gray-400 mt-3">
-            From buying your dream car to selling, financing, insuring, and servicing it — R.K. Automobile does it all under one roof.
-          </p>
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm text-gray-300">
+            <div className="mb-2 flex items-center gap-2 font-bold text-white">
+              <Sparkles className="h-4 w-4 text-brand-lime" /> Showroom-grade support
+            </div>
+            <p className="leading-relaxed">A buyer, seller, or owner should never need five separate vendors to complete one car decision.</p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -44,9 +48,6 @@ export function Services() {
                 key={s.id}
                 className={`group relative bg-[#0d0f14] border border-white/10 rounded-2xl p-6 card-hover overflow-hidden`}
               >
-                {/* corner glow */}
-                <div className={`absolute -top-12 -right-12 w-32 h-32 ${c.bg} rounded-full blur-2xl opacity-50 group-hover:opacity-100 transition-opacity`} />
-
                 <div className="relative">
                   <div className={`inline-flex p-3 rounded-xl ${c.bg} ${c.border} border ${c.text} mb-4`}>
                     <Icon className="h-6 w-6" />

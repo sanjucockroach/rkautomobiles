@@ -1,7 +1,4 @@
-"use client";
-
-import Link from "next/link";
-import { Facebook, Instagram, Youtube, MessageCircle, Phone, MapPin, Globe, Mail, ChevronRight } from "lucide-react";
+import { Facebook, Instagram, Youtube, MessageCircle, Phone, MapPin, Globe, ChevronRight } from "lucide-react";
 import { brandInfo } from "@/lib/data";
 
 const quickLinks = [
@@ -29,25 +26,25 @@ export function Footer() {
   return (
     <footer className="relative mt-auto border-t border-white/10 bg-[#050608]">
       {/* top accent */}
-      <div className="h-1 bg-gradient-to-r from-[#d4ff00] via-[#00a8ff] to-[#ff3b30]" />
+      <div className="h-1 bg-gradient-to-r from-[#d4ff00] via-[#d4ff00] to-[#d4ff00]" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8">
           {/* Brand */}
           <div className="lg:col-span-4">
-            <Link href="#" className="flex items-center gap-3 mb-4">
+            <a href="#" className="flex items-center gap-3 mb-4">
               <div className="relative h-12 w-12 rounded-lg overflow-hidden border border-white/10 bg-black">
                 <img src="/rk-logo.jpeg" alt="R.K. Automobile logo" className="h-full w-full object-cover" />
               </div>
               <div className="flex flex-col leading-tight">
                 <span className="text-base font-extrabold tracking-wide text-white">
-                  R.K. <span className="text-brand-cyan">AUTOMOBILE</span>
+                  R.K. <span className="text-brand-lime">AUTOMOBILE</span>
                 </span>
-                <span className="text-[10px] uppercase tracking-[0.25em] text-[#aaaaaa]">Used Car Dealers</span>
+                <span className="text-[11px] font-semibold text-[#aaaaaa]">Used car dealers</span>
               </div>
-            </Link>
+            </a>
             <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
-              Delhi&apos;s trusted used car dealer since 2012. Buy & sell certified pre-owned cars with finance, insurance, and Pan India delivery. Genuine deals, best prices.
+              India-wide used car buying, selling, finance, insurance, and Pan India delivery from our Delhi showroom base. Genuine deals, best prices.
             </p>
 
             {/* Socials */}
@@ -61,7 +58,7 @@ export function Footer() {
               <SocialIcon href={brandInfo.socials.youtube} label="YouTube" color="hover:text-[#FF0000] hover:border-[#FF0000]/50">
                 <Youtube className="h-4 w-4" />
               </SocialIcon>
-              <SocialIcon href={brandInfo.socials.whatsapp} label="WhatsApp Channel" color="hover:text-[#25D366] hover:border-[#25D366]/50">
+              <SocialIcon href={brandInfo.socials.whatsapp} label="WhatsApp Channel" color="hover:text-[#25d366] hover:border-[#25d366]/50">
                 <MessageCircle className="h-4 w-4" />
               </SocialIcon>
             </div>
@@ -69,13 +66,13 @@ export function Footer() {
 
           {/* Quick links */}
           <div className="lg:col-span-2">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Quick Links</h4>
+            <h4 className="text-sm font-bold text-white mb-4">Quick links</h4>
             <ul className="space-y-2.5">
               {quickLinks.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-sm text-gray-400 hover:text-brand-lime transition-colors flex items-center gap-1">
+                  <a href={l.href} className="text-sm text-gray-400 hover:text-brand-lime transition-colors flex items-center gap-1">
                     <ChevronRight className="h-3 w-3" /> {l.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -83,7 +80,7 @@ export function Footer() {
 
           {/* Services */}
           <div className="lg:col-span-3">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Our Services</h4>
+            <h4 className="text-sm font-bold text-white mb-4">Our services</h4>
             <ul className="space-y-2.5">
               {services.map((s) => (
                 <li key={s} className="text-sm text-gray-400 flex items-center gap-1.5">
@@ -95,22 +92,22 @@ export function Footer() {
 
           {/* Contact */}
           <div className="lg:col-span-3">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">Reach Us</h4>
+            <h4 className="text-sm font-bold text-white mb-4">Reach us</h4>
             <div className="space-y-3">
               <a href={brandInfo.mapUrl} target="_blank" rel="noreferrer" className="flex items-start gap-2 text-sm text-gray-400 hover:text-brand-lime transition-colors">
                 <MapPin className="h-4 w-4 text-brand-lime shrink-0 mt-0.5" />
                 <span>{brandInfo.address}</span>
               </a>
               <a href={`tel:${brandInfo.phone1}`} className="flex items-center gap-2 text-sm text-gray-400 hover:text-brand-lime transition-colors">
-                <Phone className="h-4 w-4 text-brand-cyan shrink-0" />
+                <Phone className="h-4 w-4 text-brand-lime shrink-0" />
                 <span>{brandInfo.phone1}, {brandInfo.phone3}</span>
               </a>
-              <a href={`https://wa.me/${brandInfo.whatsapp}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-gray-400 hover:text-[#25D366] transition-colors">
-                <MessageCircle className="h-4 w-4 text-[#25D366] shrink-0" />
+              <a href={`https://wa.me/${brandInfo.whatsapp}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-gray-400 hover:text-[#25d366] transition-colors">
+                <MessageCircle className="h-4 w-4 text-[#25d366] shrink-0" />
                 <span>WhatsApp: {brandInfo.phone2}</span>
               </a>
-              <a href={brandInfo.website} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-gray-400 hover:text-brand-cyan transition-colors">
-                <Globe className="h-4 w-4 text-brand-blue shrink-0" />
+              <a href={brandInfo.website} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-gray-400 hover:text-brand-lime transition-colors">
+                <Globe className="h-4 w-4 text-brand-lime shrink-0" />
                 <span>rkautomobile.in</span>
               </a>
             </div>
@@ -123,7 +120,7 @@ export function Footer() {
             © {new Date().getFullYear()} R.K. Automobile. All rights reserved.
           </p>
           <p className="text-xs text-gray-500">
-            Designed with <span className="text-brand-red">♥</span> for genuine car deals in Delhi.
+            Built for genuine used car deals across India.
           </p>
         </div>
       </div>

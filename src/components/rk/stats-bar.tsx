@@ -17,7 +17,7 @@ export function StatsBar() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((s, i) => {
             const Icon = iconMap[s.icon] ?? Users;
-            const colors = ["text-brand-lime", "text-brand-cyan", "text-brand-red", "text-brand-blue"];
+            const colors = ["text-brand-lime", "text-brand-lime", "text-brand-lime", "text-brand-lime"];
             return (
               <div key={s.label} className="flex items-center gap-4">
                 <div className={`p-3 rounded-xl bg-white/5 ${colors[i % 4]}`}>

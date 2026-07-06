@@ -5,22 +5,20 @@ import { testimonials } from "@/lib/data";
 
 const avatarColors = [
   "bg-[#d4ff00]/15 text-brand-lime border-[#d4ff00]/30",
-  "bg-[#00a8ff]/15 text-brand-cyan border-[#00a8ff]/30",
-  "bg-[#ff3b30]/15 text-brand-red border-[#ff3b30]/30",
-  "bg-[#007aff]/15 text-brand-blue border-[#007aff]/30",
+  "bg-[#d4ff00]/15 text-brand-lime border-[#d4ff00]/30",
+  "bg-[#d4ff00]/15 text-brand-lime border-[#d4ff00]/30",
+  "bg-[#d4ff00]/15 text-brand-lime border-[#d4ff00]/30",
 ];
 
 export function Testimonials() {
   return (
-    <section id="reviews" className="relative py-16 lg:py-24 overflow-hidden">
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ff3b30]/8 rounded-full blur-[120px] pointer-events-none" />
+    <section id="reviews" className="content-auto relative py-16 lg:py-24 overflow-hidden">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#d4ff00]/8 rounded-full blur-[120px] pointer-events-none" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#d4ff00]/30 bg-[#d4ff00]/5 text-xs font-medium text-brand-lime mb-3">
-            <Star className="h-3.5 w-3.5 fill-[#d4ff00]" /> Customer Reviews
-          </div>
+          <p className="text-sm font-semibold text-brand-lime mb-3">Proof from buyers and sellers, not just promises</p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white">
-            What Our <span className="gradient-text-lime-cyan">Customers Say</span>
+            What Our <span className="text-brand-lime">Customers Say</span>
           </h2>
           <div className="flex items-center justify-center gap-2 mt-4">
             <div className="flex">
@@ -66,7 +64,7 @@ export function Testimonials() {
             href="https://wa.me/919999995121?text=Hi%20R.K.%20Automobile,%20I'd%20like%20to%20share%20my%20feedback"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/20 transition-colors text-sm font-semibold"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#25d366]/10 border border-[#25d366]/30 text-[#25d366] hover:bg-[#25d366]/20 transition-colors text-sm font-semibold"
           >
             <MessageCircle className="h-4 w-4" /> Share Your Review
           </a>

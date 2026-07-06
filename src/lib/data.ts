@@ -202,7 +202,7 @@ export type Service = {
   title: string;
   description: string;
   features: string[];
-  color: "lime" | "cyan" | "red" | "blue";
+  color: "accent" | "quiet";
 };
 
 export const services: Service[] = [
@@ -212,7 +212,7 @@ export const services: Service[] = [
     title: "Buy & Sell Used Cars",
     description: "Wide range of certified pre-owned cars. Sell your car at the best price with instant payment.",
     features: ["200+ cars in stock", "Instant payment", "Free valuation", "Hassle-free transfer"],
-    color: "lime",
+    color: "accent",
   },
   {
     id: "finance",
@@ -220,7 +220,7 @@ export const services: Service[] = [
     title: "Finance Available",
     description: "Easy car loans with quick approval, minimal documentation and attractive interest rates.",
     features: ["Up to 90% funding", "Quick approval", "Low EMI options", "Minimal paperwork"],
-    color: "cyan",
+    color: "quiet",
   },
   {
     id: "delivery",
@@ -228,7 +228,7 @@ export const services: Service[] = [
     title: "Pan India Delivery",
     description: "Get your dream car delivered to your doorstep anywhere in India, safely and on time.",
     features: ["Doorstep delivery", "All states covered", "Safe transit", "Insurance during transit"],
-    color: "blue",
+    color: "quiet",
   },
   {
     id: "insurance",
@@ -236,7 +236,7 @@ export const services: Service[] = [
     title: "Insurance & Claim Support",
     description: "Comprehensive car insurance and end-to-end claim assistance from our experts.",
     features: ["Best premiums", "Cashless claims", "Quick settlement", "Renewal reminders"],
-    color: "red",
+    color: "quiet",
   },
   {
     id: "denting",
@@ -244,7 +244,7 @@ export const services: Service[] = [
     title: "Denting & Painting",
     description: "Professional denting, painting and body repair to make your car look brand new.",
     features: ["Color matching", "Panel repair", "Rust treatment", "Insurance claims"],
-    color: "lime",
+    color: "accent",
   },
   {
     id: "detailing",
@@ -252,7 +252,7 @@ export const services: Service[] = [
     title: "Car Detailing & Workshop",
     description: "Premium car detailing, polishing and complete workshop services for all makes.",
     features: ["Ceramic coating", "Interior detailing", "Engine service", "AC service"],
-    color: "cyan",
+    color: "quiet",
   },
 ];
 
@@ -291,7 +291,7 @@ export const testimonials: Testimonial[] = [
     location: "Gurgaon",
     rating: 5,
     car: "Mahindra XUV700",
-    text: "Best used car dealer in Delhi NCR. The XUV700 I bought was spotless and they even delivered it to my doorstep. Truly professional service.",
+    text: "The XUV700 I bought was spotless, and R.K. Automobile coordinated delivery and paperwork without any stress. Truly professional service.",
     avatar: "AK",
   },
   {

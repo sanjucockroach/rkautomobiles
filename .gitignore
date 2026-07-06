@@ -2,6 +2,8 @@
 
 # dependencies
 node_modules
+/.tools
+/.tools-node24
 /.pnp
 .pnp.*
 .yarn/*
@@ -16,6 +18,7 @@ node_modules
 # next.js
 /.next/
 /out/
+/dist/
 
 # production
 /build
@@ -42,7 +45,6 @@ yarn-error.log*
 next-env.d.ts
 local-*
 .claude
-.z-ai-config
 *.log
 dev.log
 dev.out.log
@@ -52,3 +54,10 @@ prompt
 server.log
 # Skills directory
 /skills/
+
+# Custom Agent/Tool Exclusions
+.agents/
+.codex/
+.gemini/
+.impeccable/
+*.md

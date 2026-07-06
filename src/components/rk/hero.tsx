@@ -1,164 +1,282 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { Search, MapPin, Shield, Star, TrendingUp, ChevronRight, Sparkles } from "lucide-react";
+import { useState } from "react";
+import {
+  Car,
+  ChevronRight,
+  Menu,
+  MessageCircle,
+  Phone,
+  Search,
+  ShieldCheck,
+  Truck,
+  X,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { brandInfo } from "@/lib/data";
 
-const ThreeScene = dynamic(() => import("./three-scene"), {
-  ssr: false,
-  loading: () => (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="h-16 w-16 rounded-full border-4 border-[#d4ff00]/30 border-t-[#d4ff00] animate-spin" />
-    </div>
-  ),
-});
+const heroScenes = [
+  {
+    label: "Showroom",
+    src: "https://cdn.pixabay.com/video/2021/09/13/88481-606110665_large.mp4",
+    poster: "/cars/hero-car.png",
+  },
+  {
+    label: "Test Drive",
+    src: "https://cdn.pixabay.com/video/2017/08/20/11490-230853032_large.mp4",
+    poster: "/cars/car-5.png",
+  },
+  {
+    label: "Luxury Detail",
+    src: "https://cdn.pixabay.com/video/2023/10/12/184734-873923034_large.mp4",
+    poster: "/cars/car-8.png",
+  },
+  {
+    label: "Delivery Day",
+    src: "https://cdn.pixabay.com/video/2021/09/13/88481-606110665_large.mp4",
+    poster: "/cars/car-2.png",
+  },
+];
 
-const trustChips = [
-  { icon: Shield, label: "200+ Point Inspection" },
-  { icon: Star, label: "4.8★ Rated" },
-  { icon: TrendingUp, label: "5000+ Happy Customers" },
-  { icon: MapPin, label: "Pan India Delivery" },
+const navLinks = [
+  { href: "#inventory", label: "Cars" },
+  { href: "#services", label: "Services" },
+  { href: "#finance", label: "Finance" },
+  { href: "#sell", label: "Sell Car" },
+  { href: "#contact", label: "Contact" },
+];
+
+const proofStats = [
+  "Pan India Delivery",
+  "200+ Point Inspection",
+  "5000+ Happy Customers",
+  "Finance & Insurance",
 ];
 
 export function Hero() {
+  const [activeVideo, setActiveVideo] = useState(0);
+  const [previousVideo, setPreviousVideo] = useState<number | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [failedVideos, setFailedVideos] = useState<Record<number, boolean>>({});
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const waLink = `https://wa.me/${brandInfo.whatsapp}?text=${encodeURIComponent(
-    "Hi R.K. Automobile, I want to explore your car inventory. Please share details."
+    "Hi R.K. Automobile, I want to explore your India-wide used car inventory. Please share details."
   )}`;
 
+  const switchVideo = (index: number) => {
+    if (index === activeVideo || isTransitioning) return;
+    setPreviousVideo(activeVideo);
+    setActiveVideo(index);
+    setIsTransitioning(true);
+    window.setTimeout(() => {
+      setPreviousVideo(null);
+      setIsTransitioning(false);
+    }, 1000);
+  };
+
+  const visibleVideoIndexes =
+    previousVideo === null ? [activeVideo] : [previousVideo, activeVideo];
+  const activeScene = heroScenes[activeVideo];
+
   return (
-    <section className="relative overflow-hidden pt-6 pb-0 lg:pt-10">
-      {/* Background grid + glows */}
-      <div className="absolute inset-0 bg-grid opacity-40 pointer-events-none" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#d4ff00]/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-40 right-0 w-[400px] h-[400px] bg-[#00a8ff]/10 rounded-full blur-[100px] pointer-events-none" />
+    <section className="relative min-h-screen w-full overflow-hidden bg-[#050608]">
+      <div className="absolute inset-0">
+        <img
+          src={activeScene.poster}
+          alt=""
+          aria-hidden="true"
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+            failedVideos[activeVideo] ? "opacity-100" : "opacity-0"
+          }`}
+        />
+        {visibleVideoIndexes.map((index) => {
+          const scene = heroScenes[index];
+          if (failedVideos[index]) return null;
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center min-h-[560px]">
-          {/* Left: copy + search */}
-          <div className="flex flex-col gap-6 z-10 pt-6 lg:pt-0">
-            <div className="inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full border border-[#d4ff00]/30 bg-[#d4ff00]/5 text-xs font-medium">
-              <Sparkles className="h-3.5 w-3.5 text-brand-lime" />
-              <span className="text-brand-lime">Delhi&apos;s Trusted Used Car Dealer</span>
-              <span className="text-gray-500">·</span>
-              <span className="text-gray-400">Since 2012</span>
-            </div>
+          return (
+            <video
+              key={`${scene.label}-${index}`}
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-out ${
+                activeVideo === index ? "opacity-100" : "opacity-0"
+              }`}
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster={scene.poster}
+              preload={activeVideo === index ? "auto" : "metadata"}
+              onError={() =>
+                setFailedVideos((current) => ({ ...current, [index]: true }))
+              }
+            >
+              <source src={scene.src} type="video/mp4" />
+            </video>
+          );
+        })}
+        <img
+          src="/cars/hero-car.png"
+          alt=""
+          aria-hidden="true"
+          className="car-float pointer-events-none absolute bottom-[9vh] right-[-8vw] z-[1] hidden w-[58vw] max-w-[860px] opacity-75 mix-blend-screen lg:block"
+        />
+        <div className="cinematic-overlay absolute inset-0 z-[1]" />
+      </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight">
-              <span className="text-white">Drive Home a</span>
-              <br />
-              <span className="gradient-text-lime-cyan">Genuine Deal</span>
-              <span className="text-white"> Today</span>
-            </h1>
+      <div className="relative z-[2] flex min-h-screen flex-col px-4 py-5 sm:px-6 lg:px-8">
+        <nav className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
+          <a href="#" className="liquid-glass flex h-14 w-44 items-center rounded-xl px-3 py-2 sm:w-52" aria-label="R.K. Automobile home">
+            <img src="/rk-logo.jpeg" alt="R.K. Automobile" className="h-full w-full object-contain" />
+          </a>
 
-            <p className="text-base lg:text-lg text-gray-300 max-w-xl leading-relaxed">
-              Buy & sell certified pre-owned cars with{" "}
-              <span className="text-brand-lime font-semibold">finance</span>,{" "}
-              <span className="text-brand-cyan font-semibold">insurance</span>, and{" "}
-              <span className="text-white font-semibold">Pan India delivery</span>. 200+ inspected cars.
-              Best prices guaranteed.
-            </p>
-
-            {/* Search bar (Cars24-style) */}
-            <div className="bg-[#0d0f14]/80 backdrop-blur-md border border-white/10 rounded-2xl p-3 shadow-2xl shadow-black/40">
-              <div className="grid grid-cols-1 sm:grid-cols-12 gap-2">
-                <div className="sm:col-span-5 relative">
-                  <label className="absolute -top-2 left-3 px-1 bg-[#0d0f14] text-[10px] uppercase tracking-wider text-brand-lime">
-                    Budget
-                  </label>
-                  <select className="w-full bg-[#14181f] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-brand-lime/50">
-                    <option>Any Budget</option>
-                    <option>Under ₹5 Lakh</option>
-                    <option>₹5 - ₹10 Lakh</option>
-                    <option>₹10 - ₹15 Lakh</option>
-                    <option>₹15 - ₹20 Lakh</option>
-                    <option>Above ₹20 Lakh</option>
-                  </select>
-                </div>
-                <div className="sm:col-span-4 relative">
-                  <label className="absolute -top-2 left-3 px-1 bg-[#0d0f14] text-[10px] uppercase tracking-wider text-brand-cyan">
-                    Body Type
-                  </label>
-                  <select className="w-full bg-[#14181f] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-brand-cyan/50">
-                    <option>All Types</option>
-                    <option>Hatchback</option>
-                    <option>Sedan</option>
-                    <option>SUV</option>
-                    <option>Luxury</option>
-                    <option>MUV</option>
-                  </select>
-                </div>
-                <div className="sm:col-span-3">
-                  <Button asChild className="w-full bg-[#d4ff00] hover:bg-[#b8e000] text-black font-bold h-[42px] glow-lime">
-                    <a href="#inventory">
-                      <Search className="h-4 w-4 mr-1" /> Search
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* CTA row */}
-            <div className="flex flex-wrap gap-3">
-              <Button asChild size="lg" className="bg-[#d4ff00] hover:bg-[#b8e000] text-black font-bold glow-lime">
-                <a href="#inventory">
-                  Browse Cars <ChevronRight className="h-4 w-4" />
-                </a>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-[#25D366] text-[#25D366] hover:bg-[#25D366]/10">
-                <a href={waLink} target="_blank" rel="noreferrer">
-                  Chat on WhatsApp
-                </a>
-              </Button>
-            </div>
-
-            {/* Trust chips */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
-              {trustChips.map((c) => (
-                <div
-                  key={c.label}
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/[0.03] border border-white/5"
-                >
-                  <c.icon className="h-3.5 w-3.5 text-brand-lime shrink-0" />
-                  <span className="text-[11px] text-gray-300 leading-tight">{c.label}</span>
-                </div>
-              ))}
-            </div>
+          <div className="liquid-glass hidden items-center gap-1 rounded-full px-2 py-2 lg:flex">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="rounded-full px-4 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href={`tel:${brandInfo.phone1}`}
+              className="ml-1 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-[#050608] transition hover:bg-[#d4ff00]"
+            >
+              <Phone className="h-4 w-4" />
+              Call
+            </a>
           </div>
 
-          {/* Right: 3D scene */}
-          <div className="relative h-[400px] sm:h-[480px] lg:h-[560px]">
-            <div className="absolute inset-0">
-              <ThreeScene />
+          <button
+            type="button"
+            onClick={() => setMenuOpen((value) => !value)}
+            className="liquid-glass relative flex h-12 w-12 items-center justify-center rounded-full text-white lg:hidden"
+            aria-label="Toggle navigation"
+            aria-expanded={menuOpen}
+          >
+            <Menu className={`absolute h-5 w-5 transition duration-300 ${menuOpen ? "rotate-90 scale-75 opacity-0" : "rotate-0 scale-100 opacity-100"}`} />
+            <X className={`absolute h-5 w-5 transition duration-300 ${menuOpen ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-75 opacity-0"}`} />
+          </button>
+        </nav>
+
+        {menuOpen && (
+          <div className="fixed inset-0 z-50 bg-black/70 px-4 py-6 backdrop-blur-md lg:hidden">
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                className="liquid-glass flex h-12 w-12 items-center justify-center rounded-full text-white"
+                aria-label="Close navigation"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
-            {/* Floating badge */}
-            <div className="absolute bottom-4 left-4 z-10 bg-[#0d0f14]/90 backdrop-blur-md border border-[#d4ff00]/30 rounded-xl px-4 py-3 animate-float">
-              <div className="text-[10px] uppercase tracking-wider text-[#aaaaaa]">Starting from</div>
-              <div className="text-2xl font-black text-brand-lime">₹2.49 Lakh*</div>
-              <div className="text-[10px] text-gray-400">EMI from ₹4,999/mo</div>
+            <div className="flex h-[80vh] flex-col items-center justify-center gap-7 text-center">
+              {navLinks.map((link, index) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="translate-y-0 text-3xl font-semibold text-white transition duration-500"
+                  style={{ transitionDelay: `${100 + index * 50}ms` }}
+                >
+                  {link.label}
+                </a>
+              ))}
+              <a
+                href={waLink}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-4 rounded-full bg-[#d4ff00] px-7 py-3 text-sm font-black text-[#050608] transition hover:bg-white"
+              >
+                WhatsApp Us
+              </a>
             </div>
-            <div className="absolute top-4 right-4 z-10 bg-[#0d0f14]/90 backdrop-blur-md border border-[#00a8ff]/30 rounded-xl px-3 py-2">
-              <div className="flex items-center gap-1.5">
-                <div className="h-2 w-2 rounded-full bg-[#d4ff00] animate-pulse" />
-                <span className="text-xs text-white font-medium">200+ Cars Live</span>
+          </div>
+        )}
+
+        <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center pb-8 pt-12 lg:pb-10">
+          <div className="max-w-4xl">
+            <div className="liquid-glass mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/85">
+              <Truck className="h-4 w-4 text-[#d4ff00]" />
+              India-wide used car buying, selling & delivery
+            </div>
+
+            <h1 className="max-w-5xl text-5xl font-black leading-[0.96] tracking-normal text-white sm:text-6xl md:text-7xl lg:text-[6rem]">
+              Find Your Next Car
+              <span className="block text-[#d4ff00]">With Confidence</span>
+            </h1>
+
+            <p className="mt-6 max-w-2xl text-base leading-7 text-white/78 sm:text-lg">
+              Certified pre-owned cars with finance, insurance, Delhi showroom support, and Pan India delivery. R.K. Automobile helps you buy, sell, and upgrade without the usual guesswork.
+            </p>
+
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <Button asChild size="lg" className="h-12 rounded-full bg-[#d4ff00] px-6 font-black text-[#050608] hover:bg-white">
+                <a href="#inventory">
+                  <Search className="h-4 w-4" />
+                  Explore Cars
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="h-12 rounded-full border-white/30 bg-white/5 px-6 font-bold text-white backdrop-blur hover:bg-white/15 hover:text-white">
+                <a href="#sell">
+                  <Car className="h-4 w-4" />
+                  Sell Your Car
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="h-12 rounded-full border-white/30 bg-white/5 px-6 font-bold text-white backdrop-blur hover:bg-white/15 hover:text-white">
+                <a href={waLink} target="_blank" rel="noreferrer">
+                  <MessageCircle className="h-4 w-4" />
+                  WhatsApp Us
+                </a>
+              </Button>
+            </div>
+
+            <div className="liquid-glass mt-8 grid max-w-xl grid-cols-1 gap-3 rounded-2xl p-3 sm:grid-cols-[1fr_auto]">
+              <div className="flex items-center gap-3 rounded-full bg-black/25 px-4 py-3 text-sm text-white/80">
+                <ShieldCheck className="h-4 w-4 text-[#d4ff00]" />
+                200+ inspected cars, doorstep delivery across India
               </div>
+              <a
+                href="#inventory"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-black text-[#050608] transition hover:bg-[#d4ff00]"
+              >
+                Browse
+                <ChevronRight className="h-4 w-4" />
+              </a>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Brand marquee */}
-      <div className="relative mt-8 border-y border-white/10 bg-[#0a0c10]/60 py-4 overflow-hidden">
-        <div className="flex animate-marquee gap-12 whitespace-nowrap">
-          {[...Array(2)].map((_, k) => (
-            <div key={k} className="flex gap-12 shrink-0">
-              {["Maruti Suzuki", "Hyundai", "Honda", "Tata", "Mahindra", "Kia", "Toyota", "Skoda", "Volkswagen", "Nissan", "Renault", "Ford"].map((b) => (
-                <span key={b + k} className="text-xl lg:text-2xl font-bold text-gray-600 hover:text-brand-lime transition-colors">
-                  {b}
-                </span>
-              ))}
-            </div>
-          ))}
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 pb-4 lg:flex-row lg:items-end lg:justify-between">
+          <div className="flex flex-wrap gap-3">
+            {heroScenes.map((scene, index) => (
+              <button
+                key={scene.label}
+                type="button"
+                disabled={isTransitioning}
+                onClick={() => switchVideo(index)}
+                className={`border-b-2 px-1 pb-1 text-sm font-semibold transition duration-300 ${
+                  activeVideo === index
+                    ? "border-[#d4ff00] text-[#d4ff00]"
+                    : "border-transparent text-white/55 hover:text-white/85"
+                }`}
+                aria-pressed={activeVideo === index}
+              >
+                {scene.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 text-xs text-white/70 sm:text-sm">
+            {proofStats.map((stat, index) => (
+              <span key={stat} className="flex items-center gap-2">
+                {index > 0 && <span className="hidden text-white/25 sm:inline">|</span>}
+                {stat}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,4 +1,3 @@
-import { Header } from "@/components/rk/header";
 import { Hero } from "@/components/rk/hero";
 import { StatsBar } from "@/components/rk/stats-bar";
 import { CarInventory } from "@/components/rk/car-inventory";
@@ -11,12 +10,16 @@ import { Testimonials } from "@/components/rk/testimonials";
 import { ContactMap } from "@/components/rk/contact-map";
 import { Footer } from "@/components/rk/footer";
 import { WhatsAppFloat } from "@/components/rk/whatsapp-float";
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 
-export default function Home() {
+export default function App() {
   return (
     <div className="relative min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      <main id="main-content" className="flex-1">
         <Hero />
         <StatsBar />
         <CarInventory />
@@ -30,6 +33,8 @@ export default function Home() {
       </main>
       <Footer />
       <WhatsAppFloat />
+      <Toaster />
+      <SonnerToaster />
     </div>
   );
 }

@@ -17,12 +17,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "types": ["vite/client", "node", "react", "react-dom"],
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
@@ -30,11 +26,9 @@
     }
   },
   "include": [
-    "next-env.d.ts",
+    "vite.config.ts",
     "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules"
