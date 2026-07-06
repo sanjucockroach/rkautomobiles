@@ -125,7 +125,7 @@ export function Hero() {
 
       <div className="relative z-[2] flex min-h-screen flex-col px-4 py-5 sm:px-6 lg:px-8">
         <nav className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
-          <a href="#" className="liquid-glass flex h-14 w-44 items-center rounded-xl px-3 py-2 sm:w-52" aria-label="R.K. Automobile home">
+          <a href="#" className="flex h-[73px] w-[229px] sm:w-[270px] items-center rounded-xl px-3 py-2 bg-black border border-white/10" aria-label="R.K. Automobile home">
             <img src="/rk-logo.jpeg" alt="R.K. Automobile" className="h-full w-full object-contain" />
           </a>
 

@@ -40,7 +40,7 @@ export function Header() {
         <div className="flex h-16 lg:h-20 items-center justify-between gap-4">
           {/* Logo */}
           <a href="#" className="flex items-center gap-3 group shrink-0" aria-label="R.K. Automobile home">
-            <div className="relative h-12 w-36 sm:w-44 lg:h-14 lg:w-52 rounded-lg overflow-hidden border border-white/10 bg-black px-2 py-1">
+            <div className="relative h-[62px] w-[187px] sm:w-[229px] lg:h-[73px] lg:w-[270px] rounded-lg overflow-hidden border border-white/10 bg-black px-2 py-1">
               <img
                 src="/rk-logo.jpeg"
                 alt="R.K. Automobile logo"
