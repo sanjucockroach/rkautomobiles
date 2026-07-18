@@ -19,9 +19,14 @@ export type Car = {
   features: string[];
   rating: number;
   inspections: number;
+  published?: boolean;
+  stockStatus?: "Available" | "Reserved" | "Sold";
+  color?: string;
+  location?: string;
+  description?: string;
 };
 
-export const cars: Car[] = [
+export const initialCars: Car[] = [
   {
     id: "rk-001",
     name: "Hyundai Verna SX (O)",
@@ -195,6 +200,9 @@ export const cars: Car[] = [
     inspections: 142,
   },
 ];
+
+// Kept for non-interactive consumers; public inventory uses the browser store.
+export const cars = initialCars;
 
 export type Service = {
   id: string;

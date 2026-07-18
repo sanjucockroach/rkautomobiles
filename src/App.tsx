@@ -12,8 +12,13 @@ import { Footer } from "@/components/rk/footer";
 import { WhatsAppFloat } from "@/components/rk/whatsapp-float";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
+import { AdminApp } from "@/components/admin/admin-app";
 
 export default function App() {
+  if (window.location.pathname.startsWith("/admin")) {
+    return <AdminApp />;
+  }
+
   return (
     <div className="relative min-h-screen flex flex-col">
       <a href="#main-content" className="skip-link">

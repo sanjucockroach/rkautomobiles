@@ -4,7 +4,8 @@ import { useMemo, useState } from "react";
 import { Fuel, Gauge, Settings2, Calendar, Star, ChevronRight, Phone, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { cars, brandInfo, type Car } from "@/lib/data";
+import { brandInfo, type Car } from "@/lib/data";
+import { useCars } from "@/lib/car-store";
 import { CarDialog } from "./car-dialog";
 
 const formatPrice = (n: number) =>
@@ -22,6 +23,7 @@ const budgets = [
 const sortOptions = ["Relevance", "Price: Low to High", "Price: High to Low", "Newest", "Lowest KM"] as const;
 
 export function CarInventory() {
+  const inventory = useCars();
   const [body, setBody] = useState("All");
   const [fuel, setFuel] = useState("All");
   const [budget, setBudget] = useState(0);
@@ -29,7 +31,8 @@ export function CarInventory() {
   const [selected, setSelected] = useState<Car | null>(null);
 
   const filtered = useMemo(() => {
-    let list = cars.filter((c) => {
+    let list = inventory.filter((c) => {
+      if (c.published === false || c.stockStatus === "Sold") return false;
       if (body !== "All" && c.bodyType !== body) return false;
       if (fuel !== "All" && c.fuel !== fuel) return false;
       const b = budgets[budget];
@@ -41,7 +44,7 @@ export function CarInventory() {
     if (sort === "Lowest KM") list = [...list].sort((a, b) => a.kmDriven - b.kmDriven);
     if (sort === "Newest") list = [...list].sort((a, b) => b.year - a.year);
     return list;
-  }, [body, fuel, budget, sort]);
+  }, [inventory, body, fuel, budget, sort]);
 
   return (
     <section id="inventory" className="content-auto relative py-16 lg:py-24">
@@ -203,6 +206,9 @@ function CarCard({ car, onSelect }: { car: Car; onSelect: () => void }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0d0f14] via-transparent to-transparent" />
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+          {car.stockStatus === "Reserved" && (
+            <Badge className="border border-white/20 bg-black/75 font-bold text-white">Reserved</Badge>
+          )}
           {car.badge && (
             <Badge className="bg-[#d4ff00] text-black font-bold border-0">{car.badge}</Badge>
           )}

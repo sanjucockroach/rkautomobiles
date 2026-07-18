@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Fuel, Gauge, Settings2, Calendar, Users, Star, BadgeCheck, Shield, MessageCircle, Phone, CheckCircle2 } from "lucide-react";
+import { Fuel, Gauge, Settings2, Calendar, Users, Star, BadgeCheck, Shield, MessageCircle, Phone, CheckCircle2, MapPin, Palette } from "lucide-react";
 import { brandInfo, type Car } from "@/lib/data";
 import { hasLeadErrors, validateLeadDetails, type LeadErrors } from "@/lib/forms";
 
@@ -66,6 +66,8 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
               <Spec icon={Settings2} label="Transmission" value={car.transmission} color="quiet" />
               <Spec icon={Users} label="Ownership" value={car.owner} color="quiet" />
               <Spec icon={Star} label="Rating" value={`${car.rating} ★`} color="quiet" />
+              {car.color && <Spec icon={Palette} label="Colour" value={car.color} color="accent" />}
+              {car.location && <Spec icon={MapPin} label="Location" value={car.location} color="quiet" />}
             </div>
 
             {/* Price */}
@@ -101,6 +103,12 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
 
           {/* Right: features + form */}
           <div className="space-y-4">
+            {car.description && (
+              <div>
+                <h4 className="mb-2 text-sm font-bold text-white">About this car</h4>
+                <p className="text-sm leading-6 text-gray-400">{car.description}</p>
+              </div>
+            )}
             <div>
               <h4 className="text-sm font-bold text-white mb-2">Key features</h4>
               <div className="flex flex-wrap gap-1.5">
