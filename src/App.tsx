@@ -15,7 +15,11 @@ import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { AdminApp } from "@/components/admin/admin-app";
 
 export default function App() {
-  if (window.location.pathname.startsWith("/admin")) {
+  const isAdminRoute =
+    window.location.pathname === "/admin" ||
+    window.location.pathname.startsWith("/admin/");
+
+  if (isAdminRoute) {
     return <AdminApp />;
   }
 
