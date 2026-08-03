@@ -125,8 +125,12 @@ export function Hero() {
 
       <div className="relative z-[2] flex min-h-screen flex-col px-4 py-5 sm:px-6 lg:px-8">
         <nav className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4">
-          <a href="#" className="flex h-[73px] w-[229px] sm:w-[270px] items-center rounded-xl px-3 py-2 bg-black border border-white/10" aria-label="R.K. Automobile home">
-            <img src="/rk-logo.jpeg" alt="R.K. Automobile" className="h-full w-full object-contain" />
+          <a href="#" className="flex shrink-0 items-center gap-2 sm:gap-3" aria-label="R.K. Automobile home">
+            <img src="/rk-logo-transparent.png" alt="R.K. Automobile logo" className="h-20 w-20 shrink-0 object-contain sm:h-24 sm:w-24" />
+            <span className="leading-tight text-white">
+              <span className="block text-sm font-black sm:text-lg">R.K. Automobiles</span>
+              <span className="mt-1 hidden text-xs font-medium text-white/60 sm:block">Certified used cars</span>
+            </span>
           </a>
 
           <div className="liquid-glass hidden items-center gap-1 rounded-full px-2 py-2 lg:flex">

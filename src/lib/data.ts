@@ -14,6 +14,7 @@ export type Car = {
   owner: string;
   rto: string;
   image: string;
+  images?: string[];
   featured?: boolean;
   badge?: string;
   features: string[];

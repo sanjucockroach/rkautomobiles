@@ -1,12 +1,12 @@
 # R.K. Automobile Admin Panel
 
-Open `/admin` in the same browser used to preview the public website.
+Open `https://rkautomobile.in/admin` and sign in with the private administrator username and password configured in Vercel.
 
 ## Everyday Tasks
 
 1. Select **Add car** to create a listing.
 2. Enter the name, brand, model, year, price, specifications, and features.
-3. Upload a primary photo or paste a hosted image URL.
+3. Upload up to five photos or add hosted image URLs. The first photo is the public primary image; select another thumbnail to make it primary.
 4. Keep **Visible on website** off while a listing is incomplete.
 5. Select **Save car**. Published, available cars appear in the homepage inventory.
 6. Use **Edit** to update a listing or mark it Reserved or Sold.
@@ -15,18 +15,27 @@ Open `/admin` in the same browser used to preview the public website.
 ## Backups
 
 - Select **Backup** to download all inventory as a JSON file.
-- Select **Restore** to replace the current browser inventory with a valid backup.
+- Select **Restore** to replace the shared live inventory with a valid backup.
 - Select **Sample data** to restore the original demonstration inventory.
 
-## Frontend-Only Limitation
+## Shared Storage and Security
 
-Inventory is stored in browser `localStorage`. It is not a shared database:
+- Inventory is stored in Upstash Redis and is read by every visitor to the main website.
+- Add, edit, restore, and delete operations require a valid HTTP-only administrator session.
+- Sessions expire after eight hours and the sign-in endpoint limits repeated failed attempts.
+- Uploaded images are compressed in the browser and stored in Vercel Blob.
+- Browser `localStorage` is used only as a temporary display cache and migration fallback.
+- Use **Backup** regularly before large inventory changes.
 
-- Changes are available to the public website in the same browser.
-- Open tabs receive inventory updates automatically.
-- Clearing browser data removes the inventory.
-- Other devices and browsers do not receive changes.
-- Uploaded images use browser storage; hosted image URLs are better for large inventories.
-- There is no secure administrator login in frontend-only mode.
+## Vercel Production Setup
 
-Use **Backup** regularly. Shared inventory, secure login, staff accounts, and permanent image storage require a backend or managed content service in a future phase.
+1. In the Vercel project, open **Storage** or **Marketplace** and connect an Upstash Redis database. Confirm that `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are available to Production, Preview, and Development.
+2. Connect a Vercel Blob store to the project. Vercel adds `BLOB_READ_WRITE_TOKEN` automatically.
+3. In **Settings → Environment Variables**, add:
+   - `ADMIN_USERNAME`: the single private administrator username.
+   - `ADMIN_PASSWORD`: a long, unique password.
+   - `ADMIN_SESSION_SECRET`: at least 32 random characters. Generate one with `openssl rand -hex 32`.
+4. Redeploy the latest `main` commit after adding or changing environment variables.
+5. Visit `/admin`, sign in, and save the existing inventory once to migrate any browser-cached listings into shared storage.
+
+No additional CNAME is needed for admin access. `/admin` is a protected route on the existing `rkautomobile.in` deployment.

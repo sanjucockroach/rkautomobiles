@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Fuel, Gauge, Settings2, Calendar, Users, Star, BadgeCheck, Shield, MessageCircle, Phone, CheckCircle2, MapPin, Palette } from "lucide-react";
+import { Fuel, Gauge, Settings2, Calendar, Users, Star, BadgeCheck, Shield, MessageCircle, Phone, CheckCircle2, MapPin, Palette, ChevronLeft, ChevronRight } from "lucide-react";
 import { brandInfo, type Car } from "@/lib/data";
 import { hasLeadErrors, validateLeadDetails, type LeadErrors } from "@/lib/forms";
 
@@ -14,6 +14,8 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
   const [form, setForm] = useState({ name: "", phone: "" });
   const [done, setDone] = useState(false);
   const [errors, setErrors] = useState<LeadErrors>({});
+  const [activeImage, setActiveImage] = useState(0);
+  const gallery = car.images?.length ? car.images.slice(0, 5) : [car.image];
   const inputClass =
     "mt-1.5 w-full bg-[#0a0c10] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-[#7f8790] focus:outline-none focus:border-brand-lime/70 focus:ring-2 focus:ring-brand-lime/20";
 
@@ -51,13 +53,62 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
           {/* Left: image + specs */}
           <div className="space-y-4">
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-[#0a0c10] border border-white/10">
-              <img src={car.image} alt={car.name} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+              <img
+                src={gallery[activeImage]}
+                alt={`${car.name}, photo ${activeImage + 1} of ${gallery.length}`}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
               <div className="absolute top-3 left-3 flex gap-2">
                 {car.badge && (
                   <Badge className="bg-[#d4ff00] text-black font-bold border-0">{car.badge}</Badge>
                 )}
               </div>
+              {gallery.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setActiveImage((index) => (index - 1 + gallery.length) % gallery.length)}
+                    aria-label="Previous car photo"
+                    className="absolute left-2 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/70 text-white transition-colors hover:bg-black focus-visible:ring-2 focus-visible:ring-brand-lime"
+                  >
+                    <ChevronLeft className="size-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveImage((index) => (index + 1) % gallery.length)}
+                    aria-label="Next car photo"
+                    className="absolute right-2 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/70 text-white transition-colors hover:bg-black focus-visible:ring-2 focus-visible:ring-brand-lime"
+                  >
+                    <ChevronRight className="size-5" />
+                  </button>
+                  <span className="absolute bottom-2 right-2 rounded-full bg-black/75 px-2.5 py-1 text-xs font-bold text-white">
+                    {activeImage + 1}/{gallery.length}
+                  </span>
+                </>
+              )}
             </div>
+            {gallery.length > 1 && (
+              <div className="grid grid-cols-5 gap-2" aria-label="Car photo gallery">
+                {gallery.map((image, index) => (
+                  <button
+                    key={`${image}-${index}`}
+                    type="button"
+                    onClick={() => setActiveImage(index)}
+                    aria-label={`Show car photo ${index + 1}`}
+                    aria-pressed={activeImage === index}
+                    className={`aspect-[4/3] overflow-hidden rounded-md border bg-black transition-opacity ${
+                      activeImage === index
+                        ? "border-brand-lime opacity-100"
+                        : "border-white/10 opacity-55 hover:opacity-100"
+                    }`}
+                  >
+                    <img src={image} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
 
             <div className="grid grid-cols-2 gap-2">
               <Spec icon={Calendar} label="Year" value={String(car.year)} color="accent" />

@@ -11,6 +11,9 @@ import {
   ImagePlus,
   IndianRupee,
   LayoutDashboard,
+  LoaderCircle,
+  LockKeyhole,
+  LogOut,
   Menu,
   Pencil,
   Plus,
@@ -18,7 +21,6 @@ import {
   Search,
   Star,
   Trash2,
-  Upload,
   X,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -42,6 +44,7 @@ import {
   replaceCars,
   resetCars,
   saveCar,
+  refreshCars,
   useCars,
 } from "@/lib/car-store";
 
@@ -71,6 +74,7 @@ const emptyDraft = (): CarDraft => ({
   owner: "1st Owner",
   rto: "DL",
   image: "",
+  images: [],
   featured: false,
   badge: "",
   featuresText: "",
@@ -85,6 +89,7 @@ const emptyDraft = (): CarDraft => ({
 
 const toDraft = (car: Car): CarDraft => ({
   ...car,
+  images: car.images?.length ? car.images : [car.image],
   featuresText: car.features.join(", "),
 });
 
@@ -95,14 +100,11 @@ const formatPrice = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value);
 
+type AuthState = "checking" | "signed-out" | "signed-in";
+
 export function AdminApp() {
-  const cars = useCars();
-  const [view, setView] = useState<View>("dashboard");
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [editor, setEditor] = useState<CarDraft | null>(null);
-  const [deleteTarget, setDeleteTarget] = useState<Car | null>(null);
-  const [query, setQuery] = useState("");
-  const importRef = useRef<HTMLInputElement>(null);
+  const [authState, setAuthState] = useState<AuthState>("checking");
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -121,6 +123,55 @@ export function AdminApp() {
       if (robots && previousRobots !== undefined) robots.content = previousRobots;
     };
   }, []);
+
+  useEffect(() => {
+    let active = true;
+    fetch("/api/admin/session", { credentials: "same-origin", cache: "no-store" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Signed out");
+        const payload = (await response.json()) as { username?: string };
+        if (!active) return;
+        setUsername(payload.username || "Administrator");
+        await refreshCars().catch(() => undefined);
+        if (active) setAuthState("signed-in");
+      })
+      .catch(() => active && setAuthState("signed-out"));
+    return () => { active = false; };
+  }, []);
+
+  if (authState === "checking") return <AdminLoading />;
+  if (authState === "signed-out") {
+    return (
+      <AdminLogin
+        onAuthenticated={async (nextUsername) => {
+          setUsername(nextUsername);
+          await refreshCars().catch(() => undefined);
+          setAuthState("signed-in");
+        }}
+      />
+    );
+  }
+
+  return (
+    <AdminWorkspace
+      username={username}
+      onLogout={async () => {
+        await fetch("/api/admin/logout", { method: "POST", credentials: "same-origin" });
+        setAuthState("signed-out");
+        setUsername("");
+      }}
+    />
+  );
+}
+
+function AdminWorkspace({ username, onLogout }: { username: string; onLogout: () => Promise<void> }) {
+  const cars = useCars();
+  const [view, setView] = useState<View>("dashboard");
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [editor, setEditor] = useState<CarDraft | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<Car | null>(null);
+  const [query, setQuery] = useState("");
+  const importRef = useRef<HTMLInputElement>(null);
 
   const visibleCars = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -170,10 +221,10 @@ export function AdminApp() {
     try {
       const parsed = JSON.parse(await file.text()) as unknown;
       if (!Array.isArray(parsed) || !parsed.every(isCar)) throw new Error("Invalid inventory");
-      replaceCars(parsed);
+      await replaceCars(parsed);
       toast.success(`${parsed.length} cars restored from backup`);
-    } catch {
-      toast.error("The backup is invalid or this browser does not have enough storage");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "The backup could not be restored");
     }
   };
 
@@ -192,9 +243,7 @@ export function AdminApp() {
               <Eye className="size-4" />
               View public website
             </a>
-            <p className="mt-3 px-3 text-xs leading-5 text-gray-500">
-              Changes are stored on this browser only.
-            </p>
+            <p className="mt-3 px-3 text-xs leading-5 text-gray-500">Signed in as {username}. Changes sync to the live website.</p>
           </div>
         </aside>
 
@@ -220,6 +269,9 @@ export function AdminApp() {
             <div className="flex items-center gap-2">
               <Button asChild variant="outline" className="hidden border-white/12 bg-transparent text-gray-200 hover:bg-white/6 hover:text-white sm:inline-flex">
                 <a href="/" target="_blank" rel="noreferrer"><Eye /> Preview site</a>
+              </Button>
+              <Button type="button" variant="ghost" size="icon" onClick={() => void onLogout()} aria-label="Sign out" title="Sign out">
+                <LogOut />
               </Button>
               <Button onClick={() => { setView("inventory"); setEditor(emptyDraft()); }}>
                 <Plus /> <span className="hidden sm:inline">Add car</span>
@@ -266,9 +318,13 @@ export function AdminApp() {
                 onDelete={setDeleteTarget}
                 onExport={exportInventory}
                 onImport={() => importRef.current?.click()}
-                onReset={() => {
-                  resetCars();
-                  toast.success("Sample inventory restored");
+                onReset={async () => {
+                  try {
+                    await resetCars();
+                    toast.success("Sample inventory restored");
+                  } catch (error) {
+                    toast.error(error instanceof Error ? error.message : "Inventory could not be restored");
+                  }
                 }}
               />
             )}
@@ -283,20 +339,20 @@ export function AdminApp() {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete {deleteTarget?.name}?</AlertDialogTitle>
             <AlertDialogDescription>
-              This removes the car from this browser’s inventory. Export a backup first if you may need it later.
+              This removes the car from the shared live inventory for every visitor. Export a backup first if you may need it later.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Keep car</AlertDialogCancel>
             <AlertDialogAction
               className="bg-red-600 text-white hover:bg-red-500"
-              onClick={() => {
+              onClick={async () => {
                 try {
-                  if (deleteTarget) deleteCar(deleteTarget.id);
+                  if (deleteTarget) await deleteCar(deleteTarget.id);
                   setDeleteTarget(null);
-                  toast.success("Car deleted");
-                } catch {
-                  toast.error("The car could not be deleted from browser storage");
+                  toast.success("Car deleted from the live inventory");
+                } catch (error) {
+                  toast.error(error instanceof Error ? error.message : "The car could not be deleted");
                 }
               }}
             >
@@ -313,12 +369,114 @@ export function AdminApp() {
 function AdminBrand() {
   return (
     <div className="flex h-20 items-center gap-3 border-b border-white/8 px-5">
-      <img src="/rk-logo.jpeg" alt="R.K. Automobile" className="size-10 rounded-lg object-cover" />
+      <img src="/rk-logo-transparent.png" alt="R.K. Automobile" className="size-12 object-contain" />
       <div>
         <p className="text-sm font-black leading-tight">R.K. AUTOMOBILE</p>
         <p className="text-xs text-gray-500">Inventory admin</p>
       </div>
     </div>
+  );
+}
+
+function AdminLoading() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[#08090c] text-[#f6f7f2]">
+      <div className="text-center">
+        <LoaderCircle className="mx-auto size-6 animate-spin text-brand-lime" />
+        <p className="mt-4 text-sm font-semibold text-gray-300">Checking secure access</p>
+      </div>
+    </div>
+  );
+}
+
+function AdminLogin({ onAuthenticated }: { onAuthenticated: (username: string) => Promise<void> }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    setError("");
+    setSubmitting(true);
+    try {
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: username.trim(), password }),
+      });
+      const payload = (await response.json()) as { username?: string; error?: string };
+      if (!response.ok) throw new Error(payload.error || "Sign in failed.");
+      await onAuthenticated(payload.username || username.trim());
+    } catch (loginError) {
+      setError(loginError instanceof Error ? loginError.message : "Sign in failed.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-[#08090c] px-4 py-10 text-[#f6f7f2]">
+      <section className="w-full max-w-sm">
+        <div className="mb-8 flex items-center justify-center gap-3">
+          <img src="/rk-logo-transparent.png" alt="R.K. Automobile" className="size-20 object-contain" />
+          <div>
+            <p className="text-lg font-black leading-tight">R.K. Automobiles</p>
+            <p className="mt-1 text-xs text-gray-500">Secure inventory access</p>
+          </div>
+        </div>
+
+        <form onSubmit={submit} className="rounded-xl border border-white/10 bg-[#0d0f13] p-6" noValidate>
+          <div className="mb-6 flex size-10 items-center justify-center rounded-lg bg-brand-lime/10 text-brand-lime">
+            <LockKeyhole className="size-5" />
+          </div>
+          <h1 className="text-xl font-black">Admin sign in</h1>
+          <p className="mt-2 text-sm leading-6 text-gray-400">Use the private credentials configured for the inventory administrator.</p>
+
+          <label className="mt-6 block text-sm font-semibold text-gray-200" htmlFor="admin-username">
+            Username
+            <input
+              id="admin-username"
+              name="username"
+              autoComplete="username"
+              required
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              className={`${controlClass} mt-2`}
+            />
+          </label>
+          <label className="mt-4 block text-sm font-semibold text-gray-200" htmlFor="admin-password">
+            Password
+            <input
+              id="admin-password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              required
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              className={`${controlClass} mt-2`}
+            />
+          </label>
+
+          {error && (
+            <div role="alert" className="mt-4 rounded-lg border border-red-400/25 bg-red-500/8 px-3 py-2.5 text-sm font-semibold text-red-200">
+              {error}
+            </div>
+          )}
+
+          <Button type="submit" disabled={submitting || !username.trim() || !password} className="mt-6 h-11 w-full font-bold">
+            {submitting ? <LoaderCircle className="animate-spin" /> : <LockKeyhole />}
+            {submitting ? "Signing in..." : "Sign in"}
+          </Button>
+        </form>
+        <a href="/" className="mx-auto mt-5 flex w-fit min-h-11 items-center text-sm font-semibold text-gray-500 transition-colors hover:text-white">
+          <ArrowLeft className="mr-2 size-4" /> Return to website
+        </a>
+      </section>
+      <Toaster richColors position="top-right" />
+    </main>
   );
 }
 
@@ -470,7 +628,7 @@ function InventoryManager({
       <section className="flex flex-col justify-between gap-5 border-b border-white/8 pb-7 sm:flex-row sm:items-end">
         <div>
           <h1 className="text-2xl font-black sm:text-3xl">Inventory</h1>
-          <p className="mt-2 text-sm text-gray-400">{total} car{total === 1 ? "" : "s"} saved in this browser</p>
+          <p className="mt-2 text-sm text-gray-400">{total} car{total === 1 ? "" : "s"} in the shared live inventory</p>
         </div>
         <Button onClick={onAdd}><Plus /> Add car</Button>
       </section>
@@ -615,11 +773,39 @@ function CarEditor({
   const [draft, setDraft] = useState(initialDraft);
   const [errors, setErrors] = useState<DraftErrors>({});
   const [processingImage, setProcessingImage] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+  const photos = draft.images?.length
+    ? draft.images
+    : draft.image
+      ? [draft.image]
+      : [];
 
   const update = <K extends keyof CarDraft>(key: K, value: CarDraft[K]) => {
     setDraft((current) => ({ ...current, [key]: value }));
     if (key in errors) setErrors((current) => ({ ...current, [key]: undefined }));
+  };
+
+  const setPhotos = (images: string[]) => {
+    const next = images.filter(Boolean).slice(0, 5);
+    setDraft((current) => ({
+      ...current,
+      image: next[0] ?? "",
+      images: next,
+    }));
+    if (errors.image) setErrors((current) => ({ ...current, image: undefined }));
+  };
+
+  const makePrimary = (index: number) => {
+    if (index === 0) return;
+    const next = [...photos];
+    const [selected] = next.splice(index, 1);
+    next.unshift(selected);
+    setPhotos(next);
+  };
+
+  const removePhoto = (index: number) => {
+    setPhotos(photos.filter((_, photoIndex) => photoIndex !== index));
   };
 
   const validate = () => {
@@ -629,12 +815,12 @@ function CarEditor({
     if (!draft.model.trim()) next.model = "Enter the model.";
     if (draft.year < 1980 || draft.year > currentYear + 1) next.year = `Use a year between 1980 and ${currentYear + 1}.`;
     if (draft.price <= 0) next.price = "Enter the selling price.";
-    if (!draft.image) next.image = "Upload a car photo or enter an image URL.";
+    if (!draft.image) next.image = "Add at least one car photo.";
     setErrors(next);
     return Object.keys(next).length === 0;
   };
 
-  const submit = (event: FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
     if (!validate()) {
       toast.error("Please check the highlighted fields");
@@ -659,34 +845,66 @@ function CarEditor({
         .filter(Boolean),
     };
     try {
-      saveCar(car);
-      toast.success("Car details saved");
+      await saveCar(car);
+      toast.success("Car details published to the shared inventory");
       onSaved();
-    } catch {
-      toast.error("Browser storage is full. Use an image URL or export a backup and remove older listings.");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Car details could not be saved");
     }
   };
 
-  const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const uploadImages = async (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(event.target.files ?? []);
     event.target.value = "";
-    if (!file) return;
-    if (!file.type.startsWith("image/")) {
+    if (!selectedFiles.length) return;
+
+    const remainingSlots = 5 - photos.length;
+    if (remainingSlots <= 0) {
+      toast.error("A listing can have up to 5 photos");
+      return;
+    }
+
+    const files = selectedFiles.slice(0, remainingSlots);
+    if (selectedFiles.length > remainingSlots) {
+      toast.info(`Only ${remainingSlots} more photo${remainingSlots === 1 ? "" : "s"} can be added`);
+    }
+    if (files.some((file) => !file.type.startsWith("image/"))) {
       toast.error("Choose a JPG, PNG, or WebP image");
       return;
     }
-    if (file.size > 8 * 1024 * 1024) {
-      toast.error("Choose an image smaller than 8 MB");
+    if (files.some((file) => file.size > 8 * 1024 * 1024)) {
+      toast.error("Each image must be smaller than 8 MB");
       return;
     }
+
     setProcessingImage(true);
     try {
-      update("image", await compressImage(file));
-      toast.success("Photo ready");
-    } catch {
-      toast.error("We could not process that image");
+      const compressed = await Promise.all(files.map(compressImage));
+      const uploaded = await Promise.all(
+        compressed.map((blob, index) => uploadCarPhoto(blob, files[index].name)),
+      );
+      setPhotos([...photos, ...uploaded]);
+      toast.success(`${uploaded.length} photo${uploaded.length === 1 ? "" : "s"} uploaded`);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "We could not upload one or more images");
     } finally {
       setProcessingImage(false);
+    }
+  };
+
+  const addImageUrl = () => {
+    if (photos.length >= 5) {
+      toast.error("A listing can have up to 5 photos");
+      return;
+    }
+
+    try {
+      const url = new URL(imageUrl.trim());
+      if (!["http:", "https:"].includes(url.protocol)) throw new Error("Invalid protocol");
+      setPhotos([...photos, url.toString()]);
+      setImageUrl("");
+    } catch {
+      toast.error("Enter a complete http or https image URL");
     }
   };
 
@@ -808,52 +1026,108 @@ function CarEditor({
           <section className="rounded-xl border border-white/8 bg-[#0d0f13] p-4">
             <div className="mb-3 flex items-center justify-between">
               <div>
-                <h2 className="text-sm font-bold">Primary photo *</h2>
-                <p className="mt-1 text-xs text-gray-500">JPG, PNG or WebP · up to 8 MB</p>
+                <h2 className="text-sm font-bold">Car photos *</h2>
+                <p className="mt-1 text-xs text-gray-500">Up to 5 photos · first photo is primary</p>
               </div>
-              {draft.image && (
-                <Button type="button" variant="ghost" size="icon" onClick={() => update("image", "")} aria-label="Remove image"><Trash2 /></Button>
-              )}
+              <span className="text-xs font-bold text-brand-lime">{photos.length}/5</span>
             </div>
-            {draft.image ? (
-              <button type="button" onClick={() => fileRef.current?.click()} className="group relative block aspect-[4/3] w-full overflow-hidden rounded-lg bg-black">
-                <img src={draft.image} alt="Car listing preview" className="h-full w-full object-cover" />
-                <span className="absolute inset-0 flex items-center justify-center bg-black/60 text-sm font-bold opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-                  <ImagePlus className="mr-2 size-4" /> Replace photo
-                </span>
-              </button>
-            ) : (
+
+            {photos.length > 0 && (
+              <div className="space-y-3">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-black">
+                  <img src={photos[0]} alt="Primary car listing preview" className="h-full w-full object-cover" />
+                  <span className="absolute left-2 top-2 rounded-full bg-brand-lime px-2 py-1 text-[11px] font-black text-black">
+                    Primary
+                  </span>
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  {photos.map((photo, index) => (
+                    <div key={`${photo}-${index}`} className="relative aspect-[4/3] overflow-hidden rounded-lg bg-black">
+                      <button
+                        type="button"
+                        onClick={() => makePrimary(index)}
+                        aria-label={index === 0 ? "Primary photo" : `Make photo ${index + 1} primary`}
+                        className={`block h-full w-full outline-none transition-opacity focus-visible:ring-2 focus-visible:ring-brand-lime ${
+                          index === 0 ? "opacity-100" : "opacity-70 hover:opacity-100"
+                        }`}
+                      >
+                        <img src={photo} alt="" className="h-full w-full object-cover" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removePhoto(index)}
+                        aria-label={`Remove photo ${index + 1}`}
+                        className="absolute right-1 top-1 flex size-7 items-center justify-center rounded-full bg-black/80 text-white transition-colors hover:bg-red-600 focus-visible:ring-2 focus-visible:ring-brand-lime"
+                      >
+                        <X className="size-3.5" />
+                      </button>
+                      <span className="pointer-events-none absolute bottom-1 left-1 rounded bg-black/75 px-1.5 py-0.5 text-[10px] font-bold text-white">
+                        {index === 0 ? "Primary" : index + 1}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                {photos.length > 1 && (
+                  <p className="text-xs leading-5 text-gray-500">
+                    Select any thumbnail to make it the primary website photo.
+                  </p>
+                )}
+              </div>
+            )}
+
+            {photos.length < 5 && (
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
                 disabled={processingImage}
-                className={`flex aspect-[4/3] w-full flex-col items-center justify-center rounded-lg border border-dashed bg-black/30 text-center transition-colors ${
+                className={`mt-3 flex min-h-28 w-full flex-col items-center justify-center rounded-lg border border-dashed bg-black/30 text-center transition-colors ${
                   errors.image ? "border-red-400 text-red-300" : "border-white/15 text-gray-400 hover:border-brand-lime hover:text-brand-lime"
                 }`}
               >
-                <Upload className="size-6" />
-                <span className="mt-3 text-sm font-bold">{processingImage ? "Preparing photo..." : "Upload car photo"}</span>
-                <span className="mt-1 text-xs text-gray-600">Click to choose a file</span>
+                <ImagePlus className="size-5" />
+                <span className="mt-2 text-sm font-bold">{processingImage ? "Preparing photos..." : "Add photos"}</span>
+                <span className="mt-1 text-xs text-gray-600">JPG, PNG or WebP · 8 MB each</span>
               </button>
             )}
             {errors.image && <p role="alert" className="mt-2 text-xs font-semibold text-red-300">{errors.image}</p>}
-            <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={uploadImage} />
-            <label className="mt-4 block">
-              <span className="text-xs font-semibold text-gray-400">Or paste an image URL</span>
-              <input
-                type="url"
-                value={draft.image.startsWith("data:") ? "" : draft.image}
-                onChange={(event) => update("image", event.target.value)}
-                placeholder="https://..."
-                className={`${controlClass} mt-2`}
-              />
-            </label>
+            <input
+              ref={fileRef}
+              type="file"
+              multiple
+              accept="image/jpeg,image/png,image/webp"
+              className="sr-only"
+              onChange={uploadImages}
+            />
+            {photos.length < 5 && (
+              <div className="mt-4">
+                <label htmlFor="car-image-url" className="text-xs font-semibold text-gray-400">Or add an image URL</label>
+                <div className="mt-2 flex gap-2">
+                  <input
+                    id="car-image-url"
+                    type="url"
+                    value={imageUrl}
+                    onChange={(event) => setImageUrl(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        event.preventDefault();
+                        addImageUrl();
+                      }
+                    }}
+                    placeholder="https://..."
+                    className={controlClass}
+                  />
+                  <Button type="button" variant="outline" size="icon" onClick={addImageUrl} aria-label="Add image URL" className="size-11 shrink-0 border-white/12 bg-transparent">
+                    <Plus />
+                  </Button>
+                </div>
+              </div>
+            )}
           </section>
 
           <div className="flex gap-3 rounded-xl border border-brand-lime/20 bg-brand-lime/6 p-4">
             <CircleAlert className="mt-0.5 size-4 shrink-0 text-brand-lime" />
             <p className="text-xs leading-5 text-gray-300">
-              Frontend-only mode stores this listing on this browser. Use Backup to move inventory safely before clearing browser data.
+              Saving updates the shared live inventory. Uploaded photos are stored permanently in Vercel Blob.
             </p>
           </div>
         </aside>
@@ -1007,7 +1281,7 @@ function ToggleRow({
   );
 }
 
-async function compressImage(file: File) {
+async function compressImage(file: File): Promise<Blob> {
   const source = await createImageBitmap(file);
   const maxWidth = 1200;
   const scale = Math.min(1, maxWidth / source.width);
@@ -1018,7 +1292,26 @@ async function compressImage(file: File) {
   if (!context) throw new Error("Canvas is unavailable");
   context.drawImage(source, 0, 0, canvas.width, canvas.height);
   source.close();
-  return canvas.toDataURL("image/jpeg", 0.76);
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => blob ? resolve(blob) : reject(new Error("Image compression failed.")),
+      "image/jpeg",
+      0.76,
+    );
+  });
+}
+
+async function uploadCarPhoto(blob: Blob, originalName: string) {
+  const basename = originalName.replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "-") || "car-photo";
+  const response = await fetch(`/api/admin/upload?filename=${encodeURIComponent(`${basename}.jpg`)}`, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: { "Content-Type": "image/jpeg" },
+    body: blob,
+  });
+  const payload = (await response.json()) as { url?: string; error?: string };
+  if (!response.ok || !payload.url) throw new Error(payload.error || "Photo upload failed.");
+  return payload.url;
 }
 
 export default AdminApp;

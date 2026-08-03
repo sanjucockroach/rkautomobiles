@@ -13,7 +13,9 @@
       body { margin: 0; background: var(--black); color: var(--ink); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.6; }
       main { width: min(920px, calc(100% - 32px)); margin: 0 auto; padding: 24px 0 56px; }
       header { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 72px; }
-      img { width: 190px; max-width: 48vw; height: auto; }
+      .brand { display: flex; align-items: center; gap: 12px; color: var(--ink); }
+      .brand img { width: 96px; height: 96px; object-fit: contain; }
+      .brand span { font-size: 1.05rem; font-weight: 900; }
       nav { display: flex; flex-wrap: wrap; gap: 12px; }
       a { color: var(--lime); font-weight: 700; text-decoration: none; }
       h1 { max-width: 760px; margin: 0; font-size: clamp(2.5rem, 9vw, 5.5rem); line-height: 0.98; letter-spacing: 0; text-wrap: balance; }
@@ -29,7 +31,7 @@
   <body>
     <main>
       <header>
-        <a href="/" aria-label="R.K. Automobile home"><img src="/rk-logo.jpeg" alt="R.K. Automobile" /></a>
+        <a class="brand" href="/" aria-label="R.K. Automobile home"><img src="/rk-logo-transparent.png" alt="R.K. Automobile logo" /><span>R.K. Automobiles</span></a>
         <nav aria-label="Static page navigation">
           <a href="/">Home</a>
           <a href="/sell-car.html">Sell Car</a>

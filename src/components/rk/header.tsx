@@ -37,17 +37,14 @@ export function Header() {
         }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 lg:h-20 items-center justify-between gap-4">
+        <div className="flex h-20 lg:h-24 items-center justify-between gap-4">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3 group shrink-0" aria-label="R.K. Automobile home">
-            <div className="relative h-[62px] w-[187px] sm:w-[229px] lg:h-[73px] lg:w-[270px] rounded-lg overflow-hidden border border-white/10 bg-black px-2 py-1">
-              <img
-                src="/rk-logo.jpeg"
-                alt="R.K. Automobile logo"
-                className="h-full w-full object-contain"
-              />
-              <div className="absolute inset-0 ring-1 ring-inset ring-[#d4ff00]/30 rounded-lg" />
-            </div>
+          <a href="#" className="group flex shrink-0 items-center gap-2 sm:gap-3" aria-label="R.K. Automobile home">
+            <img src="/rk-logo-transparent.png" alt="R.K. Automobile logo" className="h-20 w-20 object-contain lg:h-24 lg:w-24" />
+            <span className="leading-tight text-white">
+              <span className="block text-sm font-black sm:text-lg">R.K. Automobiles</span>
+              <span className="mt-1 hidden text-xs text-gray-400 sm:block">Certified used cars</span>
+            </span>
           </a>
 
           {/* Desktop nav */}
