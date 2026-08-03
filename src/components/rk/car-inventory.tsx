@@ -53,20 +53,20 @@ export function CarInventory() {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8">
           <div>
             <p className="text-sm font-semibold text-brand-lime mb-3">Certified inventory, ready for India-wide delivery</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950">
               Explore <span className="text-brand-lime">Featured Cars</span>
             </h2>
-            <p className="text-gray-400 mt-2 max-w-2xl">
-              Every car passes a 200+ point inspection. Transparent pricing, genuine deals, and best prices — guaranteed.
+            <p className="text-slate-600 mt-2 max-w-2xl">
+              Clear specifications, straightforward pricing and support from first question to final handover.
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <label className="text-sm text-gray-400" htmlFor="inventory-sort">Sort:</label>
+            <label className="text-sm text-slate-600" htmlFor="inventory-sort">Sort:</label>
             <select
               id="inventory-sort"
               value={sort}
               onChange={(e) => setSort(e.target.value as typeof sortOptions[number])}
-              className="bg-[#14181f] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-lime/50"
+              className="bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-950 focus:outline-none focus:border-brand-lime/50"
             >
               {sortOptions.map((s) => (
                 <option key={s}>{s}</option>
@@ -76,9 +76,9 @@ export function CarInventory() {
         </div>
 
         {/* Filter bar */}
-        <div className="bg-[#0d0f14]/80 backdrop-blur-md border border-white/10 rounded-2xl p-4 mb-8 space-y-3">
+        <div className="bg-white/80 backdrop-blur-md border border-slate-200 rounded-lg p-4 mb-8 space-y-3">
           <fieldset className="flex flex-wrap items-center gap-2">
-            <legend className="text-xs font-semibold text-gray-400 mr-1">Body</legend>
+            <legend className="text-xs font-semibold text-slate-600 mr-1">Body</legend>
             {bodyTypes.map((t) => (
               <button
                 key={t}
@@ -87,8 +87,8 @@ export function CarInventory() {
                 aria-pressed={body === t}
                 className={`min-h-10 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                   body === t
-                    ? "bg-brand-lime text-black"
-                    : "bg-white/5 text-gray-300 hover:bg-white/10"
+                    ? "bg-brand-lime text-white"
+                    : "bg-slate-100 text-slate-700 hover:bg-slate-100"
                 }`}
               >
                 {t}
@@ -96,7 +96,7 @@ export function CarInventory() {
             ))}
           </fieldset>
           <fieldset className="flex flex-wrap items-center gap-2">
-            <legend className="text-xs font-semibold text-gray-400 mr-1">Fuel</legend>
+            <legend className="text-xs font-semibold text-slate-600 mr-1">Fuel</legend>
             {fuelTypes.map((t) => (
               <button
                 key={t}
@@ -105,8 +105,8 @@ export function CarInventory() {
                 aria-pressed={fuel === t}
                 className={`min-h-10 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                   fuel === t
-                    ? "bg-brand-lime text-black"
-                    : "bg-white/5 text-gray-300 hover:bg-white/10"
+                    ? "bg-brand-lime text-white"
+                    : "bg-slate-100 text-slate-700 hover:bg-slate-100"
                 }`}
               >
                 {t}
@@ -114,7 +114,7 @@ export function CarInventory() {
             ))}
           </fieldset>
           <fieldset className="flex flex-wrap items-center gap-2">
-            <legend className="text-xs font-semibold text-gray-400 mr-1">Budget</legend>
+            <legend className="text-xs font-semibold text-slate-600 mr-1">Budget</legend>
             {budgets.map((b, i) => (
               <button
                 key={b.label}
@@ -124,7 +124,7 @@ export function CarInventory() {
                 className={`min-h-10 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                   budget === i
                     ? "border border-brand-lime text-brand-lime bg-brand-lime/10"
-                    : "bg-white/5 text-gray-300 hover:bg-white/10"
+                    : "bg-slate-100 text-slate-700 hover:bg-slate-100"
                 }`}
               >
                 {b.label}
@@ -134,16 +134,16 @@ export function CarInventory() {
         </div>
 
         {/* Results count */}
-        <div className="flex items-center justify-between mb-4 text-sm text-gray-400">
+        <div className="flex items-center justify-between mb-4 text-sm text-slate-600">
           <span>
-            Showing <span className="text-white font-semibold">{filtered.length}</span> cars
+            Showing <span className="text-slate-950 font-semibold">{filtered.length}</span> cars
           </span>
         </div>
 
         {/* Car grid */}
         {filtered.length === 0 ? (
-          <div className="text-center py-20 border border-dashed border-white/10 rounded-2xl">
-            <p className="text-gray-400">No cars match your filters. Try adjusting them.</p>
+          <div className="text-center py-20 border border-dashed border-slate-200 rounded-lg">
+            <p className="text-slate-600">No cars match your filters. Try adjusting them.</p>
             <Button
               variant="outline"
               className="mt-4 border-brand-lime text-brand-lime"
@@ -157,7 +157,7 @@ export function CarInventory() {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((car) => (
               <CarCard key={car.id} car={car} onSelect={() => setSelected(car)} />
             ))}
@@ -166,14 +166,14 @@ export function CarInventory() {
 
         {/* CTA */}
         <div className="mt-10 text-center">
-          <p className="text-gray-400 mb-3">Can&apos;t find what you&apos;re looking for? We have 200+ cars in stock.</p>
+          <p className="text-slate-600 mb-3">The car you have in mind may already be on its way to us.</p>
           <Button asChild size="lg" className="bg-[#25d366] hover:bg-[#1ebe57] text-black font-bold">
             <a
               href={`https://wa.me/${brandInfo.whatsapp}?text=${encodeURIComponent("Hi, I'm looking for a specific car. Please help me find it.")}`}
               target="_blank"
               rel="noreferrer"
             >
-              <MessageCircle className="h-4 w-4 mr-2" /> View Full Inventory on WhatsApp
+              <MessageCircle className="h-4 w-4 mr-2" /> Tell us what you are looking for
             </a>
           </Button>
         </div>
@@ -193,9 +193,9 @@ function CarCard({ car, onSelect }: { car: Car; onSelect: () => void }) {
     : 0;
 
   return (
-    <div className="group relative bg-[#0d0f14] border border-white/10 rounded-2xl overflow-hidden card-hover">
+    <div className="group relative bg-white border border-slate-200 rounded-lg overflow-hidden card-hover">
       {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-[#0a0c10]">
+      <div className="relative aspect-[4/3] overflow-hidden bg-slate-50">
         <img
           src={car.image}
           alt={car.name}
@@ -210,14 +210,14 @@ function CarCard({ car, onSelect }: { car: Car; onSelect: () => void }) {
             <Badge className="border border-white/20 bg-black/75 font-bold text-white">Reserved</Badge>
           )}
           {car.badge && (
-            <Badge className="bg-[#d4ff00] text-black font-bold border-0">{car.badge}</Badge>
+            <Badge className="bg-[#00a8ee] text-white font-bold border-0">{car.badge}</Badge>
           )}
           {discount > 0 && (
-            <Badge className="bg-[#d4ff00] text-black font-bold border-0">-{discount}%</Badge>
+            <Badge className="bg-[#e83840] text-white font-bold border-0">Save {discount}%</Badge>
           )}
         </div>
         <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
-          <Star className="h-3 w-3 fill-[#d4ff00] text-[#d4ff00]" />
+          <Star className="h-3 w-3 fill-[#00a8ee] text-[#00a8ee]" />
           <span className="text-xs text-white font-semibold">{car.rating}</span>
         </div>
       </div>
@@ -225,8 +225,8 @@ function CarCard({ car, onSelect }: { car: Car; onSelect: () => void }) {
       {/* Body */}
       <div className="p-4 space-y-3">
         <div>
-          <h3 className="text-white font-bold text-base leading-snug line-clamp-1">{car.name}</h3>
-          <div className="flex items-center gap-2 text-xs text-gray-400 mt-0.5">
+          <h3 className="text-slate-950 font-bold text-base leading-snug line-clamp-1">{car.name}</h3>
+          <div className="flex items-center gap-2 text-xs text-slate-600 mt-0.5">
             <span className="flex items-center gap-1"><Calendar className="h-3 w-3" />{car.year}</span>
             <span>·</span>
             <span>{car.owner}</span>
@@ -237,28 +237,28 @@ function CarCard({ car, onSelect }: { car: Car; onSelect: () => void }) {
 
         {/* Specs */}
         <div className="grid grid-cols-3 gap-1.5 text-[11px]">
-          <div className="flex flex-col items-center gap-0.5 p-1.5 rounded-md bg-white/[0.03]">
+          <div className="flex flex-col items-center gap-0.5 p-1.5 rounded-md bg-slate-50">
             <Gauge className="h-3.5 w-3.5 text-brand-lime" />
-            <span className="text-gray-300">{(car.kmDriven / 1000).toFixed(1)}k km</span>
+            <span className="text-slate-700">{(car.kmDriven / 1000).toFixed(1)}k km</span>
           </div>
-          <div className="flex flex-col items-center gap-0.5 p-1.5 rounded-md bg-white/[0.03]">
+          <div className="flex flex-col items-center gap-0.5 p-1.5 rounded-md bg-slate-50">
             <Fuel className="h-3.5 w-3.5 text-brand-lime" />
-            <span className="text-gray-300">{car.fuel}</span>
+            <span className="text-slate-700">{car.fuel}</span>
           </div>
-          <div className="flex flex-col items-center gap-0.5 p-1.5 rounded-md bg-white/[0.03]">
+          <div className="flex flex-col items-center gap-0.5 p-1.5 rounded-md bg-slate-50">
             <Settings2 className="h-3.5 w-3.5 text-brand-lime" />
-            <span className="text-gray-300">{car.transmission === "Automatic" ? "Auto" : "Manual"}</span>
+            <span className="text-slate-700">{car.transmission === "Automatic" ? "Auto" : "Manual"}</span>
           </div>
         </div>
 
         {/* Price */}
-        <div className="flex items-end justify-between pt-1 border-t border-white/5">
+        <div className="flex items-end justify-between pt-1 border-t border-slate-100">
           <div>
             {car.originalPrice && (
-              <div className="text-xs text-gray-500 line-through">{formatPrice(car.originalPrice)}</div>
+              <div className="text-xs text-slate-500 line-through">{formatPrice(car.originalPrice)}</div>
             )}
             <div className="text-xl font-black text-brand-lime">{formatPrice(car.price)}</div>
-            <div className="text-[11px] text-gray-400">EMI {formatPrice(car.emi)}/mo</div>
+            <div className="text-[11px] text-slate-600">EMI {formatPrice(car.emi)}/mo</div>
           </div>
         </div>
 
@@ -267,10 +267,10 @@ function CarCard({ car, onSelect }: { car: Car; onSelect: () => void }) {
           <Button
             onClick={onSelect}
             aria-label={`View details for ${car.name}`}
-            className="flex-1 bg-white/10 hover:bg-white/15 text-white border border-white/10"
+            className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-950 border border-slate-200"
             size="sm"
           >
-            Details <ChevronRight className="h-3.5 w-3.5" />
+            Own this car <ChevronRight className="h-3.5 w-3.5" />
           </Button>
           <Button asChild size="sm" className="bg-[#25d366] hover:bg-[#1ebe57] text-black px-2.5">
             <a href={waLink} target="_blank" rel="noreferrer" aria-label={`WhatsApp about ${car.name}`}>

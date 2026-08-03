@@ -1,0 +1,33 @@
+:root { font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #172236; background: #f7f9fc; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: inherit; }
+.nav { height: 80px; border-bottom: 1px solid #dce5ec; background: #fff; display: flex; align-items: center; }
+.nav-inner, .wrap { width: min(1120px, calc(100% - 32px)); margin: auto; }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 900; }
+.brand img { width: 68px; height: 68px; object-fit: contain; }
+.links { display: flex; gap: 28px; }
+.links a { text-decoration: none; font-weight: 700; font-size: 14px; }
+.links a:hover { color: #008fd0; }
+.hero { background: #fff; border-bottom: 1px solid #dce5ec; padding: 76px 0; }
+.label { color: #008fd0; font-weight: 800; }
+.hero h1 { font-size: clamp(42px, 7vw, 72px); line-height: 1.02; max-width: 900px; margin: 18px 0 22px; }
+.hero p { font-size: 19px; line-height: 1.7; color: #5b687a; max-width: 760px; }
+.content { padding: 64px 0 90px; }
+.content article { max-width: 800px; }
+.content h2 { font-size: 30px; margin-top: 42px; }
+.content p, .content li { color: #4f5e70; line-height: 1.8; font-size: 17px; }
+.content li { margin: 10px 0; }
+.cta { display: inline-block; margin-top: 28px; padding: 14px 20px; background: #008fd0; color: #fff; text-decoration: none; font-weight: 800; border-radius: 6px; }
+.footer { border-top: 1px solid #dce5ec; background: #fff; padding: 30px 0; color: #657286; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.card { border: 1px solid #dce5ec; background: #fff; padding: 24px; text-decoration: none; transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease; }
+.card:hover { transform: translateY(-4px); border-color: #8ed8f5; box-shadow: 0 14px 30px rgba(23, 34, 54, .08); }
+.card h2 { font-size: 22px; margin: 14px 0; }
+.card p { font-size: 15px; }
+.red { color: #e83840; }
+.hero .wrap, .content .wrap { animation: page-in 550ms cubic-bezier(.22, 1, .36, 1) both; }
+@keyframes page-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@media (max-width: 760px) { .links { display: none; } .cards { grid-template-columns: 1fr; } .hero { padding: 52px 0; } }
+@media (prefers-reduced-motion: reduce) { .hero .wrap, .content .wrap { animation: none; } .card { transition: none; } }

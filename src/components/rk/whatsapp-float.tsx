@@ -23,20 +23,20 @@ export function WhatsAppFloat() {
     <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
       {/* Expanded card */}
       {open && (
-        <div id="whatsapp-panel" className="w-72 overflow-hidden rounded-xl border border-white/15 bg-[#0d0f14] animate-in slide-in-from-bottom-4">
+        <div id="whatsapp-panel" className="w-72 overflow-hidden rounded-xl border border-slate-200 bg-white animate-in slide-in-from-bottom-4">
           <div className="bg-[#25d366] p-4 flex items-center gap-3">
             <div className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center">
-              <MessageCircle className="h-5 w-5 text-white" />
+              <MessageCircle className="h-5 w-5 text-slate-950" />
             </div>
             <div>
-              <div className="text-sm font-bold text-white">R.K. Automobile</div>
-              <div className="text-[11px] text-white/85 flex items-center gap-1">
+              <div className="text-sm font-bold text-slate-950">R.K. Automobile</div>
+              <div className="text-[11px] text-slate-950/85 flex items-center gap-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-white" /> Online now
               </div>
             </div>
           </div>
           <div className="p-4 space-y-3">
-            <p className="text-sm text-gray-300 bg-white/5 rounded-lg p-3 rounded-tl-none">
+            <p className="text-sm text-slate-700 bg-slate-100 rounded-lg p-3 rounded-tl-none">
               Interested in a vehicle, finance, or Pan India delivery? Message us and the showroom team will help with availability, pricing, and inspection details.
             </p>
             <a
@@ -67,7 +67,7 @@ export function WhatsAppFloat() {
       >
         {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-7 w-7" />}
         {!open && (
-          <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-[#d4ff00] text-black text-[10px] font-bold flex items-center justify-center border-2 border-[#050608]">
+          <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-[#00a8ee] text-black text-[10px] font-bold flex items-center justify-center border-2 border-[#050608]">
             1
           </span>
         )}

@@ -32,7 +32,7 @@ export function Header() {
   return (
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled
-          ? "bg-[#050608]/85 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/40"
+          ? "bg-white/85 backdrop-blur-xl border-b border-slate-200 shadow-lg shadow-slate-900/10"
           : "bg-transparent border-b border-transparent"
         }`}
     >
@@ -41,9 +41,9 @@ export function Header() {
           {/* Logo */}
           <a href="#" className="group flex shrink-0 items-center gap-2 sm:gap-3" aria-label="R.K. Automobile home">
             <img src="/rk-logo-transparent.png" alt="R.K. Automobile logo" className="h-20 w-20 object-contain lg:h-24 lg:w-24" />
-            <span className="leading-tight text-white">
+            <span className="leading-tight text-slate-950">
               <span className="block text-sm font-black sm:text-lg">R.K. Automobiles</span>
-              <span className="mt-1 hidden text-xs text-gray-400 sm:block">Certified used cars</span>
+              <span className="mt-1 hidden text-xs text-slate-600 sm:block">Certified used cars</span>
             </span>
           </a>
 
@@ -53,7 +53,7 @@ export function Header() {
               <a
                 key={l.href}
                 href={l.href}
-                className="px-3 py-2 text-sm font-medium text-gray-300 hover:text-brand-lime transition-colors rounded-md hover:bg-white/5"
+                className="px-3 py-2 text-sm font-medium text-slate-700 hover:text-brand-lime transition-colors rounded-md hover:bg-slate-100"
               >
                 {l.label}
               </a>
@@ -64,7 +64,7 @@ export function Header() {
           <div className="hidden lg:flex items-center gap-2">
             <a
               href={`tel:${brandInfo.phone1}`}
-              className="flex items-center gap-2 px-3 py-2 text-sm text-gray-200 hover:text-brand-lime transition-colors"
+              className="flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:text-brand-lime transition-colors"
             >
               <Phone className="h-4 w-4" />
               {brandInfo.phone1}
@@ -82,7 +82,7 @@ export function Header() {
           {/* Mobile toggle */}
           <button
             onClick={() => setOpen((v) => !v)}
-            className="lg:hidden p-2 text-white"
+            className="lg:hidden p-2 text-slate-950"
             aria-label="Toggle menu"
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -92,20 +92,20 @@ export function Header() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="lg:hidden bg-[#050608]/95 backdrop-blur-xl border-t border-white/10">
+        <div className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-slate-200">
           <nav className="mx-auto max-w-7xl px-4 py-4 flex flex-col gap-1">
             {navLinks.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="px-3 py-2.5 text-base font-medium text-gray-200 hover:text-brand-lime hover:bg-white/5 rounded-md"
+                className="px-3 py-2.5 text-base font-medium text-slate-700 hover:text-brand-lime hover:bg-slate-100 rounded-md"
               >
                 {l.label}
               </a>
             ))}
             <div className="flex gap-2 mt-2">
-              <Button asChild variant="outline" className="flex-1 border-white/20 text-white">
+              <Button asChild variant="outline" className="flex-1 border-white/20 text-slate-950">
                 <a href={`tel:${brandInfo.phone1}`}>
                   <Phone className="h-4 w-4 mr-1" /> Call
                 </a>

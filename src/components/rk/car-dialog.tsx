@@ -17,7 +17,7 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
   const [activeImage, setActiveImage] = useState(0);
   const gallery = car.images?.length ? car.images.slice(0, 5) : [car.image];
   const inputClass =
-    "mt-1.5 w-full bg-[#0a0c10] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-[#7f8790] focus:outline-none focus:border-brand-lime/70 focus:ring-2 focus:ring-brand-lime/20";
+    "mt-1.5 w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-slate-950 placeholder:text-[#7f8790] focus:outline-none focus:border-brand-lime/70 focus:ring-2 focus:ring-brand-lime/20";
 
   const getWaLink = (includeForm = false) => {
     const details = includeForm
@@ -39,12 +39,12 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
 
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="max-w-3xl bg-[#0d0f14] border-white/15 text-white max-h-[92vh] overflow-y-auto no-scrollbar">
+      <DialogContent className="max-w-3xl bg-white border-slate-200 text-slate-950 max-h-[92vh] overflow-y-auto no-scrollbar">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-black text-white">
+          <DialogTitle className="text-2xl font-black text-slate-950">
             {car.name}
           </DialogTitle>
-          <DialogDescription className="text-gray-400">
+          <DialogDescription className="text-slate-600">
             {car.year} · {car.owner} · {car.rto} RTO · {car.bodyType}
           </DialogDescription>
         </DialogHeader>
@@ -52,7 +52,7 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
         <div className="grid md:grid-cols-2 gap-5">
           {/* Left: image + specs */}
           <div className="space-y-4">
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-[#0a0c10] border border-white/10">
+            <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-50 border border-slate-200">
               <img
                 src={gallery[activeImage]}
                 alt={`${car.name}, photo ${activeImage + 1} of ${gallery.length}`}
@@ -62,7 +62,7 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
               />
               <div className="absolute top-3 left-3 flex gap-2">
                 {car.badge && (
-                  <Badge className="bg-[#d4ff00] text-black font-bold border-0">{car.badge}</Badge>
+                  <Badge className="bg-[#00a8ee] text-white font-bold border-0">{car.badge}</Badge>
                 )}
               </div>
               {gallery.length > 1 && (
@@ -101,7 +101,7 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
                     className={`aspect-[4/3] overflow-hidden rounded-md border bg-black transition-opacity ${
                       activeImage === index
                         ? "border-brand-lime opacity-100"
-                        : "border-white/10 opacity-55 hover:opacity-100"
+                        : "border-slate-200 opacity-55 hover:opacity-100"
                     }`}
                   >
                     <img src={image} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
@@ -122,17 +122,17 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
             </div>
 
             {/* Price */}
-            <div className="bg-gradient-to-br from-[#d4ff00]/10 to-[#d4ff00]/5 border border-[#d4ff00]/30 rounded-xl p-4">
+            <div className="bg-gradient-to-br from-[#00a8ee]/10 to-[#00a8ee]/5 border border-[#00a8ee]/30 rounded-xl p-4">
               <div className="flex items-end justify-between">
                 <div>
-                  <div className="text-xs font-semibold text-gray-400">Fixed price</div>
+                  <div className="text-xs font-semibold text-slate-600">Fixed price</div>
                   {car.originalPrice && (
-                    <div className="text-sm text-gray-500 line-through">{formatPrice(car.originalPrice)}</div>
+                    <div className="text-sm text-slate-500 line-through">{formatPrice(car.originalPrice)}</div>
                   )}
                   <div className="text-3xl font-black text-brand-lime">{formatPrice(car.price)}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-xs text-gray-400">EMI from</div>
+                  <div className="text-xs text-slate-600">EMI from</div>
                   <div className="text-lg font-bold text-brand-lime">{formatPrice(car.emi)}/mo</div>
                 </div>
               </div>
@@ -140,13 +140,13 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
 
             {/* Trust */}
             <div className="flex flex-wrap gap-2">
-              <div className="flex items-center gap-1.5 text-xs text-gray-300">
+              <div className="flex items-center gap-1.5 text-xs text-slate-700">
                 <Shield className="h-3.5 w-3.5 text-brand-lime" /> 200+ Point Inspected
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-gray-300">
+              <div className="flex items-center gap-1.5 text-xs text-slate-700">
                 <BadgeCheck className="h-3.5 w-3.5 text-brand-lime" /> RC Transfer Free
               </div>
-              <div className="flex items-center gap-1.5 text-xs text-gray-300">
+              <div className="flex items-center gap-1.5 text-xs text-slate-700">
                 <CheckCircle2 className="h-3.5 w-3.5 text-brand-lime" /> {car.inspections}+ Inspected
               </div>
             </div>
@@ -156,15 +156,15 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
           <div className="space-y-4">
             {car.description && (
               <div>
-                <h4 className="mb-2 text-sm font-bold text-white">About this car</h4>
-                <p className="text-sm leading-6 text-gray-400">{car.description}</p>
+                <h4 className="mb-2 text-sm font-bold text-slate-950">About this car</h4>
+                <p className="text-sm leading-6 text-slate-600">{car.description}</p>
               </div>
             )}
             <div>
-              <h4 className="text-sm font-bold text-white mb-2">Key features</h4>
+              <h4 className="text-sm font-bold text-slate-950 mb-2">Key features</h4>
               <div className="flex flex-wrap gap-1.5">
                 {car.features.map((f) => (
-                  <Badge key={f} variant="outline" className="border-white/15 text-gray-200">
+                  <Badge key={f} variant="outline" className="border-slate-200 text-slate-700">
                     <CheckCircle2 className="h-3 w-3 mr-1 text-brand-lime" /> {f}
                   </Badge>
                 ))}
@@ -172,14 +172,14 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
             </div>
 
             {/* Inquiry form */}
-            <div className="bg-[#14181f] border border-white/10 rounded-xl p-4">
+            <div className="bg-white border border-slate-200 rounded-xl p-4">
               {done ? (
                 <div className="text-center py-6">
-                  <div className="h-12 w-12 mx-auto rounded-full bg-[#d4ff00]/15 flex items-center justify-center mb-3">
+                  <div className="h-12 w-12 mx-auto rounded-full bg-[#00a8ee]/15 flex items-center justify-center mb-3">
                     <CheckCircle2 className="h-6 w-6 text-brand-lime" />
                   </div>
-                  <h4 className="text-white font-bold">Thank you, {form.name}!</h4>
-                  <p className="text-sm text-gray-400 mt-1">Our team will call you shortly about the {car.name}.</p>
+                  <h4 className="text-slate-950 font-bold">Thank you, {form.name}!</h4>
+                  <p className="text-sm text-slate-600 mt-1">Our team will call you shortly about the {car.name}.</p>
                   <Button asChild className="mt-4 bg-[#25d366] hover:bg-[#1ebe57] text-black">
                     <a href={getWaLink(true)} target="_blank" rel="noreferrer">
                       <MessageCircle className="h-4 w-4 mr-1" /> Continue on WhatsApp
@@ -188,9 +188,9 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-3" noValidate>
-                  <h4 className="text-sm font-bold text-white">Book a test drive or request details</h4>
-                  <p className="text-xs text-gray-400">We will use these details only to respond about this car.</p>
-                  <label className="block text-sm font-medium text-gray-200" htmlFor={`car-${car.id}-name`}>
+                  <h4 className="text-sm font-bold text-slate-950">Book a test drive or request details</h4>
+                  <p className="text-xs text-slate-600">We will use these details only to respond about this car.</p>
+                  <label className="block text-sm font-medium text-slate-700" htmlFor={`car-${car.id}-name`}>
                     Your name <span className="text-brand-lime">*</span>
                     <input
                       id={`car-${car.id}-name`}
@@ -214,7 +214,7 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
                       </span>
                     )}
                   </label>
-                  <label className="block text-sm font-medium text-gray-200" htmlFor={`car-${car.id}-phone`}>
+                  <label className="block text-sm font-medium text-slate-700" htmlFor={`car-${car.id}-phone`}>
                     Phone number <span className="text-brand-lime">*</span>
                     <input
                       id={`car-${car.id}-phone`}
@@ -243,7 +243,7 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
                   </label>
                   <Button
                     type="submit"
-                    className="w-full bg-[#d4ff00] hover:bg-[#b8e000] text-black font-bold"
+                    className="w-full bg-[#00a8ee] hover:bg-[#007fba] text-white font-bold"
                   >
                     Get a Call Back
                   </Button>
@@ -282,14 +282,14 @@ function Spec({
 }) {
   const colorMap = {
     accent: "text-brand-lime",
-    quiet: "text-gray-300",
+    quiet: "text-slate-700",
   };
   return (
-    <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white/[0.03] border border-white/5">
+    <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white border border-slate-100">
       <Icon className={`h-4 w-4 ${colorMap[color]} shrink-0`} />
       <div className="min-w-0">
-        <div className="text-[10px] font-semibold text-gray-500">{label}</div>
-        <div className="text-sm text-white font-medium truncate">{value}</div>
+        <div className="text-[10px] font-semibold text-slate-500">{label}</div>
+        <div className="text-sm text-slate-950 font-medium truncate">{value}</div>
       </div>
     </div>
   );

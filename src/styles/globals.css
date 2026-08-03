@@ -38,7 +38,9 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   /* R.K. Automobile brand colors */
-  --color-brand-lime: var(--brand-lime);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-red: var(--brand-red);
+  --color-brand-lime: var(--brand-blue);
   --color-brand-gray: var(--brand-gray);
   --color-whatsapp: var(--whatsapp);
   --radius-sm: calc(var(--radius) - 4px);
@@ -49,42 +51,44 @@
 
 :root {
   --radius: 0.5rem;
-  /* R.K. Automobile Brand Identity - Carbon Black + Electric Lime */
-  --brand-lime: #d4ff00;
-  --brand-gray: #8e949d;
+  /* Logo-derived identity: RK blue + RK red on cool white. */
+  --brand-blue: #00a8ee;
+  --brand-red: #e83840;
+  --brand-lime: var(--brand-blue);
+  --brand-gray: #657286;
   --whatsapp: #25d366;
 
-  --background: #050608;
-  --foreground: #f6f7f2;
-  --card: #111318;
-  --card-foreground: #f6f7f2;
-  --popover: #111318;
-  --popover-foreground: #f6f7f2;
-  --primary: #d4ff00;
-  --primary-foreground: #050608;
-  --secondary: #111318;
-  --secondary-foreground: #f6f7f2;
-  --muted: #111318;
-  --muted-foreground: #8e949d;
-  --accent: #d4ff00;
-  --accent-foreground: #050608;
-  --destructive: #d4ff00;
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.08);
-  --ring: #d4ff00;
-  --chart-1: #d4ff00;
-  --chart-2: #f6f7f2;
-  --chart-3: #8e949d;
-  --chart-4: #d4ff00;
-  --chart-5: #8e949d;
-  --sidebar: #111318;
-  --sidebar-foreground: #f6f7f2;
-  --sidebar-primary: #d4ff00;
-  --sidebar-primary-foreground: #050608;
-  --sidebar-accent: #111318;
-  --sidebar-accent-foreground: #f6f7f2;
-  --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-ring: #d4ff00;
+  --background: #f7f9fc;
+  --foreground: #172236;
+  --card: #ffffff;
+  --card-foreground: #172236;
+  --popover: #ffffff;
+  --popover-foreground: #172236;
+  --primary: #008fd0;
+  --primary-foreground: #ffffff;
+  --secondary: #edf4f8;
+  --secondary-foreground: #172236;
+  --muted: #eef3f7;
+  --muted-foreground: #657286;
+  --accent: #e83840;
+  --accent-foreground: #ffffff;
+  --destructive: #c92f36;
+  --border: #dce5ec;
+  --input: #dce5ec;
+  --ring: #008fd0;
+  --chart-1: #008fd0;
+  --chart-2: #e83840;
+  --chart-3: #657286;
+  --chart-4: #4dbde9;
+  --chart-5: #f2777d;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #172236;
+  --sidebar-primary: #008fd0;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #edf4f8;
+  --sidebar-accent-foreground: #172236;
+  --sidebar-border: #dce5ec;
+  --sidebar-ring: #008fd0;
 }
 
 @layer base {
@@ -96,18 +100,15 @@
   }
   body {
     @apply bg-background text-foreground;
-    background-color: #050608;
-    background-image:
-      radial-gradient(circle at 18% 14%, rgba(212, 255, 0, 0.08), transparent 34%),
-      linear-gradient(180deg, #050608 0%, #090b0f 42%, #050608 100%);
-    background-attachment: fixed;
+    background-color: #f7f9fc;
+    background-image: linear-gradient(180deg, #ffffff 0%, #f7f9fc 46%, #ffffff 100%);
   }
   ::selection {
-    background: #d4ff00;
-    color: #050608;
+    background: #bcecff;
+    color: #172236;
   }
   :focus-visible {
-    outline: 2px solid #d4ff00;
+    outline: 2px solid #008fd0;
     outline-offset: 3px;
   }
 }
@@ -118,28 +119,30 @@
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0c10;
+  background: #edf3f7;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #d4ff00, #f6f7f2);
+  background: #78cdec;
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #b8e000, #c5f000);
+  background: #008fd0;
 }
 
 /* Utility classes for the brand system */
-.text-brand-lime { color: #d4ff00; }
-.bg-brand-lime { background-color: #d4ff00; }
-.border-brand-lime { border-color: #d4ff00; }
+.text-brand-blue, .text-brand-lime { color: #008fd0; }
+.bg-brand-blue, .bg-brand-lime { background-color: #008fd0; }
+.border-brand-blue, .border-brand-lime { border-color: #008fd0; }
+.text-brand-red { color: #e83840; }
+.bg-brand-red { background-color: #e83840; }
+.border-brand-red { border-color: #e83840; }
 .text-whatsapp { color: #25d366; }
 .bg-whatsapp { background-color: #25d366; }
 .border-whatsapp { border-color: #25d366; }
 
 /* Restrained section depth wash. */
 .section-depth {
-  background:
-    radial-gradient(ellipse at center, rgba(212, 255, 0, 0.045), transparent 58%);
+  background: linear-gradient(180deg, rgba(0, 168, 238, 0.04), transparent 70%);
 }
 
 .skip-link {
@@ -149,8 +152,8 @@
   z-index: 100;
   transform: translateY(-150%);
   border-radius: 999px;
-  background: #d4ff00;
-  color: #050608;
+  background: #008fd0;
+  color: #ffffff;
   padding: 0.65rem 1rem;
   font-size: 0.875rem;
   font-weight: 800;
@@ -172,8 +175,8 @@
 }
 .card-hover:hover {
   transform: translateY(-3px);
-  border-color: rgba(212, 255, 0, 0.28);
-  background-color: rgba(17, 19, 24, 0.94);
+  border-color: rgba(0, 143, 208, 0.38);
+  box-shadow: 0 14px 34px rgba(23, 34, 54, 0.09);
 }
 
 /* Cinematic hero utilities */
@@ -202,7 +205,7 @@
     rgba(255, 255, 255, 0.14) 22%,
     rgba(255, 255, 255, 0) 44%,
     rgba(255, 255, 255, 0) 58%,
-    rgba(212, 255, 0, 0.18) 82%,
+    rgba(0, 168, 238, 0.18) 82%,
     rgba(255, 255, 255, 0.34) 100%
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -213,14 +216,35 @@
 
 .cinematic-overlay {
   background:
-    radial-gradient(circle at 74% 44%, rgba(212, 255, 0, 0.13), transparent 32%),
-    linear-gradient(90deg, rgba(5, 6, 8, 0.9) 0%, rgba(5, 6, 8, 0.58) 42%, rgba(5, 6, 8, 0.3) 100%),
-    linear-gradient(180deg, rgba(5, 6, 8, 0.36) 0%, rgba(5, 6, 8, 0.2) 45%, rgba(5, 6, 8, 0.88) 100%);
+    linear-gradient(90deg, rgba(247, 249, 252, 0.97) 0%, rgba(247, 249, 252, 0.84) 43%, rgba(247, 249, 252, 0.18) 78%),
+    linear-gradient(180deg, rgba(247, 249, 252, 0.45) 0%, rgba(247, 249, 252, 0.08) 48%, rgba(247, 249, 252, 0.9) 100%);
+}
+
+.public-page {
+  color: #172236;
+  background: #f7f9fc;
+}
+
+.public-surface {
+  background: #ffffff;
+  border: 1px solid #dce5ec;
+  box-shadow: 0 12px 32px rgba(23, 34, 54, 0.06);
+}
+
+.page-grid {
+  background-image: linear-gradient(rgba(0, 143, 208, 0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 143, 208, 0.055) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, black, transparent 88%);
 }
 
 @keyframes car-float {
   0%, 100% { transform: translate3d(0, 0, 0) scale(1.03); }
   50% { transform: translate3d(0, -8px, 0) scale(1.03); }
+}
+
+@keyframes mobile-nav-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .car-float {

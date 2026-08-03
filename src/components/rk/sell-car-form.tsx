@@ -19,7 +19,7 @@ export function SellCarForm() {
   const [done, setDone] = useState(false);
   const [errors, setErrors] = useState<LeadErrors>({});
   const inputClass =
-    "mt-1.5 w-full bg-[#0a0c10] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-[#7f8790] focus:outline-none focus:border-brand-lime/70 focus:ring-2 focus:ring-brand-lime/20";
+    "mt-1.5 w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-slate-950 placeholder:text-[#7f8790] focus:outline-none focus:border-brand-lime/70 focus:ring-2 focus:ring-brand-lime/20";
 
   const waLink = `https://wa.me/${brandInfo.whatsapp}?text=${encodeURIComponent(
     `Hi R.K. Automobile, I want to sell my car. My name is ${form.name}, phone: ${form.phone}. Details: ${form.brand} ${form.model} (${form.year}), ${form.km} km, Expected: ${form.expectedPrice}. Please give me the best price.`
@@ -37,16 +37,16 @@ export function SellCarForm() {
   return (
     <section id="sell" className="content-auto relative py-16 lg:py-24">
       <div className="absolute inset-0 section-depth opacity-20 pointer-events-none" />
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] bg-[#d4ff00]/8 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] bg-[#00a8ee]/8 rounded-full blur-[120px] pointer-events-none" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left: copy + benefits */}
           <div>
             <p className="text-sm font-semibold text-brand-lime mb-3">Sell with paperwork, payment, and pickup aligned</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950">
               Get the <span className="text-brand-lime">Best Price</span> for Your Car
             </h2>
-            <p className="text-gray-400 mt-3 max-w-lg">
+            <p className="text-slate-600 mt-3 max-w-lg">
               Sell your car in 3 easy steps. Free home inspection, instant payment, and free RC transfer. No haggling, no hidden charges.
             </p>
 
@@ -59,33 +59,33 @@ export function SellCarForm() {
                 "No hidden charges",
                 "All brands accepted",
               ].map((b) => (
-                <div key={b} className="flex items-center gap-2 text-sm text-gray-300">
+                <div key={b} className="flex items-center gap-2 text-sm text-slate-700">
                   <CheckCircle2 className="h-4 w-4 text-brand-lime shrink-0" />
                   {b}
                 </div>
               ))}
             </div>
 
-            <div className="mt-6 p-4 rounded-xl bg-gradient-to-r from-[#d4ff00]/10 to-transparent border border-[#d4ff00]/20">
+            <div className="mt-6 p-4 rounded-xl bg-gradient-to-r from-[#00a8ee]/10 to-transparent border border-[#00a8ee]/20">
               <div className="flex items-center gap-3">
                 <IndianRupee className="h-6 w-6 text-brand-lime" />
                 <div>
-                  <div className="text-sm font-bold text-white">Average payout in 24 hours</div>
-                  <div className="text-xs text-gray-400">From inspection to payment — done in a day.</div>
+                  <div className="text-sm font-bold text-slate-950">Average payout in 24 hours</div>
+                  <div className="text-xs text-slate-600">From inspection to payment — done in a day.</div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right: form */}
-          <div className="bg-[#0d0f14] border border-white/10 rounded-2xl p-6 lg:p-8 shadow-2xl shadow-black/40">
+          <div className="bg-white border border-slate-200 rounded-lg p-6 lg:p-8 shadow-2xl shadow-slate-900/10">
             {done ? (
               <div className="text-center py-8">
-                <div className="h-16 w-16 mx-auto rounded-full bg-[#d4ff00]/15 flex items-center justify-center mb-4">
+                <div className="h-16 w-16 mx-auto rounded-full bg-[#00a8ee]/15 flex items-center justify-center mb-4">
                   <CheckCircle2 className="h-8 w-8 text-brand-lime" />
                 </div>
-                <h3 className="text-2xl font-black text-white">Request Received!</h3>
-                <p className="text-gray-400 mt-2 max-w-sm mx-auto">
+                <h3 className="text-2xl font-black text-slate-950">Request Received!</h3>
+                <p className="text-slate-600 mt-2 max-w-sm mx-auto">
                   Thank you, {form.name}. Our team will call you on {form.phone} within 30 minutes to schedule a free inspection.
                 </p>
                 <Button asChild className="mt-5 bg-[#25d366] hover:bg-[#1ebe57] text-black">
@@ -96,11 +96,11 @@ export function SellCarForm() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-                <h3 className="text-xl font-bold text-white mb-1">Get Free Valuation</h3>
-                <p className="text-sm text-gray-400 mb-4">Fill the form and get a call back in 30 minutes.</p>
+                <h3 className="text-xl font-bold text-slate-950 mb-1">Get Free Valuation</h3>
+                <p className="text-sm text-slate-600 mb-4">Fill the form and get a call back in 30 minutes.</p>
 
                 <div className="grid sm:grid-cols-2 gap-3">
-                  <label className="block text-sm font-medium text-gray-200" htmlFor="sell-name">
+                  <label className="block text-sm font-medium text-slate-700" htmlFor="sell-name">
                     Your name <span className="text-brand-lime">*</span>
                     <input
                       id="sell-name"
@@ -124,7 +124,7 @@ export function SellCarForm() {
                       </span>
                     )}
                   </label>
-                  <label className="block text-sm font-medium text-gray-200" htmlFor="sell-phone">
+                  <label className="block text-sm font-medium text-slate-700" htmlFor="sell-phone">
                     Phone number <span className="text-brand-lime">*</span>
                     <input
                       id="sell-phone"
@@ -154,7 +154,7 @@ export function SellCarForm() {
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-3">
-                  <label className="block text-sm font-medium text-gray-200" htmlFor="sell-brand">
+                  <label className="block text-sm font-medium text-slate-700" htmlFor="sell-brand">
                     Car brand
                     <input
                       id="sell-brand"
@@ -167,7 +167,7 @@ export function SellCarForm() {
                       className={inputClass}
                     />
                   </label>
-                  <label className="block text-sm font-medium text-gray-200" htmlFor="sell-model">
+                  <label className="block text-sm font-medium text-slate-700" htmlFor="sell-model">
                     Model
                     <input
                       id="sell-model"
@@ -182,7 +182,7 @@ export function SellCarForm() {
                 </div>
 
                 <div className="grid sm:grid-cols-3 gap-3">
-                  <label className="block text-sm font-medium text-gray-200" htmlFor="sell-year">
+                  <label className="block text-sm font-medium text-slate-700" htmlFor="sell-year">
                     Year
                     <input
                       id="sell-year"
@@ -197,7 +197,7 @@ export function SellCarForm() {
                       className={inputClass}
                     />
                   </label>
-                  <label className="block text-sm font-medium text-gray-200" htmlFor="sell-km">
+                  <label className="block text-sm font-medium text-slate-700" htmlFor="sell-km">
                     KM driven
                     <input
                       id="sell-km"
@@ -211,7 +211,7 @@ export function SellCarForm() {
                       className={inputClass}
                     />
                   </label>
-                  <label className="block text-sm font-medium text-gray-200" htmlFor="sell-price">
+                  <label className="block text-sm font-medium text-slate-700" htmlFor="sell-price">
                     Expected price
                     <input
                       id="sell-price"
@@ -229,11 +229,11 @@ export function SellCarForm() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-[#d4ff00] hover:bg-[#b8e000] text-black font-bold h-11"
+                  className="w-full bg-[#00a8ee] hover:bg-[#007fba] text-white font-bold h-11"
                 >
                   <Send className="h-4 w-4 mr-2" /> Get Free Valuation
                 </Button>
-                <p className="text-[11px] text-gray-500 text-center">
+                <p className="text-[11px] text-slate-500 text-center">
                   By submitting, you agree to be contacted by R.K. Automobile regarding your car sale.
                 </p>
               </form>

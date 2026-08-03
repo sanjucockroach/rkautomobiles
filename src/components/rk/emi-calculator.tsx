@@ -42,47 +42,47 @@ export function EmiCalculator() {
           {/* Left: copy */}
           <div>
             <p className="text-sm font-semibold text-brand-lime mb-3">Finance desk, before you visit the showroom</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950">
               Plan Your <span className="text-brand-lime">Car Loan</span> in Seconds
             </h2>
-            <p className="text-gray-400 mt-3 max-w-lg">
+            <p className="text-slate-600 mt-3 max-w-lg">
               Calculate your monthly EMI instantly. Get up to <span className="text-brand-lime font-semibold">90% funding</span> with quick approval and minimal documentation.
             </p>
 
             <div className="grid grid-cols-2 gap-3 mt-6">
-              <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
-                <div className="text-xs text-gray-400">Interest Rates</div>
+              <div className="p-4 rounded-xl bg-white border border-slate-200">
+                <div className="text-xs text-slate-600">Interest Rates</div>
                 <div className="text-2xl font-black text-brand-lime">8.5%*</div>
-                <div className="text-[11px] text-gray-500">Starting p.a.</div>
+                <div className="text-[11px] text-slate-500">Starting p.a.</div>
               </div>
-              <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
-                <div className="text-xs text-gray-400">Max Funding</div>
+              <div className="p-4 rounded-xl bg-white border border-slate-200">
+                <div className="text-xs text-slate-600">Max Funding</div>
                 <div className="text-2xl font-black text-brand-lime">90%</div>
-                <div className="text-[11px] text-gray-500">On-road price</div>
+                <div className="text-[11px] text-slate-500">On-road price</div>
               </div>
-              <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
-                <div className="text-xs text-gray-400">Approval Time</div>
+              <div className="p-4 rounded-xl bg-white border border-slate-200">
+                <div className="text-xs text-slate-600">Approval Time</div>
                 <div className="text-2xl font-black text-brand-lime">24 hrs</div>
-                <div className="text-[11px] text-gray-500">Quick sanction</div>
+                <div className="text-[11px] text-slate-500">Quick sanction</div>
               </div>
-              <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
-                <div className="text-xs text-gray-400">Tenure</div>
+              <div className="p-4 rounded-xl bg-white border border-slate-200">
+                <div className="text-xs text-slate-600">Tenure</div>
                 <div className="text-2xl font-black text-brand-lime">7 yrs</div>
-                <div className="text-[11px] text-gray-500">Max tenure</div>
+                <div className="text-[11px] text-slate-500">Max tenure</div>
               </div>
             </div>
           </div>
 
           {/* Right: calculator */}
-          <div className="bg-[#0d0f14] border border-white/10 rounded-2xl p-6 lg:p-8 shadow-2xl shadow-black/40">
+          <div className="bg-white border border-slate-200 rounded-lg p-6 lg:p-8 shadow-2xl shadow-slate-900/10">
             <div className="space-y-5">
               {/* Price */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label className="text-sm text-gray-300 flex items-center gap-1.5">
+                  <label className="text-sm text-slate-700 flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-brand-lime" /> Car Price
                   </label>
-                  <span className="text-lg font-bold text-white">{formatPrice(price)}</span>
+                  <span className="text-lg font-bold text-slate-950">{formatPrice(price)}</span>
                 </div>
                 <Slider
                   value={[price]}
@@ -90,9 +90,9 @@ export function EmiCalculator() {
                   min={200000}
                   max={3000000}
                   step={50000}
-                  className="[&_[role=slider]]:bg-[#d4ff00] [&_[role=slider]]:border-[#d4ff00] [&_.bg-primary]:bg-[#d4ff00]"
+                  className="[&_[role=slider]]:bg-[#00a8ee] [&_[role=slider]]:border-[#00a8ee] [&_.bg-primary]:bg-[#00a8ee]"
                 />
-                <div className="flex justify-between text-[11px] text-gray-500 mt-1">
+                <div className="flex justify-between text-[11px] text-slate-500 mt-1">
                   <span>₹2L</span>
                   <span>₹30L</span>
                 </div>
@@ -101,10 +101,10 @@ export function EmiCalculator() {
               {/* Down payment */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label className="text-sm text-gray-300 flex items-center gap-1.5">
+                  <label className="text-sm text-slate-700 flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-brand-lime" /> Down Payment
                   </label>
-                  <span className="text-lg font-bold text-white">{down}% ({formatPrice((price * down) / 100)})</span>
+                  <span className="text-lg font-bold text-slate-950">{down}% ({formatPrice((price * down) / 100)})</span>
                 </div>
                 <Slider
                   value={[down]}
@@ -112,9 +112,9 @@ export function EmiCalculator() {
                   min={0}
                   max={50}
                   step={5}
-                  className="[&_[role=slider]]:bg-[#d4ff00] [&_[role=slider]]:border-[#d4ff00] [&_.bg-primary]:bg-[#d4ff00]"
+                  className="[&_[role=slider]]:bg-[#00a8ee] [&_[role=slider]]:border-[#00a8ee] [&_.bg-primary]:bg-[#00a8ee]"
                 />
-                <div className="flex justify-between text-[11px] text-gray-500 mt-1">
+                <div className="flex justify-between text-[11px] text-slate-500 mt-1">
                   <span>0%</span>
                   <span>50%</span>
                 </div>
@@ -123,10 +123,10 @@ export function EmiCalculator() {
               {/* Rate */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label className="text-sm text-gray-300 flex items-center gap-1.5">
+                  <label className="text-sm text-slate-700 flex items-center gap-1.5">
                     <Percent className="h-3.5 w-3.5 text-brand-lime" /> Interest Rate
                   </label>
-                  <span className="text-lg font-bold text-white">{rate}% p.a.</span>
+                  <span className="text-lg font-bold text-slate-950">{rate}% p.a.</span>
                 </div>
                 <Slider
                   value={[rate]}
@@ -134,9 +134,9 @@ export function EmiCalculator() {
                   min={7}
                   max={16}
                   step={0.5}
-                  className="[&_[role=slider]]:bg-[#d4ff00] [&_[role=slider]]:border-[#d4ff00] [&_.bg-primary]:bg-[#d4ff00]"
+                  className="[&_[role=slider]]:bg-[#00a8ee] [&_[role=slider]]:border-[#00a8ee] [&_.bg-primary]:bg-[#00a8ee]"
                 />
-                <div className="flex justify-between text-[11px] text-gray-500 mt-1">
+                <div className="flex justify-between text-[11px] text-slate-500 mt-1">
                   <span>7%</span>
                   <span>16%</span>
                 </div>
@@ -145,10 +145,10 @@ export function EmiCalculator() {
               {/* Tenure */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label className="text-sm text-gray-300 flex items-center gap-1.5">
+                  <label className="text-sm text-slate-700 flex items-center gap-1.5">
                     <Calendar className="h-3.5 w-3.5 text-brand-lime" /> Loan Tenure
                   </label>
-                  <span className="text-lg font-bold text-white">{tenure} mo ({(tenure / 12).toFixed(1)} yr)</span>
+                  <span className="text-lg font-bold text-slate-950">{tenure} mo ({(tenure / 12).toFixed(1)} yr)</span>
                 </div>
                 <Slider
                   value={[tenure]}
@@ -156,22 +156,22 @@ export function EmiCalculator() {
                   min={12}
                   max={84}
                   step={12}
-                  className="[&_[role=slider]]:bg-[#d4ff00] [&_[role=slider]]:border-[#d4ff00] [&_.bg-primary]:bg-[#d4ff00]"
+                  className="[&_[role=slider]]:bg-[#00a8ee] [&_[role=slider]]:border-[#00a8ee] [&_.bg-primary]:bg-[#00a8ee]"
                 />
-                <div className="flex justify-between text-[11px] text-gray-500 mt-1">
+                <div className="flex justify-between text-[11px] text-slate-500 mt-1">
                   <span>1 yr</span>
                   <span>7 yrs</span>
                 </div>
               </div>
 
               {/* Result */}
-              <div className="bg-gradient-to-br from-[#d4ff00]/10 to-[#d4ff00]/5 border border-[#d4ff00]/30 rounded-xl p-5">
+              <div className="bg-gradient-to-br from-[#00a8ee]/10 to-[#00a8ee]/5 border border-[#00a8ee]/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <div className="text-xs font-semibold text-gray-400">Your monthly EMI</div>
+                    <div className="text-xs font-semibold text-slate-600">Your monthly EMI</div>
                     <div className="text-3xl lg:text-4xl font-black text-brand-lime">
                       {formatPrice(emi)}
-                      <span className="text-base text-gray-400 font-normal">/mo</span>
+                      <span className="text-base text-slate-600 font-normal">/mo</span>
                     </div>
                   </div>
                   <TrendingDown className="h-8 w-8 text-brand-lime" />
@@ -179,20 +179,20 @@ export function EmiCalculator() {
 
                 {/* Breakdown bar */}
                 <div className="flex h-2.5 rounded-full overflow-hidden mb-2">
-                  <div className="bg-[#d4ff00]" style={{ width: `${principalPct}%` }} />
-                  <div className="bg-[#d4ff00]" style={{ width: `${100 - principalPct}%` }} />
+                  <div className="bg-[#00a8ee]" style={{ width: `${principalPct}%` }} />
+                  <div className="bg-[#00a8ee]" style={{ width: `${100 - principalPct}%` }} />
                 </div>
                 <div className="flex justify-between text-[11px]">
                   <span className="text-brand-lime">Principal {formatPrice(principal)}</span>
                   <span className="text-brand-lime">Interest {formatPrice(totalInterest)}</span>
                 </div>
-                <div className="mt-2 pt-2 border-t border-white/10 flex justify-between text-xs">
-                  <span className="text-gray-400">Total Payable</span>
-                  <span className="text-white font-bold">{formatPrice(totalPayable)}</span>
+                <div className="mt-2 pt-2 border-t border-slate-200 flex justify-between text-xs">
+                  <span className="text-slate-600">Total Payable</span>
+                  <span className="text-slate-950 font-bold">{formatPrice(totalPayable)}</span>
                 </div>
               </div>
 
-              <Button asChild className="w-full bg-[#d4ff00] hover:bg-[#b8e000] text-black font-bold">
+              <Button asChild className="w-full bg-[#00a8ee] hover:bg-[#007fba] text-white font-bold">
                 <a href={waLink} target="_blank" rel="noreferrer">
                   Apply for Loan on WhatsApp
                 </a>

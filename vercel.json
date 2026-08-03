@@ -7,6 +7,14 @@
     {
       "source": "/admin/:path*",
       "destination": "/index.html"
+    },
+    {
+      "source": "/rk-story",
+      "destination": "/rk-story.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog.html"
     }
   ],
   "headers": [

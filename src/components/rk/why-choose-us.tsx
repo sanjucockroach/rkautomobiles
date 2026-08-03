@@ -42,8 +42,8 @@ const reasons = [
 ];
 
 const colorMap: Record<string, { text: string; bg: string; border: string }> = {
-  accent: { text: "text-brand-lime", bg: "bg-[#d4ff00]/10", border: "border-[#d4ff00]/30" },
-  quiet: { text: "text-white", bg: "bg-white/[0.04]", border: "border-white/10" },
+  accent: { text: "text-brand-red", bg: "bg-red-50", border: "border-red-200" },
+  quiet: { text: "text-brand-blue", bg: "bg-sky-50", border: "border-sky-200" },
 };
 
 export function WhyChooseUs() {
@@ -53,10 +53,10 @@ export function WhyChooseUs() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <p className="text-sm font-semibold text-brand-lime mb-3">Trust is the product before the car is</p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950">
             Trusted by <span className="text-brand-lime">5000+ Customers</span>
           </h2>
-          <p className="text-gray-400 mt-3">
+          <p className="text-slate-600 mt-3">
             We don&apos;t just sell cars — we build trust for buyers and sellers across India.
           </p>
         </div>
@@ -67,41 +67,41 @@ export function WhyChooseUs() {
             return (
               <div
                 key={r.title}
-                className="group relative bg-[#0d0f14] border border-white/10 rounded-2xl p-6 card-hover"
+                className="group relative bg-white border border-slate-200 rounded-lg p-6 card-hover"
               >
                 <div className={`inline-flex p-3 rounded-xl ${c.bg} ${c.border} border ${c.text} mb-4`}>
                   <r.icon className="h-6 w-6" />
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{r.title}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">{r.desc}</p>
+                <h3 className="text-lg font-bold text-slate-950 mb-2">{r.title}</h3>
+                <p className="text-sm text-slate-600 leading-relaxed">{r.desc}</p>
               </div>
             );
           })}
         </div>
 
         {/* Trust banner */}
-        <div className="mt-10 relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-r from-[#d4ff00]/5 via-[#0d0f14] to-[#d4ff00]/5 p-6 lg:p-8">
-          <div className="absolute top-0 right-0 h-40 w-40 bg-[#d4ff00]/10 rounded-full blur-3xl" />
+        <div className="mt-10 relative overflow-hidden rounded-lg border border-slate-200 bg-white p-6 lg:p-8">
+          <div className="absolute top-0 right-0 h-40 w-40 bg-[#00a8ee]/10 rounded-full blur-3xl" />
           <div className="relative flex flex-col lg:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <Wrench className="h-8 w-8 text-brand-lime" />
               <div>
-                <div className="text-lg font-bold text-white">Free 7-Day Service Warranty</div>
-                <div className="text-sm text-gray-400">On every car purchase. Plus 1-year free roadside assistance.</div>
+                <div className="text-lg font-bold text-slate-950">Free 7-Day Service Warranty</div>
+                <div className="text-sm text-slate-600">On every car purchase. Plus 1-year free roadside assistance.</div>
               </div>
             </div>
             <div className="flex items-center gap-6 text-center">
               <div>
                 <div className="text-2xl font-black text-brand-lime">100%</div>
-                <div className="text-xs text-gray-400">Verified</div>
+                <div className="text-xs text-slate-600">Verified</div>
               </div>
               <div>
                 <div className="text-2xl font-black text-brand-lime">5000+</div>
-                <div className="text-xs text-gray-400">Customers</div>
+                <div className="text-xs text-slate-600">Customers</div>
               </div>
               <div>
                 <div className="text-2xl font-black text-brand-lime">4.8★</div>
-                <div className="text-xs text-gray-400">Rating</div>
+                <div className="text-xs text-slate-600">Rating</div>
               </div>
             </div>
           </div>

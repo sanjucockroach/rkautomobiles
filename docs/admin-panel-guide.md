@@ -1,6 +1,6 @@
 # R.K. Automobile Admin Panel
 
-Open `https://rkautomobile.in/admin` and sign in with the private administrator username and password configured in Vercel.
+Open `https://www.rkautomobile.in/admin` and sign in with the private administrator username and password configured in Vercel.
 
 ## Everyday Tasks
 
@@ -37,5 +37,11 @@ Open `https://rkautomobile.in/admin` and sign in with the private administrator 
    - `ADMIN_SESSION_SECRET`: at least 32 random characters. Generate one with `openssl rand -hex 32`.
 4. Redeploy the latest `main` commit after adding or changing environment variables.
 5. Visit `/admin`, sign in, and save the existing inventory once to migrate any browser-cached listings into shared storage.
+
+The designated single-owner username is `rk.inventory.owner`. Its generated password and session secret are stored only in the ignored local `.env.production.local` file and must be added to Vercel; they are intentionally never committed to Git.
+
+## Vehicle Registration Lookup
+
+The public registration-number form calls `/api/vehicle-lookup`. It does not scrape mParivahan and never exposes provider credentials in browser code. After R.K. Automobiles receives approved MoRTH/API Setu or licensed-provider access, set `VEHICLE_LOOKUP_API_URL` and `VEHICLE_LOOKUP_API_KEY` in Vercel and adapt the small response mapping in `api/vehicle-lookup.js` if the provider uses different field names.
 
 No additional CNAME is needed for admin access. `/admin` is a protected route on the existing `rkautomobile.in` deployment.

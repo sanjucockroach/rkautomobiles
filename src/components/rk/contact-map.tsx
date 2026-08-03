@@ -11,7 +11,7 @@ export function ContactMap() {
   const [done, setDone] = useState(false);
   const [errors, setErrors] = useState<LeadErrors>({});
   const inputClass =
-    "mt-1.5 w-full bg-[#0a0c10] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-[#7f8790] focus:outline-none focus:border-brand-lime/70 focus:ring-2 focus:ring-brand-lime/20";
+    "mt-1.5 w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-slate-950 placeholder:text-[#7f8790] focus:outline-none focus:border-brand-lime/70 focus:ring-2 focus:ring-brand-lime/20";
 
   const contactWaLink = `https://wa.me/${brandInfo.whatsapp}?text=${encodeURIComponent(
     `Hi R.K. Automobile, my name is ${form.name}. Phone: ${form.phone}. Email: ${form.email || "Not shared"}. Message: ${form.message || "Please contact me."}`
@@ -32,10 +32,10 @@ export function ContactMap() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <p className="text-sm font-semibold text-brand-lime mb-3">Delhi showroom, India-wide assistance</p>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950">
             Get in <span className="text-brand-lime">Touch</span>
           </h2>
-          <p className="text-gray-400 mt-3">
+          <p className="text-slate-600 mt-3">
             Visit our showroom in Nehru Vihar, Delhi or reach out on WhatsApp/Phone. We&apos;re here to help you 7 days a week.
           </p>
         </div>
@@ -44,7 +44,7 @@ export function ContactMap() {
           {/* Left: contact info + map */}
           <div className="space-y-5">
             {/* Map */}
-            <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-[#0d0f14] h-64">
+            <div className="relative rounded-lg overflow-hidden border border-slate-200 bg-white h-64">
               <iframe
                 title="R.K. Automobile Location"
                 src={brandInfo.mapEmbed}
@@ -54,12 +54,12 @@ export function ContactMap() {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
-              <div className="absolute bottom-3 left-3 right-3 bg-[#0d0f14]/90 backdrop-blur-md border border-white/10 rounded-xl p-3 flex items-center justify-between gap-2">
+              <div className="absolute bottom-3 left-3 right-3 bg-white/90 backdrop-blur-md border border-slate-200 rounded-xl p-3 flex items-center justify-between gap-2">
                 <div className="flex items-start gap-2 min-w-0">
                   <MapPin className="h-4 w-4 text-brand-lime shrink-0 mt-0.5" />
                   <div className="min-w-0">
-                    <div className="text-xs font-bold text-white truncate">R.K. AUTOMOBILE</div>
-                    <div className="text-[11px] text-gray-400 truncate">{brandInfo.address}</div>
+                    <div className="text-xs font-bold text-slate-950 truncate">R.K. AUTOMOBILE</div>
+                    <div className="text-[11px] text-slate-600 truncate">{brandInfo.address}</div>
                   </div>
                 </div>
                 <a
@@ -75,63 +75,63 @@ export function ContactMap() {
 
             {/* Contact cards */}
             <div className="grid sm:grid-cols-2 gap-3">
-              <a href={`tel:${brandInfo.phone1}`} className="p-4 rounded-xl bg-[#0d0f14] border border-white/10 card-hover flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-[#d4ff00]/10 text-brand-lime">
+              <a href={`tel:${brandInfo.phone1}`} className="p-4 rounded-xl bg-white border border-slate-200 card-hover flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-[#00a8ee]/10 text-brand-lime">
                   <Phone className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-semibold text-gray-400">Call us</div>
-                  <div className="text-sm font-bold text-white">{brandInfo.phone1}</div>
+                  <div className="text-[11px] font-semibold text-slate-600">Call us</div>
+                  <div className="text-sm font-bold text-slate-950">{brandInfo.phone1}</div>
                 </div>
               </a>
-              <a href={`https://wa.me/${brandInfo.whatsapp}`} target="_blank" rel="noreferrer" className="p-4 rounded-xl bg-[#0d0f14] border border-white/10 card-hover flex items-center gap-3">
+              <a href={`https://wa.me/${brandInfo.whatsapp}`} target="_blank" rel="noreferrer" className="p-4 rounded-xl bg-white border border-slate-200 card-hover flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-[#25d366]/10 text-[#25d366]">
                   <MessageCircle className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-semibold text-gray-400">WhatsApp</div>
-                  <div className="text-sm font-bold text-white">{brandInfo.phone2}</div>
+                  <div className="text-[11px] font-semibold text-slate-600">WhatsApp</div>
+                  <div className="text-sm font-bold text-slate-950">{brandInfo.phone2}</div>
                 </div>
               </a>
-              <a href={`tel:${brandInfo.phone3}`} className="p-4 rounded-xl bg-[#0d0f14] border border-white/10 card-hover flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-[#d4ff00]/10 text-brand-lime">
+              <a href={`tel:${brandInfo.phone3}`} className="p-4 rounded-xl bg-white border border-slate-200 card-hover flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-[#00a8ee]/10 text-brand-lime">
                   <Phone className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-semibold text-gray-400">Alt. number</div>
-                  <div className="text-sm font-bold text-white">{brandInfo.phone3}</div>
+                  <div className="text-[11px] font-semibold text-slate-600">Alt. number</div>
+                  <div className="text-sm font-bold text-slate-950">{brandInfo.phone3}</div>
                 </div>
               </a>
-              <div className="p-4 rounded-xl bg-[#0d0f14] border border-white/10 flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-[#d4ff00]/10 text-brand-lime">
+              <div className="p-4 rounded-xl bg-white border border-slate-200 flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-[#00a8ee]/10 text-brand-lime">
                   <Clock className="h-4 w-4" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-semibold text-gray-400">Open hours</div>
-                  <div className="text-sm font-bold text-white">Mon-Sun · 9am-8pm</div>
+                  <div className="text-[11px] font-semibold text-slate-600">Open hours</div>
+                  <div className="text-sm font-bold text-slate-950">Mon-Sun · 9am-8pm</div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right: contact form */}
-          <div className="bg-[#0d0f14] border border-white/10 rounded-2xl p-6 lg:p-8 shadow-2xl shadow-black/40">
+          <div className="bg-white border border-slate-200 rounded-lg p-6 lg:p-8 shadow-2xl shadow-slate-900/10">
             {done ? (
               <div className="text-center py-10">
-                <div className="h-16 w-16 mx-auto rounded-full bg-[#d4ff00]/15 flex items-center justify-center mb-4">
+                <div className="h-16 w-16 mx-auto rounded-full bg-[#00a8ee]/15 flex items-center justify-center mb-4">
                   <Send className="h-8 w-8 text-brand-lime" />
                 </div>
-                <h3 className="text-2xl font-black text-white">Message Sent!</h3>
-                <p className="text-gray-400 mt-2">Your WhatsApp message is ready. We&apos;ll get back to you within 30 minutes during business hours.</p>
+                <h3 className="text-2xl font-black text-slate-950">Message Sent!</h3>
+                <p className="text-slate-600 mt-2">Your WhatsApp message is ready. We&apos;ll get back to you within 30 minutes during business hours.</p>
                 <Button variant="outline" className="mt-5 border-brand-lime text-brand-lime" onClick={() => setDone(false)}>
                   Send Another Message
                 </Button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-                <h3 className="text-xl font-bold text-white">Send a Message</h3>
+                <h3 className="text-xl font-bold text-slate-950">Send a Message</h3>
                 <div className="grid sm:grid-cols-2 gap-3">
-                  <label className="block text-sm font-medium text-gray-200" htmlFor="contact-name">
+                  <label className="block text-sm font-medium text-slate-700" htmlFor="contact-name">
                     Your name <span className="text-brand-lime">*</span>
                     <input
                       id="contact-name"
@@ -155,7 +155,7 @@ export function ContactMap() {
                       </span>
                     )}
                   </label>
-                  <label className="block text-sm font-medium text-gray-200" htmlFor="contact-phone">
+                  <label className="block text-sm font-medium text-slate-700" htmlFor="contact-phone">
                     Phone <span className="text-brand-lime">*</span>
                     <input
                       id="contact-phone"
@@ -183,8 +183,8 @@ export function ContactMap() {
                     )}
                   </label>
                 </div>
-                <label className="block text-sm font-medium text-gray-200" htmlFor="contact-email">
-                  Email <span className="text-gray-500">(optional)</span>
+                <label className="block text-sm font-medium text-slate-700" htmlFor="contact-email">
+                  Email <span className="text-slate-500">(optional)</span>
                   <input
                     id="contact-email"
                     name="email"
@@ -197,7 +197,7 @@ export function ContactMap() {
                     className={inputClass}
                   />
                 </label>
-                <label className="block text-sm font-medium text-gray-200" htmlFor="contact-message">
+                <label className="block text-sm font-medium text-slate-700" htmlFor="contact-message">
                   Message
                   <textarea
                     id="contact-message"
@@ -212,7 +212,7 @@ export function ContactMap() {
                 </label>
                 <Button
                   type="submit"
-                  className="w-full bg-[#d4ff00] hover:bg-[#b8e000] text-black font-bold h-11"
+                  className="w-full bg-[#00a8ee] hover:bg-[#007fba] text-white font-bold h-11"
                 >
                   <Send className="h-4 w-4 mr-2" /> Send Message
                 </Button>

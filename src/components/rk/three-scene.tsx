@@ -30,7 +30,7 @@ function Wheel({ position }: { position: [number, number, number] }) {
         {/* Rim accent */}
         <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, rimY, 0]}>
           <cylinderGeometry args={[0.22, 0.22, 0.02, 16]} />
-          <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={2.0} metalness={0.9} roughness={0.1} toneMapped={false} />
+          <meshStandardMaterial color="#00a8ee" emissive="#00a8ee" emissiveIntensity={2.0} metalness={0.9} roughness={0.1} toneMapped={false} />
         </mesh>
         {/* Visual spokes for spinning effect */}
         <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, rimY * 1.05, 0]}>
@@ -73,11 +73,11 @@ function SportsCar() {
       {/* Beveled side accent (lime neon) */}
       <mesh position={[0, 0.35, 0.76]}>
         <boxGeometry args={[3.5, 0.08, 0.02]} />
-        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={3} toneMapped={false} />
+        <meshStandardMaterial color="#00a8ee" emissive="#00a8ee" emissiveIntensity={3} toneMapped={false} />
       </mesh>
       <mesh position={[0, 0.35, -0.76]}>
         <boxGeometry args={[3.5, 0.08, 0.02]} />
-        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={3} toneMapped={false} />
+        <meshStandardMaterial color="#00a8ee" emissive="#00a8ee" emissiveIntensity={3} toneMapped={false} />
       </mesh>
       {/* Cabin / roof - tapered */}
       <mesh castShadow position={[-0.15, 0.85, 0]}>
@@ -87,12 +87,12 @@ function SportsCar() {
       {/* Windshield glass */}
       <mesh position={[0.78, 0.86, 0]} rotation={[0, 0, -0.5]}>
         <boxGeometry args={[0.05, 0.6, 1.25]} />
-        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={1.2} transparent opacity={0.55} metalness={0.4} roughness={0.1} toneMapped={false} />
+        <meshStandardMaterial color="#00a8ee" emissive="#00a8ee" emissiveIntensity={1.2} transparent opacity={0.55} metalness={0.4} roughness={0.1} toneMapped={false} />
       </mesh>
       {/* Rear glass */}
       <mesh position={[-1.05, 0.86, 0]} rotation={[0, 0, 0.5]}>
         <boxGeometry args={[0.05, 0.55, 1.25]} />
-        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={1.0} transparent opacity={0.5} metalness={0.4} roughness={0.1} toneMapped={false} />
+        <meshStandardMaterial color="#00a8ee" emissive="#00a8ee" emissiveIntensity={1.0} transparent opacity={0.5} metalness={0.4} roughness={0.1} toneMapped={false} />
       </mesh>
       {/* Hood nose taper */}
       <mesh castShadow position={[1.55, 0.5, 0]} rotation={[0, 0, -0.12]}>
@@ -107,20 +107,20 @@ function SportsCar() {
       {/* Headlights */}
       <mesh position={[2.02, 0.5, 0.5]}>
         <boxGeometry args={[0.06, 0.14, 0.3]} />
-        <meshStandardMaterial color="#ffffff" emissive="#d4ff00" emissiveIntensity={4} toneMapped={false} />
+        <meshStandardMaterial color="#ffffff" emissive="#00a8ee" emissiveIntensity={4} toneMapped={false} />
       </mesh>
       <mesh position={[2.02, 0.5, -0.5]}>
         <boxGeometry args={[0.06, 0.14, 0.3]} />
-        <meshStandardMaterial color="#ffffff" emissive="#d4ff00" emissiveIntensity={4} toneMapped={false} />
+        <meshStandardMaterial color="#ffffff" emissive="#00a8ee" emissiveIntensity={4} toneMapped={false} />
       </mesh>
       {/* Tail lights */}
       <mesh position={[-2.12, 0.5, 0.5]}>
         <boxGeometry args={[0.05, 0.12, 0.35]} />
-        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={3} toneMapped={false} />
+        <meshStandardMaterial color="#00a8ee" emissive="#00a8ee" emissiveIntensity={3} toneMapped={false} />
       </mesh>
       <mesh position={[-2.12, 0.5, -0.5]}>
         <boxGeometry args={[0.05, 0.12, 0.35]} />
-        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={3} toneMapped={false} />
+        <meshStandardMaterial color="#00a8ee" emissive="#00a8ee" emissiveIntensity={3} toneMapped={false} />
       </mesh>
 
       {/* Wheels - 4 cylinders */}
@@ -136,7 +136,7 @@ function SportsCar() {
       {/* Underglow plane */}
       <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[4, 1.8]} />
-        <meshBasicMaterial color="#d4ff00" transparent opacity={0.18} toneMapped={false} />
+        <meshBasicMaterial color="#00a8ee" transparent opacity={0.18} toneMapped={false} />
       </mesh>
     </group>
   );
@@ -154,7 +154,7 @@ function NeonGrid() {
   return (
     <gridHelper
       ref={ref}
-      args={[40, 40, "#d4ff00", "#0a3a4a"]}
+      args={[40, 40, "#00a8ee", "#0a3a4a"]}
       position={[0, -0.6, 0]}
     >
       <lineBasicMaterial transparent opacity={0.35} />
@@ -181,11 +181,11 @@ function NeonRings() {
     <>
       <mesh ref={ring1} position={[0, 0.5, 0]}>
         <torusGeometry args={[3.4, 0.02, 16, 80]} />
-        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={2} toneMapped={false} />
+        <meshStandardMaterial color="#00a8ee" emissive="#00a8ee" emissiveIntensity={2} toneMapped={false} />
       </mesh>
       <mesh ref={ring2} position={[0, 0.5, 0]}>
         <torusGeometry args={[4.2, 0.015, 16, 80]} />
-        <meshStandardMaterial color="#d4ff00" emissive="#d4ff00" emissiveIntensity={2} toneMapped={false} />
+        <meshStandardMaterial color="#00a8ee" emissive="#00a8ee" emissiveIntensity={2} toneMapped={false} />
       </mesh>
     </>
   );
@@ -194,7 +194,7 @@ function NeonRings() {
 /* Floating geometric particles */
 function FloatingShapes() {
   const shapes = useMemo(() => {
-    const colors = ["#d4ff00", "#d4ff00", "#d4ff00", "#d4ff00"];
+    const colors = ["#00a8ee", "#00a8ee", "#00a8ee", "#00a8ee"];
     return Array.from({ length: 14 }).map((_, i) => ({
       position: [
         (Math.random() - 0.5) * 12,
@@ -270,18 +270,18 @@ export function ThreeScene() {
         <CameraController />
         {/* Lighting */}
         <ambientLight intensity={0.35} />
-        <spotLight position={[6, 8, 4]} angle={0.4} penumbra={0.8} intensity={3} color="#d4ff00" castShadow />
-        <spotLight position={[-6, 6, -4]} angle={0.4} penumbra={0.8} intensity={2.5} color="#d4ff00" />
-        <pointLight position={[0, 3, 6]} intensity={2} color="#d4ff00" />
-        <pointLight position={[0, 1, -4]} intensity={1.5} color="#d4ff00" />
+        <spotLight position={[6, 8, 4]} angle={0.4} penumbra={0.8} intensity={3} color="#00a8ee" castShadow />
+        <spotLight position={[-6, 6, -4]} angle={0.4} penumbra={0.8} intensity={2.5} color="#00a8ee" />
+        <pointLight position={[0, 3, 6]} intensity={2} color="#00a8ee" />
+        <pointLight position={[0, 1, -4]} intensity={1.5} color="#00a8ee" />
 
         <group position={[0, -0.3, 0]}>
           <SportsCar />
           <NeonRings />
           <NeonGrid />
           <FloatingShapes />
-          <Sparkles count={60} scale={10} size={3} speed={0.4} color="#d4ff00" opacity={0.7} />
-          <Sparkles count={40} scale={8} size={2} speed={0.3} color="#d4ff00" opacity={0.6} />
+          <Sparkles count={60} scale={10} size={3} speed={0.4} color="#00a8ee" opacity={0.7} />
+          <Sparkles count={40} scale={8} size={2} speed={0.3} color="#00a8ee" opacity={0.6} />
           <ContactShadows position={[0, -0.59, 0]} opacity={0.6} scale={12} blur={2.5} far={4} color="#000000" />
         </group>
 
