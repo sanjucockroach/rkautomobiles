@@ -8,7 +8,7 @@ const quickLinks = [
   { href: "/#sell", label: "Sell Your Car" },
   { href: "/#process", label: "How It Works" },
   { href: "/#reviews", label: "Reviews" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/contact", label: "Contact" },
 ];
 
 const services = [
@@ -24,9 +24,8 @@ const services = [
 
 export function Footer() {
   return (
-    <footer className="relative mt-auto border-t border-slate-200 bg-white">
-      {/* top accent */}
-      <div className="h-1 bg-gradient-to-r from-[#00a8ee] via-[#00a8ee] to-[#00a8ee]" />
+    <footer className="relative mt-auto border-t border-white/10 bg-[#05070a] text-white">
+      <div className="flex h-1"><span className="w-2/3 bg-brand-blue" /><span className="w-1/3 bg-brand-red" /></div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8">
@@ -35,14 +34,14 @@ export function Footer() {
             <a href="#" className="flex items-center gap-3 mb-4">
               <img src="/rk-logo-transparent.png" alt="R.K. Automobiles logo" className="h-16 w-16 object-contain" />
               <div className="flex flex-col leading-tight">
-                <span className="text-base font-extrabold tracking-wide text-slate-950">
+                <span className="text-base font-extrabold tracking-wide text-white">
                   R.K. Automobiles
                 </span>
-                <span className="text-[11px] font-semibold text-slate-500">Used cars, clearly handled</span>
+                <span className="text-[11px] font-semibold text-white/55">Used cars, clearly handled</span>
               </div>
             </a>
-            <p className="text-sm text-slate-600 leading-relaxed max-w-sm">
-              India-wide used car buying, selling, finance, insurance, and Pan India delivery from our Delhi showroom base. Genuine deals, best prices.
+            <p className="text-sm text-white/60 leading-relaxed max-w-sm">
+              Used-car buying, selling, finance, insurance and delivery across India, supported by our Delhi showroom team.
             </p>
 
             {/* Socials */}
@@ -64,11 +63,11 @@ export function Footer() {
 
           {/* Quick links */}
           <div className="lg:col-span-2">
-            <h4 className="text-sm font-bold text-slate-950 mb-4">Quick links</h4>
+            <h4 className="text-sm font-bold text-white mb-4">Quick links</h4>
             <ul className="space-y-2.5">
               {quickLinks.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} className="text-sm text-slate-600 hover:text-brand-lime transition-colors flex items-center gap-1">
+                  <a href={l.href} className="text-sm text-white/60 hover:text-brand-blue transition-colors flex items-center gap-1">
                     <ChevronRight className="h-3 w-3" /> {l.label}
                   </a>
                 </li>
@@ -78,11 +77,11 @@ export function Footer() {
 
           {/* Services */}
           <div className="lg:col-span-3">
-            <h4 className="text-sm font-bold text-slate-950 mb-4">Our services</h4>
+            <h4 className="text-sm font-bold text-white mb-4">Our services</h4>
             <ul className="space-y-2.5">
               {services.map((s) => (
-                <li key={s} className="text-sm text-slate-600 flex items-center gap-1.5">
-                  <span className="h-1 w-1 rounded-full bg-brand-lime" /> {s}
+                <li key={s} className="text-sm text-white/60 flex items-center gap-1.5">
+                  <span className="h-1 w-1 rounded-full bg-brand-red" /> {s}
                 </li>
               ))}
             </ul>
@@ -90,21 +89,21 @@ export function Footer() {
 
           {/* Contact */}
           <div className="lg:col-span-3">
-            <h4 className="text-sm font-bold text-slate-950 mb-4">Reach us</h4>
+            <h4 className="text-sm font-bold text-white mb-4">Reach us</h4>
             <div className="space-y-3">
-              <a href={brandInfo.mapUrl} target="_blank" rel="noreferrer" className="flex items-start gap-2 text-sm text-slate-600 hover:text-brand-lime transition-colors">
+              <a href={brandInfo.mapUrl} target="_blank" rel="noreferrer" className="flex items-start gap-2 text-sm text-white/60 hover:text-white transition-colors">
                 <MapPin className="h-4 w-4 text-brand-lime shrink-0 mt-0.5" />
                 <span>{brandInfo.address}</span>
               </a>
-              <a href={`tel:${brandInfo.phone1}`} className="flex items-center gap-2 text-sm text-slate-600 hover:text-brand-lime transition-colors">
+              <a href={`tel:${brandInfo.phone1}`} className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
                 <Phone className="h-4 w-4 text-brand-lime shrink-0" />
                 <span>{brandInfo.phone1}, {brandInfo.phone3}</span>
               </a>
-              <a href={`https://wa.me/${brandInfo.whatsapp}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-slate-600 hover:text-[#25d366] transition-colors">
+              <a href={`https://wa.me/${brandInfo.whatsapp}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-white/60 hover:text-[#25d366] transition-colors">
                 <MessageCircle className="h-4 w-4 text-[#25d366] shrink-0" />
                 <span>WhatsApp: {brandInfo.phone2}</span>
               </a>
-              <a href={brandInfo.website} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-slate-600 hover:text-brand-lime transition-colors">
+              <a href={brandInfo.website} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
                 <Globe className="h-4 w-4 text-brand-lime shrink-0" />
                 <span>rkautomobile.in</span>
               </a>
@@ -113,11 +112,11 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-slate-500">
-            © {new Date().getFullYear()} R.K. Automobile. All rights reserved.
+        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-white/45">
+            © {new Date().getFullYear()} R.K. Automobiles. All rights reserved.
           </p>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-white/45">
             Built for genuine used car deals across India.
           </p>
         </div>
@@ -144,7 +143,7 @@ function SocialIcon({
       rel="noreferrer"
       aria-label={label}
       title={label}
-      className={`h-9 w-9 rounded-lg border border-slate-200 bg-slate-100 flex items-center justify-center text-slate-600 transition-colors ${color}`}
+      className={`h-9 w-9 rounded-md border border-white/15 bg-white/5 flex items-center justify-center text-white/60 transition-colors ${color}`}
     >
       {children}
     </a>

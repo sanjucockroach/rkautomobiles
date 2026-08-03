@@ -18,6 +18,7 @@ import { VehicleLookup } from "@/components/rk/vehicle-lookup";
 
 const RkStoryPage = lazy(() => import("@/pages/rk-story-page").then((module) => ({ default: module.RkStoryPage })));
 const BlogPage = lazy(() => import("@/pages/blog-page").then((module) => ({ default: module.BlogPage })));
+const ContactPage = lazy(() => import("@/pages/contact-page").then((module) => ({ default: module.ContactPage })));
 
 export default function App() {
   const path = window.location.pathname.replace(/\/$/, "") || "/";
@@ -31,6 +32,7 @@ export default function App() {
 
   if (path === "/rk-story" || path === "/rk-story.html") return <Suspense fallback={null}><RkStoryPage /></Suspense>;
   if (path === "/blog" || path === "/blog.html") return <Suspense fallback={null}><BlogPage /></Suspense>;
+  if (path === "/contact") return <Suspense fallback={null}><ContactPage /></Suspense>;
 
   return (
     <div className="public-page relative min-h-screen flex flex-col">

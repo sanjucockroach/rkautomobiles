@@ -176,7 +176,6 @@
 .card-hover:hover {
   transform: translateY(-3px);
   border-color: rgba(0, 143, 208, 0.38);
-  box-shadow: 0 14px 34px rgba(23, 34, 54, 0.09);
 }
 
 /* Cinematic hero utilities */
@@ -216,8 +215,8 @@
 
 .cinematic-overlay {
   background:
-    linear-gradient(90deg, rgba(247, 249, 252, 0.97) 0%, rgba(247, 249, 252, 0.84) 43%, rgba(247, 249, 252, 0.18) 78%),
-    linear-gradient(180deg, rgba(247, 249, 252, 0.45) 0%, rgba(247, 249, 252, 0.08) 48%, rgba(247, 249, 252, 0.9) 100%);
+    linear-gradient(90deg, rgba(5, 7, 10, 0.88) 0%, rgba(5, 7, 10, 0.64) 48%, rgba(5, 7, 10, 0.18) 82%),
+    linear-gradient(180deg, rgba(5, 7, 10, 0.35) 0%, rgba(5, 7, 10, 0.08) 48%, rgba(5, 7, 10, 0.86) 100%);
 }
 
 .public-page {
@@ -229,12 +228,6 @@
   background: #ffffff;
   border: 1px solid #dce5ec;
   box-shadow: 0 12px 32px rgba(23, 34, 54, 0.06);
-}
-
-.page-grid {
-  background-image: linear-gradient(rgba(0, 143, 208, 0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 143, 208, 0.055) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: linear-gradient(to bottom, black, transparent 88%);
 }
 
 @keyframes car-float {

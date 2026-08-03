@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { brandInfo } from "@/lib/data";
 import { hasLeadErrors, validateLeadDetails, type LeadErrors } from "@/lib/forms";
 
-export function ContactMap() {
+export function ContactMap({ showHeading = true }: { showHeading?: boolean }) {
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
   const [done, setDone] = useState(false);
   const [errors, setErrors] = useState<LeadErrors>({});
@@ -30,7 +30,7 @@ export function ContactMap() {
     <section id="contact" className="content-auto relative py-16 lg:py-24">
       <div className="absolute inset-0 section-depth opacity-20 pointer-events-none" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
+        {showHeading && <div className="text-center max-w-2xl mx-auto mb-12">
           <p className="text-sm font-semibold text-brand-lime mb-3">Delhi showroom, India-wide assistance</p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950">
             Get in <span className="text-brand-lime">Touch</span>
@@ -38,7 +38,7 @@ export function ContactMap() {
           <p className="text-slate-600 mt-3">
             Visit our showroom in Nehru Vihar, Delhi or reach out on WhatsApp/Phone. We&apos;re here to help you 7 days a week.
           </p>
-        </div>
+        </div>}
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left: contact info + map */}
@@ -50,7 +50,7 @@ export function ContactMap() {
                 src={brandInfo.mapEmbed}
                 width="100%"
                 height="100%"
-                style={{ border: 0, filter: "invert(0.92) hue-rotate(180deg) contrast(0.85)" }}
+                style={{ border: 0 }}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
@@ -115,14 +115,14 @@ export function ContactMap() {
           </div>
 
           {/* Right: contact form */}
-          <div className="bg-white border border-slate-200 rounded-lg p-6 lg:p-8 shadow-2xl shadow-slate-900/10">
+          <div className="bg-white border border-slate-200 rounded-lg p-6 lg:p-8">
             {done ? (
               <div className="text-center py-10">
                 <div className="h-16 w-16 mx-auto rounded-full bg-[#00a8ee]/15 flex items-center justify-center mb-4">
                   <Send className="h-8 w-8 text-brand-lime" />
                 </div>
-                <h3 className="text-2xl font-black text-slate-950">Message Sent!</h3>
-                <p className="text-slate-600 mt-2">Your WhatsApp message is ready. We&apos;ll get back to you within 30 minutes during business hours.</p>
+                <h3 className="text-2xl font-black text-slate-950">WhatsApp opened</h3>
+                <p className="text-slate-600 mt-2">Send the prepared message in WhatsApp and our showroom team will respond during business hours.</p>
                 <Button variant="outline" className="mt-5 border-brand-lime text-brand-lime" onClick={() => setDone(false)}>
                   Send Another Message
                 </Button>
