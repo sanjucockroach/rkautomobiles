@@ -38,7 +38,7 @@ Open `https://www.rkautomobile.in/admin` and sign in with the private administra
 4. Redeploy the latest `main` commit after adding or changing environment variables.
 5. Visit `/admin`, sign in, and save the existing inventory once to migrate any browser-cached listings into shared storage.
 
-The designated single-owner username is `rk.inventory.owner`. Its generated password and session secret are stored only in the ignored local `.env.production.local` file and must be added to Vercel; they are intentionally never committed to Git.
+The designated single-owner username is `rkautomobileadmin`. Its password and session secret are stored only in the ignored local `.env.production.local` file and must be added to Vercel; they are intentionally never committed to Git.
 
 ## Vehicle Registration Lookup
 
