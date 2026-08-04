@@ -29,14 +29,16 @@ Open `https://www.rkautomobile.in/admin` and sign in with the private administra
 
 ## Vercel Production Setup
 
-1. In the Vercel project, open **Storage** or **Marketplace** and connect an Upstash Redis database. Confirm that `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are available to Production, Preview, and Development.
-2. Connect a Vercel Blob store to the project. Vercel adds `BLOB_READ_WRITE_TOKEN` automatically.
+1. In the Vercel project, open **Storage** or **Marketplace** and connect an Upstash Redis database. Confirm that `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are available to Production. The supported `KV_REST_API_URL` and `KV_REST_API_TOKEN` aliases also work.
+2. Connect a Vercel Blob store to the same project and environment. Confirm that Vercel created `BLOB_READ_WRITE_TOKEN` for Production.
 3. In **Settings → Environment Variables**, add:
    - `ADMIN_USERNAME`: the single private administrator username.
    - `ADMIN_PASSWORD`: a long, unique password.
    - `ADMIN_SESSION_SECRET`: at least 32 random characters. Generate one with `openssl rand -hex 32`.
 4. Redeploy the latest `main` commit after adding or changing environment variables.
 5. Visit `/admin`, sign in, and save the existing inventory once to migrate any browser-cached listings into shared storage.
+
+After redeployment, open `/api/inventory`. A successful empty response or JSON inventory confirms Redis is connected; a `503` response means a required storage variable is still missing. Add or edit a car in `/admin`, then check the public inventory in a private browser window to confirm the shared data is visible without the administrator's browser cache.
 
 The designated single-owner username is `rkautomobileadmin`. Its password and session secret are stored only in the ignored local `.env.production.local` file and must be added to Vercel; they are intentionally never committed to Git.
 

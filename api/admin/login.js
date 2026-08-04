@@ -21,7 +21,9 @@ export default async function handler(request, response) {
     return response.status(403).json({ error: "Invalid request origin." });
   }
   if (!credentialsAreConfigured()) {
-    return response.status(503).json({ error: "Admin credentials are not configured in Vercel." });
+    return response.status(503).json({
+      error: "Vercel Production is missing ADMIN_USERNAME, ADMIN_PASSWORD, or ADMIN_SESSION_SECRET. Add all three environment variables and redeploy.",
+    });
   }
 
   try {
