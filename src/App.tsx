@@ -16,9 +16,24 @@ import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { AdminApp } from "@/components/admin/admin-app";
 import { VehicleLookup } from "@/components/rk/vehicle-lookup";
 
-const RkStoryPage = lazy(() => import("@/pages/rk-story-page").then((module) => ({ default: module.RkStoryPage })));
-const BlogPage = lazy(() => import("@/pages/blog-page").then((module) => ({ default: module.BlogPage })));
-const ContactPage = lazy(() => import("@/pages/contact-page").then((module) => ({ default: module.ContactPage })));
+const RkStoryPage = lazy(() =>
+  import("@/pages/rk-story-page").then((module) => ({
+    default: module.RkStoryPage,
+  })),
+);
+const BlogPage = lazy(() =>
+  import("@/pages/blog-page").then((module) => ({ default: module.BlogPage })),
+);
+const ContactPage = lazy(() =>
+  import("@/pages/contact-page").then((module) => ({
+    default: module.ContactPage,
+  })),
+);
+const OurSpecialityPage = lazy(() =>
+  import("@/pages/our-speciality-page").then((module) => ({
+    default: module.OurSpecialityPage,
+  })),
+);
 
 export default function App() {
   const path = window.location.pathname.replace(/\/$/, "") || "/";
@@ -30,9 +45,30 @@ export default function App() {
     return <AdminApp />;
   }
 
-  if (path === "/rk-story" || path === "/rk-story.html") return <Suspense fallback={null}><RkStoryPage /></Suspense>;
-  if (path === "/blog" || path === "/blog.html") return <Suspense fallback={null}><BlogPage /></Suspense>;
-  if (path === "/contact") return <Suspense fallback={null}><ContactPage /></Suspense>;
+  if (path === "/rk-story" || path === "/rk-story.html")
+    return (
+      <Suspense fallback={null}>
+        <RkStoryPage />
+      </Suspense>
+    );
+  if (path === "/blog" || path === "/blog.html")
+    return (
+      <Suspense fallback={null}>
+        <BlogPage />
+      </Suspense>
+    );
+  if (path === "/contact")
+    return (
+      <Suspense fallback={null}>
+        <ContactPage />
+      </Suspense>
+    );
+  if (path === "/our-speciality" || path === "/our-speciality.html")
+    return (
+      <Suspense fallback={null}>
+        <OurSpecialityPage />
+      </Suspense>
+    );
 
   return (
     <div className="public-page relative min-h-screen flex flex-col">

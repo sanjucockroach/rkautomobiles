@@ -19,6 +19,10 @@
     {
       "source": "/contact",
       "destination": "/index.html"
+    },
+    {
+      "source": "/our-speciality",
+      "destination": "/index.html"
     }
   ],
   "headers": [

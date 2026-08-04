@@ -3,6 +3,7 @@ import { brandInfo } from "@/lib/data";
 
 const quickLinks = [
   { href: "/#inventory", label: "Browse Cars" },
+  { href: "/our-speciality", label: "Jets & Helicopters" },
   { href: "/#services", label: "Our Services" },
   { href: "/#finance", label: "EMI Calculator" },
   { href: "/#sell", label: "Sell Your Car" },
