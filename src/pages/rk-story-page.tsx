@@ -23,48 +23,40 @@ export function RkStoryPage() {
       <SiteHeader />
       <main>
         <section className="relative min-h-[80svh] bg-[#05070a] text-white flex items-center overflow-hidden">
-          {/* Subtle background glow */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(0,168,238,0.06)_0%,transparent_60%)]" />
+          {/* Full bleed background image aligned to the left */}
+          <motion.img 
+            initial={reduceMotion ? false : { scale: 1.05, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0.65 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            src="/rk-owner.jpeg" 
+            alt="R.K. Automobiles Showroom" 
+            className="absolute inset-0 h-full w-full object-cover object-[20%_center] pointer-events-none" 
+          />
+          
+          {/* Gradients to fade out the image and make text readable */}
+          {/* Mobile overlay */}
+          <div className="absolute inset-0 bg-black/60 lg:hidden z-[1]" />
+          {/* Desktop gradient (darker on the right where the text is placed) */}
+          <div className="absolute inset-0 hidden lg:block bg-[linear-gradient(90deg,rgba(5,7,10,0.1)_0%,rgba(5,7,10,0.45)_35%,rgba(5,7,10,0.92)_70%)] z-[1]" />
           
           <div className="relative mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8 z-[2]">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:items-center">
-              {/* Text column */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:items-center">
+              {/* Shift text to the right side on desktop (cols 7 to 12) */}
               <motion.div 
-                initial={reduceMotion ? false : { opacity: 0, x: -30 }} 
+                initial={reduceMotion ? false : { opacity: 0, x: 35 }} 
                 animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="lg:col-span-7 flex flex-col justify-center text-left"
+                transition={{ duration: 0.9, ease: "easeOut", delay: 0.1 }}
+                className="lg:col-start-7 lg:col-span-6 flex flex-col justify-center text-left bg-black/30 lg:bg-transparent p-6 sm:p-8 lg:p-0 rounded-2xl backdrop-blur-sm lg:backdrop-blur-none border border-white/5 lg:border-none"
               >
-                <p className="mb-5 flex items-center gap-2 text-sm font-bold text-white/70">
+                <p className="mb-5 flex items-center gap-2 text-sm font-bold text-brand-lime">
                   <MapPin className="h-4 w-4 text-brand-blue" /> A Delhi showroom connecting journeys across India
                 </p>
                 <h1 className="text-balance text-4xl font-black leading-[1.1] text-white sm:text-5xl lg:text-6xl">
                   Between one goodbye and another person's first drive.
                 </h1>
-                <p className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/72">
+                <p className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/80 font-medium">
                   That is where the R.K. story lives.
                 </p>
-              </motion.div>
-
-              {/* Image column */}
-              <motion.div 
-                initial={reduceMotion ? false : { opacity: 0, y: 30 }} 
-                animate={{ opacity: 1, y: 0 }} 
-                transition={{ duration: 0.8, delay: 0.15 }}
-                className="lg:col-span-5 flex justify-center lg:justify-end"
-              >
-                <div className="relative w-full max-w-[380px] aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] bg-black/40 p-2">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent z-[1] pointer-events-none" />
-                  <img 
-                    src="/rk-owner.jpeg" 
-                    alt="R.K. Automobiles Owner" 
-                    className="w-full h-full object-cover rounded-xl"
-                  />
-                  <div className="absolute bottom-6 left-6 right-6 z-[2]">
-                    <div className="text-sm font-black text-brand-lime">R.K. Automobiles</div>
-                    <div className="text-xs text-white/70 mt-0.5">Delhi Showroom</div>
-                  </div>
-                </div>
               </motion.div>
             </div>
           </div>
