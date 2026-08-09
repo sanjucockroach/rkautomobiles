@@ -82,15 +82,25 @@ export function WhyChooseUs() {
         {/* Trust banner */}
         <div className="mt-10 relative overflow-hidden rounded-lg border border-slate-200 bg-white p-6 lg:p-8">
           <div className="absolute top-0 right-0 h-40 w-40 bg-[#00a8ee]/10 rounded-full blur-3xl" />
-          <div className="relative flex flex-col lg:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <Wrench className="h-8 w-8 text-brand-lime" />
+          <div className="relative flex flex-col lg:flex-row items-start justify-between gap-6">
+            <div className="flex items-start gap-4">
+              <div className="inline-flex p-3 rounded-xl bg-red-50 border border-red-200 text-brand-red shrink-0 mt-1">
+                <Wrench className="h-6 w-6" />
+              </div>
               <div>
                 <div className="text-lg font-bold text-slate-950">Free 7-Day Service Warranty</div>
-                <div className="text-sm text-slate-600">On every car purchase. Plus 1-year free roadside assistance.</div>
+                <div className="text-sm text-slate-600 mt-0.5 font-medium">On every car purchase. One month free roadside assistance around Delhi NCR.</div>
+                <div className="mt-4 border-t border-slate-100 pt-3">
+                  <div className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Warranty Terms & Conditions:</div>
+                  <ul className="list-disc pl-4 space-y-1 text-xs text-slate-500">
+                    <li>Customer side issues will not be addressed.</li>
+                    <li>Any issue in machinery and car will be addressed accordingly.</li>
+                    <li>Includes one month of free roadside assistance around Delhi NCR.</li>
+                  </ul>
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-6 text-center">
+            <div className="flex items-center gap-6 text-center self-center lg:self-start lg:pt-1 shrink-0">
               <div>
                 <div className="text-2xl font-black text-brand-lime">100%</div>
                 <div className="text-xs text-slate-600">Verified</div>

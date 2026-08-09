@@ -1,7 +1,8 @@
 "use client";
 
 import { Car, Wallet, Truck, Shield, Wrench, Sparkles, ArrowUpRight } from "lucide-react";
-import { services } from "@/lib/data";
+import { services, brandInfo } from "@/lib/data";
+import { useState } from "react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   car: Car,
@@ -15,6 +16,15 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 const colorMap = {
   accent: { text: "text-brand-red", bg: "bg-red-50", border: "border-red-200" },
   quiet: { text: "text-brand-blue", bg: "bg-sky-50", border: "border-sky-200" },
+};
+
+const whatsappMessages: Record<string, string> = {
+  "buy-sell": "Hi R.K. Automobile, I am interested in buying or selling a used car. Please share the details.",
+  finance: "Hi R.K. Automobile, I want to inquire about car finance/loan options and EMIs. Please guide me.",
+  delivery: "Hi R.K. Automobile, I want to learn more about your Pan India delivery options. Please share details.",
+  insurance: "Hi R.K. Automobile, I want to enquire about car insurance and claim support. Please guide me.",
+  denting: "Hi R.K. Automobile, I am interested in denting & painting services for my car. Please share details and pricing.",
+  detailing: "Hi R.K. Automobile, I want to learn more about car detailing and complete workshop services. Please share details.",
 };
 
 export function Services() {
@@ -43,6 +53,9 @@ export function Services() {
           {services.map((s) => {
             const Icon = iconMap[s.icon] ?? Car;
             const c = colorMap[s.color];
+            const message = whatsappMessages[s.id] ?? "Hi R.K. Automobile, I am interested in your services. Please share details.";
+            const waLink = `https://wa.me/${brandInfo.whatsapp}?text=${encodeURIComponent(message)}`;
+
             return (
               <div
                 key={s.id}
@@ -64,9 +77,14 @@ export function Services() {
                     ))}
                   </ul>
 
-                  <div className={`flex items-center gap-1 text-sm font-semibold ${c.text} group-hover:gap-2 transition-all`}>
+                  <a
+                    href={waLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`inline-flex items-center gap-1 text-sm font-semibold ${c.text} group-hover:gap-2 transition-all hover:underline`}
+                  >
                     Learn more <ArrowUpRight className="h-4 w-4" />
-                  </div>
+                  </a>
                 </div>
               </div>
             );

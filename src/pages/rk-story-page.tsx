@@ -25,7 +25,7 @@ export function RkStoryPage() {
       <SiteHeader />
       <main>
         <section className="relative min-h-[78svh] overflow-hidden bg-[#05070a] text-white">
-          <motion.img style={{ y: imageY }} src="/cars/hero-car.png" alt="A car ready for its next owner" className="absolute inset-0 h-[115%] w-full object-cover opacity-65" />
+          <motion.img style={{ y: imageY }} src="/rk-owner.jpeg" alt="R.K. Automobiles Owner" className="absolute inset-0 h-[115%] w-full object-cover object-[center_30%] opacity-60" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,.96)_0%,rgba(5,7,10,.7)_50%,rgba(5,7,10,.24)_100%),linear-gradient(180deg,transparent_50%,rgba(5,7,10,.92)_100%)]" />
           <motion.div initial={reduceMotion ? false : { clipPath: "inset(0 0 100% 0)" }} animate={{ clipPath: "inset(0 0 0% 0)" }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="relative mx-auto flex min-h-[78svh] max-w-7xl items-end px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8">
             <div className="max-w-4xl">
