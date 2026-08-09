@@ -13,8 +13,6 @@ const promises = [
 export function RkStoryPage() {
   const storyRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: storyRef, offset: ["start start", "end end"] });
-  const imageY = useTransform(scrollYProgress, [0, 0.35], [0, reduceMotion ? 0 : -70]);
 
   useEffect(() => {
     document.title = "Our Story | R.K. Automobiles";
@@ -24,16 +22,52 @@ export function RkStoryPage() {
     <div ref={storyRef} className="public-page min-h-screen">
       <SiteHeader />
       <main>
-        <section className="relative min-h-[78svh] overflow-hidden bg-[#05070a] text-white">
-          <motion.img style={{ y: imageY }} src="/rk-owner.jpeg" alt="R.K. Automobiles Owner" className="absolute inset-0 h-[115%] w-full object-cover object-[center_30%] opacity-60" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,10,.96)_0%,rgba(5,7,10,.7)_50%,rgba(5,7,10,.24)_100%),linear-gradient(180deg,transparent_50%,rgba(5,7,10,.92)_100%)]" />
-          <motion.div initial={reduceMotion ? false : { clipPath: "inset(0 0 100% 0)" }} animate={{ clipPath: "inset(0 0 0% 0)" }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="relative mx-auto flex min-h-[78svh] max-w-7xl items-end px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8">
-            <div className="max-w-4xl">
-              <p className="mb-5 flex items-center gap-2 text-sm font-bold text-white/70"><MapPin className="h-4 w-4 text-brand-blue" /> A Delhi showroom connecting journeys across India</p>
-              <h1 className="text-balance text-5xl font-black leading-[1.03] text-white sm:text-6xl lg:text-7xl">Between one goodbye and another person's first drive.</h1>
-              <p className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/72">That is where the R.K. story lives.</p>
+        <section className="relative min-h-[80svh] bg-[#05070a] text-white flex items-center overflow-hidden">
+          {/* Subtle background glow */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(0,168,238,0.06)_0%,transparent_60%)]" />
+          
+          <div className="relative mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8 z-[2]">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:items-center">
+              {/* Text column */}
+              <motion.div 
+                initial={reduceMotion ? false : { opacity: 0, x: -30 }} 
+                animate={{ opacity: 1, x: 0 }} 
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="lg:col-span-7 flex flex-col justify-center text-left"
+              >
+                <p className="mb-5 flex items-center gap-2 text-sm font-bold text-white/70">
+                  <MapPin className="h-4 w-4 text-brand-blue" /> A Delhi showroom connecting journeys across India
+                </p>
+                <h1 className="text-balance text-4xl font-black leading-[1.1] text-white sm:text-5xl lg:text-6xl">
+                  Between one goodbye and another person's first drive.
+                </h1>
+                <p className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/72">
+                  That is where the R.K. story lives.
+                </p>
+              </motion.div>
+
+              {/* Image column */}
+              <motion.div 
+                initial={reduceMotion ? false : { opacity: 0, y: 30 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                transition={{ duration: 0.8, delay: 0.15 }}
+                className="lg:col-span-5 flex justify-center lg:justify-end"
+              >
+                <div className="relative w-full max-w-[380px] aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] bg-black/40 p-2">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent z-[1] pointer-events-none" />
+                  <img 
+                    src="/rk-owner.jpeg" 
+                    alt="R.K. Automobiles Owner" 
+                    className="w-full h-full object-cover rounded-xl"
+                  />
+                  <div className="absolute bottom-6 left-6 right-6 z-[2]">
+                    <div className="text-sm font-black text-brand-lime">R.K. Automobiles</div>
+                    <div className="text-xs text-white/70 mt-0.5">Delhi Showroom</div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
         </section>
 
         <section className="bg-white py-20 sm:py-28">
