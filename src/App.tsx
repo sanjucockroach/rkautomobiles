@@ -10,7 +10,7 @@ import { SellCarForm } from "@/components/rk/sell-car-form";
 import { Testimonials } from "@/components/rk/testimonials";
 import { ContactMap } from "@/components/rk/contact-map";
 import { Footer } from "@/components/rk/footer";
-import { WhatsAppFloat } from "@/components/rk/whatsapp-float";
+import { AiChatbot } from "@/components/rk/ai-chatbot";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { AdminApp } from "@/components/admin/admin-app";
@@ -49,24 +49,36 @@ export default function App() {
     return (
       <Suspense fallback={null}>
         <RkStoryPage />
+        <AiChatbot />
+        <Toaster />
+        <SonnerToaster />
       </Suspense>
     );
   if (path === "/blog" || path === "/blog.html")
     return (
       <Suspense fallback={null}>
         <BlogPage />
+        <AiChatbot />
+        <Toaster />
+        <SonnerToaster />
       </Suspense>
     );
   if (path === "/contact")
     return (
       <Suspense fallback={null}>
         <ContactPage />
+        <AiChatbot />
+        <Toaster />
+        <SonnerToaster />
       </Suspense>
     );
   if (path === "/our-speciality" || path === "/our-speciality.html")
     return (
       <Suspense fallback={null}>
         <OurSpecialityPage />
+        <AiChatbot />
+        <Toaster />
+        <SonnerToaster />
       </Suspense>
     );
 
@@ -89,7 +101,7 @@ export default function App() {
         <ContactMap />
       </main>
       <Footer />
-      <WhatsAppFloat />
+      <AiChatbot />
       <Toaster />
       <SonnerToaster />
     </div>
