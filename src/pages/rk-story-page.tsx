@@ -26,7 +26,7 @@ export function RkStoryPage() {
           {/* Full bleed background image aligned to the left */}
           <motion.img 
             initial={reduceMotion ? false : { scale: 1.05, opacity: 0 }}
-            animate={{ scale: 1, opacity: 0.65 }}
+            animate={{ scale: 1, opacity: 0.88 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
             src="/rk-owner.jpeg" 
             alt="R.K. Automobiles Showroom" 
