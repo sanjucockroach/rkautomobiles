@@ -22,31 +22,67 @@ export function RkStoryPage() {
     <div ref={storyRef} className="public-page min-h-screen">
       <SiteHeader />
       <main>
-        <section className="relative min-h-[80svh] bg-[#05070a] text-white flex items-center overflow-hidden">
-          {/* Full bleed background image aligned to the left */}
+        <section className="relative bg-[#05070a] text-white overflow-hidden py-10 lg:py-0 lg:min-h-[80svh] lg:flex lg:items-center">
+          {/* Desktop Full bleed background image */}
           <motion.img 
-            initial={reduceMotion ? false : { scale: 1.05, opacity: 0 }}
-            animate={{ scale: 1, opacity: 0.88 }}
+            initial={reduceMotion ? false : { scale: 1.03, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0.9 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
             src="/rk-owner.jpeg" 
             alt="R.K. Automobiles Showroom" 
-            className="absolute inset-0 h-full w-full object-cover object-[20%_center] pointer-events-none" 
+            className="hidden lg:block absolute inset-0 h-full w-full object-cover object-[18%_center] pointer-events-none" 
           />
           
-          {/* Gradients to fade out the image and make text readable */}
-          {/* Mobile overlay */}
-          <div className="absolute inset-0 bg-black/60 lg:hidden z-[1]" />
-          {/* Desktop gradient (darker on the right where the text is placed) */}
-          <div className="absolute inset-0 hidden lg:block bg-[linear-gradient(90deg,rgba(5,7,10,0.1)_0%,rgba(5,7,10,0.45)_35%,rgba(5,7,10,0.92)_70%)] z-[1]" />
+          {/* Desktop gradient (keeps left owner & car 100% clear, fades to dark on right for text) */}
+          <div className="absolute inset-0 hidden lg:block bg-[linear-gradient(90deg,rgba(5,7,10,0.05)_0%,rgba(5,7,10,0.35)_35%,rgba(5,7,10,0.92)_65%,#05070a_100%)] z-[1]" />
           
-          <div className="relative mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8 z-[2]">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:items-center">
-              {/* Shift text to the right side on desktop (cols 7 to 12) */}
+          <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 z-[2]">
+            {/* MOBILE LAYOUT: Clean Vertical Stack with Full Crisp Image and Text Below (Zero Blur) */}
+            <div className="flex flex-col lg:hidden gap-6">
+              {/* Crisp, unblurred, fully visible image container on Mobile */}
+              <motion.div 
+                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.7)] bg-black/60"
+              >
+                <img 
+                  src="/rk-owner.jpeg" 
+                  alt="R.K. Automobiles Owner and Showroom" 
+                  className="w-full h-full object-cover object-center"
+                />
+                <div className="absolute bottom-3 left-3 bg-black/75 backdrop-blur-md border border-white/10 px-2.5 py-1 rounded-lg">
+                  <div className="text-[11px] font-black text-brand-lime">R.K. Automobiles</div>
+                  <div className="text-[9px] text-white/70">Delhi Showroom</div>
+                </div>
+              </motion.div>
+
+              {/* Text content below image on Mobile (No blur, 100% readable) */}
+              <motion.div 
+                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.15 }}
+                className="text-left"
+              >
+                <p className="mb-3 flex items-center gap-2 text-xs font-bold text-brand-lime">
+                  <MapPin className="h-3.5 w-3.5 text-brand-blue" /> A Delhi showroom connecting journeys across India
+                </p>
+                <h1 className="text-balance text-3xl sm:text-4xl font-black leading-[1.15] text-white">
+                  Between one goodbye and another person's first drive.
+                </h1>
+                <p className="mt-4 text-base leading-7 text-white/80 font-medium">
+                  That is where the R.K. story lives.
+                </p>
+              </motion.div>
+            </div>
+
+            {/* DESKTOP LAYOUT (lg:): Text shifted to the right over subtle dark fade */}
+            <div className="hidden lg:grid grid-cols-12 gap-8 items-center py-20">
               <motion.div 
                 initial={reduceMotion ? false : { opacity: 0, x: 35 }} 
                 animate={{ opacity: 1, x: 0 }} 
                 transition={{ duration: 0.9, ease: "easeOut", delay: 0.1 }}
-                className="lg:col-start-7 lg:col-span-6 flex flex-col justify-center text-left bg-black/30 lg:bg-transparent p-6 sm:p-8 lg:p-0 rounded-2xl backdrop-blur-sm lg:backdrop-blur-none border border-white/5 lg:border-none"
+                className="col-start-7 col-span-6 flex flex-col justify-center text-left"
               >
                 <p className="mb-5 flex items-center gap-2 text-sm font-bold text-brand-lime">
                   <MapPin className="h-4 w-4 text-brand-blue" /> A Delhi showroom connecting journeys across India
@@ -54,7 +90,7 @@ export function RkStoryPage() {
                 <h1 className="text-balance text-4xl font-black leading-[1.1] text-white sm:text-5xl lg:text-6xl">
                   Between one goodbye and another person's first drive.
                 </h1>
-                <p className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/80 font-medium">
+                <p className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-white/85 font-medium">
                   That is where the R.K. story lives.
                 </p>
               </motion.div>
