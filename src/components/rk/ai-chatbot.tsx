@@ -633,9 +633,11 @@ export function AiChatbot() {
               className="group cursor-pointer max-w-[280px] bg-[#0c1017]/95 border border-brand-lime/40 text-white p-3.5 rounded-2xl shadow-[0_12px_30px_rgba(0,0,0,0.6)] backdrop-blur-md flex items-start gap-3 transition-transform hover:scale-[1.02]"
             >
               <div className="relative flex-shrink-0 mt-0.5">
-                <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-brand-blue to-brand-lime flex items-center justify-center text-slate-950 font-bold">
-                  <Bot className="h-4 w-4" />
-                </div>
+                <img
+                  src="/chatbot-avatar.jpg"
+                  alt="R.K. AI Advisor"
+                  className="h-9 w-9 rounded-full object-cover border-2 border-brand-lime/60 shadow-md"
+                />
                 <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-emerald-400 border-2 border-[#0c1017]" />
               </div>
               <div className="flex-1">
@@ -683,9 +685,13 @@ export function AiChatbot() {
             <X className="h-6 w-6 text-white" />
           ) : (
             <>
-              <div className="relative">
-                <Bot className="h-7 w-7 text-brand-lime animate-pulse" />
-                <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#25d366] text-[9px] font-black text-black">
+              <div className="relative h-full w-full p-0.5 flex items-center justify-center">
+                <img
+                  src="/chatbot-avatar.jpg"
+                  alt="Chatbot Icon"
+                  className="h-full w-full rounded-full object-cover border-2 border-brand-lime/70"
+                />
+                <span className="absolute -bottom-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#25d366] text-[9px] font-black text-black border border-black shadow">
                   <MessageCircle className="h-2.5 w-2.5" />
                 </span>
               </div>
@@ -713,9 +719,11 @@ export function AiChatbot() {
             <div className="relative bg-gradient-to-r from-[#0d121c] via-[#101726] to-[#0a101d] p-4 border-b border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-brand-blue to-brand-lime flex items-center justify-center text-slate-950 shadow-inner">
-                    <Bot className="h-6 w-6 font-bold" />
-                  </div>
+                  <img
+                    src="/chatbot-avatar.jpg"
+                    alt="R.K. AI Car Advisor"
+                    className="h-10 w-10 rounded-xl object-cover border-2 border-brand-lime/50 shadow-md"
+                  />
                   <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-400 border-2 border-[#07090e] animate-pulse" />
                 </div>
                 <div>
@@ -980,9 +988,11 @@ export function AiChatbot() {
               {/* Typing Indicator */}
               {isTyping && (
                 <div className="flex items-center gap-2 text-white/50 text-xs py-1">
-                  <div className="h-6 w-6 rounded-full bg-white/10 flex items-center justify-center">
-                    <Bot className="h-3.5 w-3.5 text-brand-lime" />
-                  </div>
+                  <img
+                    src="/chatbot-avatar.jpg"
+                    alt="R.K. Advisor"
+                    className="h-6 w-6 rounded-full object-cover border border-brand-lime/40"
+                  />
                   <div className="flex items-center gap-1 bg-[#131926] px-3 py-2 rounded-xl border border-white/5">
                     <span className="h-1.5 w-1.5 rounded-full bg-brand-lime animate-bounce [animation-delay:-0.3s]" />
                     <span className="h-1.5 w-1.5 rounded-full bg-brand-lime animate-bounce [animation-delay:-0.15s]" />
