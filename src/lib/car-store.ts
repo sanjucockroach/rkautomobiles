@@ -63,7 +63,7 @@ export async function refreshCars() {
 
   remoteLoad = (async () => {
     try {
-      const response = await fetch("/api/inventory", {
+      const response = await fetch(`/api/inventory?t=${Date.now()}`, {
         headers: { Accept: "application/json" },
         cache: "no-store",
       });

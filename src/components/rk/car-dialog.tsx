@@ -58,6 +58,10 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
                 alt={`${car.name}, photo ${activeImage + 1} of ${gallery.length}`}
                 loading="lazy"
                 decoding="async"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80";
+                }}
                 className="h-full w-full object-cover"
               />
               <div className="absolute top-3 left-3 flex gap-2">
@@ -104,7 +108,17 @@ export function CarDialog({ car, onClose }: { car: Car; onClose: () => void }) {
                         : "border-slate-200 opacity-55 hover:opacity-100"
                     }`}
                   >
-                    <img src={image} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                    <img
+                      src={image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80";
+                      }}
+                      className="h-full w-full object-cover"
+                    />
                   </button>
                 ))}
               </div>
