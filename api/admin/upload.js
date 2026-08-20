@@ -27,12 +27,31 @@ export default async function handler(request, response) {
 
   try {
     const filename = safeFilename(request.query.filename);
-    const blob = await put(`cars/${Date.now()}-${filename}`, request, {
-      access: "public",
+    const path = `cars/${Date.now()}-${filename}`;
+    const baseOptions = {
       addRandomSuffix: true,
       contentType,
-    });
-    return response.status(200).json({ url: blob.url });
+    };
+
+    let blob;
+    if (process.env.BLOB_ACCESS === "private") {
+      blob = await put(path, request, baseOptions);
+    } else {
+      try {
+        blob = await put(path, request, {
+          ...baseOptions,
+          access: "public",
+        });
+      } catch (uploadErr) {
+        const errMsg = String(uploadErr?.message || uploadErr);
+        if (errMsg.includes("private store") || errMsg.includes("configured with private access")) {
+          blob = await put(path, request, baseOptions);
+        } else {
+          throw uploadErr;
+        }
+      }
+    }
+    return response.status(200).json({ url: blob.url || blob.downloadUrl });
   } catch (error) {
     return response.status(503).json({
       error: error instanceof Error ? error.message : "Photo upload failed.",
