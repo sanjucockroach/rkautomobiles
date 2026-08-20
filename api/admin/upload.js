@@ -34,21 +34,22 @@ export default async function handler(request, response) {
     };
 
     let blob;
-    if (process.env.BLOB_ACCESS === "private") {
-      blob = await put(path, request, baseOptions);
-    } else {
-      try {
+    const targetAccess = process.env.BLOB_ACCESS === "private" ? "private" : "public";
+
+    try {
+      blob = await put(path, request, {
+        ...baseOptions,
+        access: targetAccess,
+      });
+    } catch (uploadErr) {
+      const errMsg = String(uploadErr?.message || uploadErr);
+      if (targetAccess === "public" && (errMsg.includes("private store") || errMsg.includes("configured with private access"))) {
         blob = await put(path, request, {
           ...baseOptions,
-          access: "public",
+          access: "private",
         });
-      } catch (uploadErr) {
-        const errMsg = String(uploadErr?.message || uploadErr);
-        if (errMsg.includes("private store") || errMsg.includes("configured with private access")) {
-          blob = await put(path, request, baseOptions);
-        } else {
-          throw uploadErr;
-        }
+      } else {
+        throw uploadErr;
       }
     }
     return response.status(200).json({ url: blob.url || blob.downloadUrl });
