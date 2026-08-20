@@ -9,6 +9,14 @@ function safeFilename(value) {
     .slice(-100);
 }
 
+async function getBuffer(request) {
+  const chunks = [];
+  for await (const chunk of request) {
+    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
+  }
+  return Buffer.concat(chunks);
+}
+
 export default async function handler(request, response) {
   response.setHeader("Cache-Control", "no-store");
   if (request.method !== "POST") {
@@ -26,6 +34,11 @@ export default async function handler(request, response) {
   }
 
   try {
+    const fileBuffer = await getBuffer(request);
+    if (!fileBuffer || fileBuffer.length === 0) {
+      return response.status(400).json({ error: "Empty photo payload." });
+    }
+
     const filename = safeFilename(request.query.filename);
     const path = `cars/${Date.now()}-${filename}`;
     const baseOptions = {
@@ -37,14 +50,17 @@ export default async function handler(request, response) {
     const targetAccess = process.env.BLOB_ACCESS === "private" ? "private" : "public";
 
     try {
-      blob = await put(path, request, {
+      blob = await put(path, fileBuffer, {
         ...baseOptions,
         access: targetAccess,
       });
     } catch (uploadErr) {
       const errMsg = String(uploadErr?.message || uploadErr);
-      if (targetAccess === "public" && (errMsg.includes("private store") || errMsg.includes("configured with private access"))) {
-        blob = await put(path, request, {
+      if (
+        targetAccess === "public" &&
+        (errMsg.includes("private store") || errMsg.includes("configured with private access"))
+      ) {
+        blob = await put(path, fileBuffer, {
           ...baseOptions,
           access: "private",
         });
